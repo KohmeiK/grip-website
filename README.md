@@ -1,5 +1,6 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-Most Recent Stable version at: https://kolledgeholdings.com
+
+### Most Recent Stable version at: https://kolledgeholdings.com.
 
 This is a React.js version of my other repo, ASES-Website
 
