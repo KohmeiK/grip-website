@@ -1,8 +1,16 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+This is a React.js version of my other repo, ASES-Website
+
 ## Available Scripts
 
 In the project directory, you can run:
+
+### `npm dev`
+
+Builds the react app and serves with firebase to localhost:5000
+Do this if you need to test firebase
+
 
 ### `npm start`
 
