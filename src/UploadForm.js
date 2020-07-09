@@ -1,4 +1,5 @@
 import React, {useEffect} from "react"
+import Button from 'react-bootstrap/Button'
 
 class UploadForm extends React.Component{
   constructor(props){
@@ -35,7 +36,7 @@ class UploadForm extends React.Component{
             required
           />
         </label>
-        <input type="submit" className="" value="Upload" />
+        <input className="my-2 btn btn-primary bg-wb" type="submit" value="Upload" />
       </form>
 
       {/* progress bar */}
