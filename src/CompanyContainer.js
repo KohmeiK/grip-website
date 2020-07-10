@@ -1,11 +1,14 @@
 import React from "react"
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
+import Image from './Image'
 
 function CompanyContainer(props){
+  const imageURL = "https://picsum.photos/" + (200 + props.id) +"/40"
+  //just to randomize image
   return(
     <Card style={{ width: '18rem' }}>
-      <Card.Img variant="top" src="https://picsum.photos/1000/600" />
+      <Card.Img variant="top" src={imageURL} />
       <Card.Body>
         <Card.Title>{props.name}</Card.Title>
         <Card.Text>
@@ -18,3 +21,6 @@ function CompanyContainer(props){
 }
 
 export default CompanyContainer
+
+// <img src="%PUBLIC_URL%/TempImg.png"/>
+// <Image src={imageURL}/>
