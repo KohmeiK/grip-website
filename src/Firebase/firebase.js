@@ -20,8 +20,10 @@ const config = {
 
 class Firebase {
   constructor() {
-    app.initializeApp(config);
+    this.bob = app.initializeApp(config);
   }
 }
-
 export default Firebase;
+
+// let Firebase = app.initializeApp(config);
+// export default Firebase;
