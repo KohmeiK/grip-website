@@ -4,12 +4,12 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.css';
 import TestPage from "./TestPage"
-import Firebase, { FirebaseContext } from './Firebase/index.js';
+import FirebaseContext, {Firebase} from './Firebase/index.js';
 
 ReactDOM.render(
   <React.StrictMode>
     <FirebaseContext.Provider value={Firebase}>
-      <TestPage />
+      <App />
     </FirebaseContext.Provider>
   </React.StrictMode>,
   document.querySelector('#root')
