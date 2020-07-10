@@ -5,7 +5,8 @@
 // export const auth = firebase.auth();
 // export const firestore = firebase.firestore();
 
-import app from 'firebase/app';
+import * as firebase from "firebase/app";
+import 'firebase/firestore';
 
 const config = {
   apiKey: "AIzaSyBI-HC_K_CzKsv7oTV1ERDNDN3PbkRt6cM",
@@ -18,10 +19,9 @@ const config = {
   measurementId: "G-6ZMC5ZN1D5"
 };
 
-class Firebase {
-  constructor() {
-    this.bob = app.initializeApp(config);
-  }
+const Firebase = {
+    app: firebase.initializeApp(config),
+    db: firebase.firestore()
 }
 export default Firebase;
 
