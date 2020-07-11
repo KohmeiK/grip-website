@@ -7,15 +7,17 @@ function CompanyContainer(props){
   const imageURL = "https://picsum.photos/" + (200 + props.id) +"/40"
   //just to randomize image
   return(
-    <Card style={{ width: '18rem' }}>
-      <Card.Img variant="top" src={imageURL} />
+    <Card>
+      <Card.Img variant="top" src={imageURL} style={{height:"5em"}} />
       <Card.Body>
         <Card.Title>{props.name}</Card.Title>
         <Card.Text>
           {props.info}
         </Card.Text>
-        <Button variant="primary">More Info</Button>
       </Card.Body>
+      <Card.Footer>
+        <small className="text-muted">Location: Antartica</small>
+      </Card.Footer>
     </Card>
   )
 }
