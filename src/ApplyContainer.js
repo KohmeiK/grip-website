@@ -1,5 +1,6 @@
 import React, {useState, useContext, useEffect} from 'react'
 import CompanyContainer from './CompanyContainer'
+import ApplyModal from './ApplyModal'
 import FirebaseContext from './Firebase'
 import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
@@ -9,11 +10,19 @@ import {CardColumns, Form, InputGroup, FormControl} from 'react-bootstrap'
 
 function ApplyContainer(){
   const firebase = useContext(FirebaseContext)
-  const [companies, setCompanies] = useState([])
-  const [display, setDisplay] = useState("Loading...")
+  const [companies, setCompanies] = useState([]) //Data from DB
+  const [display, setDisplay] = useState("Not Set") //JSX for List
+  const [indexToShow, setIndexToShow] = useState(-1); //Modal
+  const [show, setShow] = useState(false); //Modal show
+  const [loading, setLoading] = useState(true); //Still loading array
+  const handleClose = () => setShow(false);
+  const handleShow = (index) => {
+    setIndexToShow(index)
+    setShow(true)
+  }
 
   useEffect(() => {
-    //This is called every time the component shows up on the screen
+    //Only on mount
     firebase.db.collection('companies')
     .get()
     .then(function (querySnapshot){ // no condition for query, thus returns all companies
@@ -23,19 +32,36 @@ function ApplyContainer(){
         querySnapshot.forEach(function (doc){
           setCompanies(companies.push(doc.data())) //Add all companies to array
         })
-        setDisplay(companies.map(function(company){ //Convert each element to JSX
-          return(
-            <div>
-            <br />
-            <CompanyContainer id={Math.floor(Math.random() * 20)-10} name={company.companyName} info={company.info} />
-            </div>
-          );
-        }))
-
+        setCompanies(companies)
+        setLoading(false)
     }).catch(function(error){
         console.log(error)
     })
-  },[]);
+  },[])
+
+  let localDisplay = "Loading..."
+  if(!loading)
+  {
+    localDisplay = companies.map(function annon(company, index){ //Convert each element to JSX
+      //convert all elements before reach render, this is only updates when show is changed
+      return(
+        <div>
+          <br />
+          <CompanyContainer
+            key={index}
+            index={index}
+            name={company.companyName}
+            info={company.info}
+            handleClose={handleClose}
+            handleShow={handleShow}
+            show={show && (index === indexToShow) ? true : false}
+            uid={"(Ethan) Set ID in ApplyContainer.js line 57"}
+            cid={"(Ethan) Set CID in ApplyContainer.js line 58"}
+           />
+        </div>
+      );
+    })
+  }
 
   return(
     <div style={{background:"#e0e0e0"}} >
@@ -64,7 +90,7 @@ function ApplyContainer(){
             </Col>
           </Form.Row>
         </Form>
-            {display}
+            {localDisplay}
         </Col>
         <Col sm={3}>More Settings</Col>
       </Row>
