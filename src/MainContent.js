@@ -3,7 +3,7 @@ import LandingCarousel from './LandingCarousel.js'
 import UploadFrom from './UploadForm.js'
 import ApplyContainer from './ApplyContainer'
 import CompanyForm from './CompanyForm'
-import TestPage from './TestPage'
+import Login from './Login'
 
 function MainContent(props){
   if(props.pageNum === 0){
@@ -24,7 +24,7 @@ function MainContent(props){
     );
   }else if(props.pageNum == 4){
     return(
-      <TestPage />
+      <Login />
     )
   }else{
     return(<h1>Something is wrong.</h1>)

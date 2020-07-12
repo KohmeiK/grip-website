@@ -22,7 +22,7 @@ function NavBar(props){
           <Nav.Link href="#" onClick={() => props.gotoPage(1)}>Upload</Nav.Link>
           <Nav.Link href="#" onClick={() => props.gotoPage(2)}>Create Company</Nav.Link>
           <Nav.Link href="#" onClick={() => props.gotoPage(3)}>Apply</Nav.Link>
-          <Nav.Link href="#" onClick={() => props.gotoPage(4)}>Test</Nav.Link>
+          <Nav.Link href="#" onClick={() => props.gotoPage(4)}>Login</Nav.Link>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
