@@ -6,7 +6,7 @@ import ApplyModal from "./ApplyModal.js"
 
 function CompanyContainer(props){
 
-  const imageURL = "https://picsum.photos/" + (200 + props.index) +"/40"
+  const imageURL = "https://picsum.photos/" + (800 + props.index) +"/100"
   //just to randomize image
 
   const handleClick = () => props.handleShow(props.index)
@@ -14,13 +14,13 @@ function CompanyContainer(props){
   return(
     <>
       <Card>
-        <Card.Img variant="top" src={imageURL} style={{height:"5em"}} />
+        <Card.Img variant="top" src={imageURL} style={{height:"7em"}} />
         <Card.Body>
           <Card.Title>{props.name}</Card.Title>
           <Card.Text>
-            {props.info}
-            <br/>
-            {props.show ? true : false}
+            <pre>
+              {props.info}
+            </pre>
           </Card.Text>
         </Card.Body>
         <Card.Footer>

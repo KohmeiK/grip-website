@@ -27,6 +27,16 @@ function CompanyForm(){
         <div>
           <Formik
             initialValues={{ name: '', info: ''}}
+            validate={values => {
+              const errors = {};
+              if (!values.name) {
+                errors.name = 'Required';
+              }
+              if (!values.info) {
+                errors.info = 'Required';
+              }
+              return errors;
+            }}
             onSubmit={(values, { setSubmitting, resetForm }) => {
               setTimeout(() => {
 
