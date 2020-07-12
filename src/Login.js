@@ -1,21 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react'
 import FirebaseContext from './Firebase'
-// import 'firebase/firestore';
-
-// import fire from './Fire';
 
 import { Formik, useFormik, Form, Field, ErrorMessage } from 'formik';
 
 function Login() {
-
-  useEffect(() => {
-
-  })
-  // useEffect(() => {
-
-  // },[]); //Run only onMount
   const firebase = useContext(FirebaseContext)
   let auth = firebase.auth
+
   const formik = useFormik({
     initialValues: {
       email: '',
