@@ -1,5 +1,7 @@
 import React, {useState} from "react"
-import {Modal, Button} from 'react-bootstrap'
+import {Modal, Button, Container, Row, Col} from 'react-bootstrap'
+import { Document, Page } from 'react-pdf';
+import Resume from './Resume.js'
 
 function ApplyModal(props) {
 
@@ -24,7 +26,18 @@ function ApplyModal(props) {
         <br />
         <b>CompanyUser: {props.cid}</b>
         <br />
-        <p>[Debug] Index:{props.index} Show:{props.show ? "isTrue" : "isFalse"} </p>
+        The follow resume will be uploaded:
+        <br />
+        <Container fluid>
+          <Row className="justify-content-md-center">
+            <Col style={{borderStyle: "solid"}} md="auto">
+              <Resume />
+            </Col>
+          </Row>
+
+        </Container>
+        <br />
+        {/*<p>[Debug] Index:{props.index} Show:{props.show ? "isTrue" : "isFalse"} </p>*/}
 
         </Modal.Body>
         <Modal.Footer>
