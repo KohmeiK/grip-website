@@ -4,7 +4,7 @@ import React, {setState} from 'react';
 import { Formik } from "formik";
 import * as yup from "yup"
 import Thumbnail from "./Thumbnail.js"
-import FirebaseContext from "./Firebase"
+import FirebaseContext from "./Firebase/"
 
 class UploadForm extends React.Component {
   constructor(props){

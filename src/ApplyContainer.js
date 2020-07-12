@@ -25,14 +25,16 @@ function ApplyContainer(){
         })
         setDisplay(companies.map(function(company){ //Convert each element to JSX
           return(
+            <div>
+            <br />
             <CompanyContainer id={Math.floor(Math.random() * 20)-10} name={company.companyName} info={company.info} />
+            </div>
           );
         }))
 
     }).catch(function(error){
         console.log(error)
     })
-
   },[]);
 
   return(
@@ -62,10 +64,7 @@ function ApplyContainer(){
             </Col>
           </Form.Row>
         </Form>
-          <br />
-          <CardColumns>
             {display}
-          </CardColumns>
         </Col>
         <Col sm={3}>More Settings</Col>
       </Row>

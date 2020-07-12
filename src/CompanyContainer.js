@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button'
 import Image from './Image'
 
 function CompanyContainer(props){
+
   const imageURL = "https://picsum.photos/" + (200 + props.id) +"/40"
   //just to randomize image
   return(
@@ -16,7 +17,7 @@ function CompanyContainer(props){
         </Card.Text>
       </Card.Body>
       <Card.Footer>
-        <small className="text-muted">Location: Antartica</small>
+        <Button onClick={handleClick}> Apply! </Button>
       </Card.Footer>
     </Card>
   )
@@ -24,5 +25,10 @@ function CompanyContainer(props){
 
 export default CompanyContainer
 
+//This is for Image Placeholder before loading is done
 // <img src="%PUBLIC_URL%/TempImg.png"/>
 // <Image src={imageURL}/>
+
+function handleClick(){
+  alert("Pushed")
+}
