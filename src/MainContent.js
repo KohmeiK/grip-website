@@ -4,6 +4,7 @@ import UploadFrom from './UploadForm.js'
 import ApplyContainer from './ApplyContainer'
 import CompanyForm from './CompanyForm'
 import Login from './Login'
+import Signup from './Signup'
 
 function MainContent(props){
   if(props.pageNum === 0){
@@ -25,6 +26,10 @@ function MainContent(props){
   }else if(props.pageNum == 4){
     return(
       <Login />
+    )
+  }else if(props.pageNum == 5){
+    return(
+      <Signup />
     )
   }else{
     return(<h1>Something is wrong.</h1>)
