@@ -27,6 +27,7 @@ function CompanyContainer(props){
           <Button onClick={handleClick}> Apply! </Button>
         </Card.Footer>
       </Card>
+      {/*Normally Hidden*/}
       <ApplyModal
         uid={props.uid}
         cid={props.cid}
