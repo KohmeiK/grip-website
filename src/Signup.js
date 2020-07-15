@@ -17,8 +17,9 @@ function Signup() {
             school: '',
             classYear: '',
         },
-        onSubmit: values => {
+        onSubmit: (values, {resetForm})  => {
             if (values.pwd === values.pwdConfirm) {
+              resetForm()
                 auth.createUserWithEmailAndPassword(values.email, values.pwd)
                     .catch(error => {
                         alert(error.message)
@@ -130,4 +131,4 @@ function Signup() {
 
 
 
-export default Signup 
+export default Signup

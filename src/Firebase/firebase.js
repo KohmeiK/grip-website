@@ -23,7 +23,7 @@ const config = {
 
 const Firebase = {
     app: firebase.initializeApp(config),
-    auth: firebase.auth(), 
+    auth: firebase.auth(),
     db: firebase.firestore(),
     storage: firebase.storage().ref()
 }
