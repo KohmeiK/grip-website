@@ -67,7 +67,7 @@ function Signup() {
         },
     })
     return (
-        <div>
+        <div className="w-50 m-auto">
             <h3>Sign Up</h3>
             <form onSubmit={formik.handleSubmit}>
                 <div className="form-group">

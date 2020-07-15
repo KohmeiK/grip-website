@@ -2,6 +2,7 @@ import React, {useState, useContext, useEffect} from 'react'
 import CompanyContainer from './CompanyContainer'
 import ApplyModal from './ApplyModal'
 import FirebaseContext from './Firebase'
+import AuthContext from './Firebase/AuthContext'
 import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
@@ -10,6 +11,7 @@ import {CardColumns, Form, InputGroup, FormControl} from 'react-bootstrap'
 
 function ApplyContainer(){
   const firebase = useContext(FirebaseContext)
+  const authContext = useContext(AuthContext)
   const [companies, setCompanies] = useState([]) //Data from DB
   const [display, setDisplay] = useState("Not Set") //JSX for List
   const [indexToShow, setIndexToShow] = useState(-1); //Modal
@@ -55,7 +57,7 @@ function ApplyContainer(){
             handleClose={handleClose}
             handleShow={handleShow}
             show={show && (index === indexToShow) ? true : false}
-            uid={"(Ethan) Set ID in ApplyContainer.js line 57"}
+            uid={authContext.user.uid}
             cid={"(Ethan) Set CID in ApplyContainer.js line 58"}
            />
         </div>

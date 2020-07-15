@@ -31,7 +31,7 @@ function Login() {
     },
   })
   return (
-    <div>
+    <div className="w-50 m-auto">
       <h3>Login</h3>
       <form onSubmit={formik.handleSubmit}>
         <div className="form-group">
