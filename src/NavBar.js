@@ -12,8 +12,6 @@ import AuthContext from './Firebase/AuthContext'
 import FirebaseContext from './Firebase'
 
 
-
-
 function NavBar(props){
   const firebase = useContext(FirebaseContext)
   const authContext = useContext(AuthContext)
@@ -37,6 +35,7 @@ function NavBar(props){
     authStatus = "Logged out"
   }
 
+  console.log(authContext.user)
   return(
     <Navbar expand="lg" bg="dark" variant="dark">
       <LinkContainer to="/">
@@ -58,15 +57,7 @@ function NavBar(props){
           <LinkContainer to="/">
             <Nav.Link>Home</Nav.Link>
           </LinkContainer>
-          <LinkContainer to="/upload">
-            <Nav.Link>Upload</Nav.Link>
-          </LinkContainer>
-          <LinkContainer to="/company">
-            <Nav.Link>Create Company</Nav.Link>
-          </LinkContainer>
-          <LinkContainer to="/apply">
-            <Nav.Link>Apply</Nav.Link>
-          </LinkContainer>
+          <RestOfNavBar isLoggedIn={authContext.authenticated}/>
         </Nav>
       </Navbar.Collapse>
       <Nav>
@@ -78,6 +69,25 @@ function NavBar(props){
     </Navbar>
 
   );
+}
+
+function RestOfNavBar(props){
+  if(props.isLoggedIn){
+    return(
+      <> {/*Fragments - aren't they cool?*/}
+        <LinkContainer to="/upload">
+          <Nav.Link>Upload</Nav.Link>
+        </LinkContainer>
+        <LinkContainer to="/company">
+          <Nav.Link>Create Company</Nav.Link>
+        </LinkContainer>
+        <LinkContainer to="/apply">
+          <Nav.Link>Apply</Nav.Link>
+        </LinkContainer>
+      </>
+    );
+  }
+  return(null)
 }
 
 export default NavBar

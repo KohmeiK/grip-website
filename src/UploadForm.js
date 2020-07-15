@@ -78,8 +78,8 @@ class UploadForm extends React.Component {
                 {this.state.uploading && <ProgressBar now={this.state.progressBar}/>}
                 <br />
                 {this.state.uploading
-                  ? <button type="submit" className="btn btn-dark" disabled>uploading</button>
-                  : <button type="submit" className="btn btn-primary">submit</button>}
+                  ? <button type="submit" className="btn btn-dark" disabled>Uploading</button>
+                  : <button type="submit" className="btn btn-primary">Submit</button>}
               </form>
             );
           }} />
