@@ -5,14 +5,14 @@ import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.css';
 import Login from "./Login"
 import FirebaseContext, {Firebase} from './Firebase/index.js';
-import UserProvider from './Firebase/userProvider'
+import {AuthProvider} from './Firebase/AuthContext';
 
 ReactDOM.render(
   <React.StrictMode>
       <FirebaseContext.Provider value={Firebase}>
-        <UserProvider>
+        <AuthProvider>
           <App />
-        </UserProvider>
+        </AuthProvider>
       </FirebaseContext.Provider>
   </React.StrictMode>,
   document.querySelector('#root')

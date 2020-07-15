@@ -1,29 +1,33 @@
 import React, { useState, useEffect, useContext } from 'react'
 import FirebaseContext from './Firebase'
-
+import AuthContext from './Firebase/AuthContext'
 import { Formik, useFormik, Form, Field, ErrorMessage } from 'formik';
+import { useHistory } from "react-router-dom";
+import {Button} from "react-bootstrap"
 
 function Login() {
+  let history = useHistory()
   const firebase = useContext(FirebaseContext)
-  let auth = firebase.auth
+  const authContext = useContext(AuthContext)
+
+  const handleSubmit = async(values) => {
+    try{
+      //wait until log in is complete
+      await firebase.auth.signInWithEmailAndPassword(values.email, values.pwd)
+      history.push('/Apply')
+    }catch(error){
+      alert(error)
+    }
+  }
 
   const formik = useFormik({
     initialValues: {
       email: '',
       pwd: '',
     },
-    onSubmit: values => {
-      auth.signInWithEmailAndPassword(values.email, values.pwd)
-        .catch(error => {
-          alert(error.message)
-        })
-      auth.onAuthStateChanged(user => {
-        if (user.displayName === null) {
-          alert('Welcome, ' + user.email)
-        } else {
-          alert('Welcome, ' + user.displayName)
-        }
-      })
+    onSubmit: (values,{resetForm}) => {
+      resetForm()
+      handleSubmit(values)
     },
   })
   return (
@@ -52,13 +56,15 @@ function Login() {
             value={formik.values.pwd}
           />
         </div>
-        <button type="submit">Submit</button>
+        <Button type="submit">Submit</Button>
       </form>
+
+      <br />
+      <h4> No account? </h4>
+      <Button variant="secondary" onClick={()=>history.push("/signup")}>Sign Up</Button>
 
     </div>
   )
 }
-
-
 
 export default Login

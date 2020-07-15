@@ -11,7 +11,7 @@ function Image(props){
     return (
       <div className = "imageHolder" >
         {!loaded && <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/1x1.png" alt="Placeholder" /> }
-        <img src ={props.src} style={imageStyle} onLoad={handleImageLoaded} />
+        <img src ={props.src} style={imageStyle} onLoad={handleImageLoaded} alt="Image"/>
       </div>
     )
 }
