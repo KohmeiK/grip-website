@@ -3,6 +3,7 @@ import { Nav, Navbar, Button, ButtonGroup, DropdownButton, Dropdown } from 'reac
 import AuthContext from './Firebase/AuthContext'
 import {useHistory} from "react-router-dom";
 import FirebaseContext from './Firebase'
+import { LinkContainer, UncontrolledDropdown, DropdownToggle, DropdownItem, DropdownMenu } from 'react-router-bootstrap'
 
 function NavAuthSection(){
   const firebase = useContext(FirebaseContext)
@@ -26,10 +27,16 @@ function NavAuthSection(){
     return(
       <>
         <DropdownButton variant= "secondary" id="dropdown-basic-button" title={authContext.user.displayName + ' '}>
-          <Dropdown.Item href="/setting">Settings</Dropdown.Item>
-          <Dropdown.Item href="/upload">Upload Resume</Dropdown.Item>
+          <LinkContainer to="/setting">
+            <Dropdown.Item>Settings</Dropdown.Item>
+          </LinkContainer>
+          <LinkContainer to="/upload">
+            <Dropdown.Item>Upload Resume</Dropdown.Item>
+          </LinkContainer>
+
           <Dropdown.Item onClick={()=>alert("Not set up yet!")}>Your Applications</Dropdown.Item>
           <Dropdown.Divider />
+
           <Dropdown.Item onClick={handleAuthChange}>Log Out</Dropdown.Item>
         </DropdownButton>
       </>
