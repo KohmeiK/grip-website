@@ -8,6 +8,7 @@ import CompanyForm from './CompanyForm'
 import Login from './Login'
 import Signup from "./Signup"
 import Test from './Test'
+import Setting from './Setting'
 import {
   BrowserRouter as Router,
   Switch,
@@ -20,6 +21,9 @@ function App(){
       <Router>
         <NavBar/>
         <Switch>
+          <Route path="/setting">
+            <Setting/>
+          </Route>
           <Route path="/test">
             <Test/>
           </Route>

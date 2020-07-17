@@ -1,5 +1,5 @@
 import React, {useContext} from 'react'
-import { Nav, Navbar, Button, ButtonGroup } from 'react-bootstrap'
+import { Nav, Navbar, Button, ButtonGroup, DropdownButton, Dropdown } from 'react-bootstrap'
 import {
   BrowserRouter as Router,
   Switch,
@@ -10,6 +10,7 @@ import {
 import { LinkContainer } from 'react-router-bootstrap'
 import AuthContext from './Firebase/AuthContext'
 import FirebaseContext from './Firebase'
+import NavAuthSection from './NavAuthSection'
 
 
 function NavBar(props){
@@ -17,25 +18,6 @@ function NavBar(props){
   const authContext = useContext(AuthContext)
   let history = useHistory()
 
-  const handleAuthChange = ()=>{
-    if(authContext.authenticated){
-      firebase.auth.signOut()
-      history.push('/')
-    }else{
-      history.push('/login')
-    }
-  }
-
-  let authStatus = "Loading Page"
-  if(authContext.loadingAuthSate){
-    authStatus = "Loading Auth"
-  }else if(authContext.authenticated && authContext.user){
-    authStatus = authContext.user.displayName ? authContext.user.displayName : authContext.user.email
-  }else{
-    authStatus = "Logged out"
-  }
-
-  console.log(authContext.user)
   return(
     <Navbar expand="lg" bg="dark" variant="dark">
       <LinkContainer to="/">
@@ -61,10 +43,7 @@ function NavBar(props){
         </Nav>
       </Navbar.Collapse>
       <Nav>
-        <ButtonGroup>
-          <Button variant="secondary" disabled>{authStatus}</Button>
-          <Button onClick={handleAuthChange}>{authContext.authenticated ? "Log Out" : "Log In"}</Button>
-        </ButtonGroup>
+        <NavAuthSection />
       </Nav>
     </Navbar>
 
@@ -75,9 +54,6 @@ function RestOfNavBar(props){
   if(props.isLoggedIn){
     return(
       <> {/*Fragments - aren't they cool?*/}
-        <LinkContainer to="/upload">
-          <Nav.Link>Upload</Nav.Link>
-        </LinkContainer>
         <LinkContainer to="/company">
           <Nav.Link>Create Company</Nav.Link>
         </LinkContainer>
