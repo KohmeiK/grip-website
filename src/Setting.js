@@ -2,6 +2,8 @@ import React from 'react'
 import FirebaseContext from './Firebase'
 import AuthContext from './Firebase/AuthContext'
 import {CardColumns, Form, InputGroup, FormControl, Row, Col, Container} from 'react-bootstrap'
+import InfoUpdate from "./InfoUpdate"
+import OtherSettings from "./OtherSettings"
 
 function Setting(){
 
@@ -17,22 +19,8 @@ function Setting(){
           </div>
         </Col>
         <Col sm={7}>
-        <Form>
-          <Form.Row className="align-items-center">
-            <Col>
-              <Form.Label htmlFor="inlineFormInputGroup" srOnly>
-                Some Eventual Search Feature Could Go Here
-              </Form.Label>
-              <InputGroup className="mb-2">
-                <FormControl id="inlineFormInputGroup" placeholder="Some Eventual Search Feature Could Go Here" />
-                <InputGroup.Append>
-                  <InputGroup.Text>Search</InputGroup.Text>
-                </InputGroup.Append>
-              </InputGroup>
-            </Col>
-          </Form.Row>
-        </Form>
-            Nothing
+          <InfoUpdate />
+          <OtherSettings />
         </Col>
         <Col sm={3}>More Settings</Col>
       </Row>

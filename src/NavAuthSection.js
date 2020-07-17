@@ -25,7 +25,7 @@ function NavAuthSection(){
   }else if(authContext.authenticated && authContext.user){
     return(
       <>
-        <DropdownButton variant= "secondary" id="dropdown-basic-button" title={authContext.user.displayName}>
+        <DropdownButton variant= "secondary" id="dropdown-basic-button" title={authContext.user.displayName + ' '}>
           <Dropdown.Item href="/setting">Settings</Dropdown.Item>
           <Dropdown.Item href="/upload">Upload Resume</Dropdown.Item>
           <Dropdown.Item onClick={()=>alert("Not set up yet!")}>Your Applications</Dropdown.Item>

@@ -26,13 +26,11 @@ function Signup() {
 
         //I can access authContext.user immedealty here
         //setUser is async so we need to deal with that
-        
+
         const user = res.user
 
         // write in database
         firebase.db.collection("students").doc(user.uid).set({
-            name: values.name,
-            email: values.email,
             school: values.school,
             classYear: values.classYear,
         })
