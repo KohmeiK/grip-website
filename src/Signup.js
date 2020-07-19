@@ -19,7 +19,7 @@ function Signup() {
         const res = await firebase.auth.createUserWithEmailAndPassword(values.email, values.pwd)
 
         //make changes to user before saving, wait until changes made
-        await res.user.updateProfile({displayName: values.name,})
+        await res.user.updateProfile({displayName: values.name})
 
         //update user value for context
         authContext.setUser(res.user);

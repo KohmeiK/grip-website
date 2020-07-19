@@ -1,80 +1,132 @@
-import React, {useEffect, useContext} from "react"
+import React, { useEffect, useContext } from "react"
 import FirebaseContext from './Firebase'
+import AuthContext from './Firebase/AuthContext'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import {Col, Row, Container} from 'react-bootstrap'
+import { Col, Row, Container } from 'react-bootstrap'
 
 
-function CompanyForm(){
-
+function CompanyForm() {
   const firebase = useContext(FirebaseContext)
+  const authContext = useContext(AuthContext)
   useEffect(() => {
     //This is called every time the component shows up on the screen
 
-  },[]);
+  }, []);
 
-  return(
-    <div style={{background:"#e0e0e0"}} >
-    <Container fluid style={{paddingTop: "2em"}}>
-      <Row>
-        <Col>
-          <div style={{marginLeft: "1em", borderRadius: "25px", background:"white", height: "40em"}}>
-            <div style={{margin: "2em", marginTop: "0em",  background:"white", height: "40em"}}>
-              Margin Intentionally Left Blank
+  const handleSubmit = async (values) => {
+    try {
+
+      //Wait to do anything until account is made
+      const res = await firebase.auth.createUserWithEmailAndPassword(values.email, values.pwd)
+
+      //make changes to user before saving, wait until changes made
+      await res.user.updateProfile({ displayName: values.name})
+
+      //update user value for context
+      authContext.setUser(res.user);
+
+      //I can access authContext.user immedealty here
+      //setUser is async so we need to deal with that
+
+      const user = res.user
+
+      // write in database
+      firebase.db.collection("companies").doc(user.uid).set({
+        info: values.info, 
+        jobs: new Array(0)
+      })
+      alert('Successfully created a company, log in again')
+      // history.push("/upload")
+
+    } catch (err) {
+      //Catch all errors here!
+      console.log(err)
+      alert(err)
+    }
+  }
+
+  return (
+    <div style={{ background: "#e0e0e0" }} >
+      <Container fluid style={{ paddingTop: "2em" }}>
+        <Row>
+          <Col>
+            <div style={{ marginLeft: "1em", borderRadius: "25px", background: "white", height: "40em" }}>
+              <div style={{ margin: "2em", marginTop: "0em", background: "white", height: "40em" }}>
+                Margin Intentionally Left Blank
             </div>
-          </div>
-        </Col>
-        <Col sm={5}>
-        <div>
-          <Formik
-            initialValues={{ name: '', info: ''}}
-            validate={values => {
-              const errors = {};
-              if (!values.name) {
-                errors.name = 'Required';
-              }
-              if (!values.info) {
-                errors.info = 'Required';
-              }
-              return errors;
-            }}
-            onSubmit={(values, { setSubmitting, resetForm }) => {
-              setTimeout(() => {
+            </div>
+          </Col>
+          <Col sm={5}>
+            <div>
+              <Formik
+                initialValues={{ name: '', info: '', email: '', pwd: '' }}
+                validate={values => {
+                  const errors = {};
+                  if (!values.name) {
+                    errors.name = 'Required';
+                  }
+                  if (!values.info) {
+                    errors.info = 'Required';
+                  }
+                  if (!values.email) {
+                    errors.email = 'Required';
+                  }
+                  if (!values.pwd) {
+                    errors.pwd = 'Required';
+                  }
+                  return errors;
+                }}
+                onSubmit={(values, { setSubmitting, resetForm }) => {
+                  handleSubmit(values)
+                  // setTimeout(() => {
 
-                  firebase.db.collection('companies').add({
-                      companyName: values.name,
-                      info: values.info
-                  }).then(function (docRef){
-                      console.log(docRef.id)
-                      alert('success! Ref: ' + docRef.id)
-                  })
-                  .catch(function(error){
-                      alert('Error writing document: ', error)
-                  })
-                  resetForm()
-              }, 200);
+                  //   firebase.db.collection('companies').add({
+                  //     companyName: values.name,
+                  //     info: values.info
+                  //   }).then(function (docRef) {
+                  //     console.log(docRef.id)
+                  //     alert('success! Ref: ' + docRef.id)
+                  //   })
+                  //     .catch(function (error) {
+                  //       alert('Error writing document: ', error)
+                  //     })
+                  //   resetForm()
+                  // }, 200);
 
-            }}
-          >
-            {({ isSubmitting }) => (
-              <Form>
-                Company Name: <br/>
-                <Field type="text" name="name" style={{width: "100%"}}/>
-                <ErrorMessage name="name" component="div" />
-                <br/> Company Info: <br/>
-                <Field type="text" name="info" as="textarea" style={{width: "100%"}} />
-                <ErrorMessage name="info" component="div" />
-                <br/>
-                <button className="my-2 btn btn-primary bg-wb" type="submit" disabled={isSubmitting}>
-                  Submit
+                }}
+              >
+                {({ isSubmitting }) => (
+                  <Form>
+                    Company Name: <br />
+                    <Field type="text" name="name" style={{ width: "100%" }} />
+                    <ErrorMessage name="name" component="div" />
+                    <br />
+                    Company Info: <br />
+                    <Field type="text" name="info" as="textarea" style={{ width: "100%" }} />
+                    <ErrorMessage name="info" component="div" />
+                    <br />
+                    Preferred Login Email: <br />
+                    <Field type="email" name="email" style={{ width: "100%" }} />
+                    <ErrorMessage name="email" component="div" />
+                    <br />
+                    Temporary Password: <br />
+                    <Field type="text" name="pwd" style={{ width: "100%" }} />
+                    <ErrorMessage name="pwd" component="div" />
+                    <br />
+                    <button className="my-2 btn btn-primary bg-wb" type="submit" disabled={isSubmitting}>
+                      Submit
                 </button>
-              </Form>
-            )}
-          </Formik>
-        </div>
-        </Col>
-        <Col sm={4}>More Settings</Col>
-      </Row>
-    </Container>
+                  </Form>
+                )}
+              </Formik>
+
+              <br /> 
+              Kohmei can you figure out how to reset form after clicking submit
+            </div>
+          </Col>
+          <Col sm={4}>More Settings</Col>
+        </Row>
+      </Container>
     </div>
   );
 
