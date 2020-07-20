@@ -1,5 +1,5 @@
 import React, {useState, useContext, useEffect} from 'react'
-import CompanyContainer from './CompanyContainer'
+import JobContainer from './JobContainer'
 import ApplyModal from './ApplyModal'
 import FirebaseContext from './Firebase'
 import AuthContext from './Firebase/AuthContext'
@@ -9,10 +9,10 @@ import Row from 'react-bootstrap/Row'
 import {CardColumns, Form, InputGroup, FormControl} from 'react-bootstrap'
 
 
-function ApplyContainer(){
+function ApplyContainer2(){
   const firebase = useContext(FirebaseContext)
   const authContext = useContext(AuthContext)
-  const [companies, setCompanies] = useState([]) //Data from DB
+  const [jobs, setJobs] = useState([]) //Data from DB
   const [display, setDisplay] = useState("Not Set") //JSX for List
   const [indexToShow, setIndexToShow] = useState(-1); //Modal
   const [show, setShow] = useState(false); //Modal show
@@ -25,16 +25,16 @@ function ApplyContainer(){
 
   useEffect(() => {
     //Only on mount
-    firebase.db.collection('companies')
+    firebase.db.collection('jobs')
     .get()
-    .then(function (querySnapshot){ // no condition for query, thus returns all companies
+    .then(function (querySnapshot){ // no condition for query, thus returns all jobs
         if (querySnapshot.docs.length === 0){
           return(<h1> Oops, there are currently no available internships! </h1>)
         }
         querySnapshot.forEach(function (doc){
-          setCompanies(companies.push(doc.data())) //Add all companies to array
+          setJobs(jobs.push(doc.data())) //Add all jobs to array
         })
-        setCompanies(companies)
+        setJobs(jobs)
         setLoading(false)
     }).catch(function(error){
         console.log(error)
@@ -44,16 +44,18 @@ function ApplyContainer(){
   let localDisplay = "Loading..."
   if(!loading)
   {
-    localDisplay = companies.map(function annon(company, index){ //Convert each element to JSX
+    localDisplay = jobs.map(function annon(job, index){ //Convert each element to JSX
       //convert all elements before reach render, this is only updates when show is changed
       return(
         <div>
           <br />
-          <CompanyContainer
+          <JobContainer
             key={index}
             index={index}
-            name={company.companyName}
-            info={company.info}
+            name={job.title}
+            info={job.info}
+            dl={job.deadline}
+            companyName={job.companyName}
             handleClose={handleClose}
             handleShow={handleShow}
             show={show && (index === indexToShow) ? true : false}
@@ -101,4 +103,4 @@ function ApplyContainer(){
   )
 }
 
-export default ApplyContainer
+export default ApplyContainer2
