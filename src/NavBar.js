@@ -60,6 +60,9 @@ function RestOfNavBar(props){
         <LinkContainer to="/apply">
           <Nav.Link>Apply</Nav.Link>
         </LinkContainer>
+        <LinkContainer to="/test">
+          <Nav.Link>Test</Nav.Link>
+        </LinkContainer>
       </>
     );
   }

@@ -42,6 +42,9 @@ function App(){
           <Route path="/upload">
             <UploadFrom />
           </Route>
+          <Route path="/test">
+            <Test /> 
+          </Route>
           <Route path="/">
             <LandingCarousel/>
           </Route>

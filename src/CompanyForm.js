@@ -20,7 +20,7 @@ function CompanyForm() {
       const res = await firebase.auth.createUserWithEmailAndPassword(values.email, values.pwd)
 
       //make changes to user before saving, wait until changes made
-      await res.user.updateProfile({ displayName: values.name})
+      await res.user.updateProfile({ displayName: values.name })
 
       //update user value for context
       authContext.setUser(res.user);
@@ -32,9 +32,18 @@ function CompanyForm() {
 
       // write in database
       firebase.db.collection("companies").doc(user.uid).set({
-        info: values.info, 
+        info: values.info,
         jobs: new Array(0)
       })
+
+      firebase.db.collection("jobs").add({
+        title: values.jobTitle,
+        info: values.jobInfo, 
+        deadline: values.jobDl, 
+        companyID: user.uid, 
+        applicants: new Array(0)
+      })
+
       alert('Successfully created a company, log in again')
       // history.push("/upload")
 
@@ -59,7 +68,7 @@ function CompanyForm() {
           <Col sm={5}>
             <div>
               <Formik
-                initialValues={{ name: '', info: '', email: '', pwd: '' }}
+                initialValues={{ name: '', info: '', email: '', pwd: '', jobTitle: '', jobInfo: '', jobDl: '' }}
                 validate={values => {
                   const errors = {};
                   if (!values.name) {
@@ -73,6 +82,15 @@ function CompanyForm() {
                   }
                   if (!values.pwd) {
                     errors.pwd = 'Required';
+                  }
+                  if (!values.jobTitle) {
+                    errors.jobTitle = 'Required';
+                  }
+                  if (!values.jobInfo) {
+                    errors.jobInfo = 'Required';
+                  }
+                  if (!values.jobDl) {
+                    errors.jobDl = 'Required';
                   }
                   return errors;
                 }}
@@ -113,6 +131,23 @@ function CompanyForm() {
                     <Field type="text" name="pwd" style={{ width: "100%" }} />
                     <ErrorMessage name="pwd" component="div" />
                     <br />
+                    Job1 Title: <br />
+                    <Field type="text" name="jobTitle" style={{ width: "100%" }} />
+                    <ErrorMessage name="jobTitle" component="div" />
+                    <br />
+                    Job1 Info: <br />
+                    <Field type="text" name="jobInfo" as="textarea" style={{ width: "100%" }} />
+                    <ErrorMessage name="jobInfo" component="div" />
+                    <br />
+                    Job1 Deadline: <br />
+                    <Field type="text" name="jobDl" style={{ width: "100%" }} />
+                    <ErrorMessage name="jobDl" component="div" />
+                    <br />
+
+
+
+
+                    
                     <button className="my-2 btn btn-primary bg-wb" type="submit" disabled={isSubmitting}>
                       Submit
                 </button>
@@ -120,7 +155,7 @@ function CompanyForm() {
                 )}
               </Formik>
 
-              <br /> 
+              <br />
               Kohmei can you figure out how to reset form after clicking submit
             </div>
           </Col>
