@@ -2,19 +2,24 @@ import React, { useState, useEffect, useContext } from 'react'
 import FirebaseContext from './Firebase'
 import AuthContext from './Firebase/AuthContext'
 import { Formik, useFormik, Form, Field, ErrorMessage } from 'formik';
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import {Button} from "react-bootstrap"
 
 function Login() {
   let history = useHistory()
+  let location = useLocation()
   const firebase = useContext(FirebaseContext)
   const authContext = useContext(AuthContext)
+  const [isLoading, setLoading] = useState(false)
+
+  let { from } = location.state || { from: { pathname: "/" } };
 
   const handleSubmit = async(values) => {
     try{
       //wait until log in is complete
       await firebase.auth.signInWithEmailAndPassword(values.email, values.pwd)
-      history.push('/Apply')
+      setLoading(false)
+      history.replace(from);
     }catch(error){
       alert(error)
     }
@@ -27,12 +32,13 @@ function Login() {
     },
     onSubmit: (values,{resetForm}) => {
       resetForm()
+      setLoading(true)
       handleSubmit(values)
     },
   })
   return (
     <div className="w-50 m-auto">
-      <h3>Login</h3>
+      <h3>Login to view the page {from.pathname}</h3>
       <form onSubmit={formik.handleSubmit}>
         <div className="form-group">
           <label htmlFor="email">Email: </label>
@@ -56,7 +62,7 @@ function Login() {
             value={formik.values.pwd}
           />
         </div>
-        <Button type="submit">Submit</Button>
+        <Button disabled={isLoading} type="submit">Submit</Button>
       </form>
 
       <br />

@@ -105,6 +105,7 @@ function CompanyForm() {
                   return errors;
                 }}
                 onSubmit={(values, { setSubmitting, resetForm }) => {
+                  resetForm()
                   handleSubmit(values)
                   // alert(JSON.stringify(values, null, 2))
                   // setTimeout(() => {
@@ -201,9 +202,6 @@ function CompanyForm() {
                   </Form>
                 )}
               </Formik>
-
-              <br />
-              Kohmei can you figure out how to reset form after clicking submit
             </div>
           </Col>
           <Col sm={4}>More Settings</Col>

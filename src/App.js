@@ -15,35 +15,33 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import PrivateRoute from './PrivateRoute'
 
 function App(){
     return(
       <Router>
         <NavBar/>
         <Switch>
-          <Route path="/setting">
+          <PrivateRoute path="/setting">
             <Setting/>
-          </Route>
-          <Route path="/test">
-            <Test/>
-          </Route>
+          </PrivateRoute>
           <Route path="/signup">
             <Signup />
           </Route>
           <Route path="/login">
             <Login />
           </Route>
-          <Route path="/apply">
+          <PrivateRoute path="/apply">
             <ApplyContainer />
-          </Route>
-          <Route path="/company">
+          </PrivateRoute>
+          <PrivateRoute path="/company">
             <CompanyForm />
-          </Route>
-          <Route path="/upload">
+          </PrivateRoute>
+          <PrivateRoute path="/upload">
             <UploadFrom />
-          </Route>
+          </PrivateRoute>
           <Route path="/test">
-            <Test /> 
+            <Test />
           </Route>
           <Route path="/">
             <LandingCarousel/>
