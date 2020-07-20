@@ -38,9 +38,9 @@ function CompanyForm() {
 
       firebase.db.collection("jobs").add({
         title: values.jobTitle,
-        info: values.jobInfo, 
-        deadline: values.jobDl, 
-        companyID: user.uid, 
+        info: values.jobInfo,
+        deadline: values.jobDl,
+        companyID: user.uid,
         applicants: new Array(0)
       })
 
@@ -95,6 +95,7 @@ function CompanyForm() {
                   return errors;
                 }}
                 onSubmit={(values, { setSubmitting, resetForm }) => {
+                  resetForm()
                   handleSubmit(values)
                   // setTimeout(() => {
 
@@ -147,16 +148,13 @@ function CompanyForm() {
 
 
 
-                    
+
                     <button className="my-2 btn btn-primary bg-wb" type="submit" disabled={isSubmitting}>
                       Submit
                 </button>
                   </Form>
                 )}
               </Formik>
-
-              <br />
-              Kohmei can you figure out how to reset form after clicking submit
             </div>
           </Col>
           <Col sm={4}>More Settings</Col>
