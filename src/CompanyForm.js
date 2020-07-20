@@ -195,7 +195,7 @@ function CompanyForm() {
               </Formik>
             </div>
 
-
+            {/* add a job to a company */}
             <div>
               <Formik
                 initialValues={{ companyID: '', jobTitle: '', jobInfo: '', jobDl: '' }}
@@ -216,36 +216,9 @@ function CompanyForm() {
                   return errors;
                 }}
                 onSubmit={(values, { setSubmitting, resetForm }) => {
+                  resetForm()
+
                   let docRef = firebase.db.collection("companies").doc(values.companyID)
-
-
-
-                  // firebase.db.runTransaction(function (transaction) {
-                  //   return transaction.get(docRef).then(function (doc) {
-                  //     if (!doc.exists) {
-                  //       throw "Document does not exist!";
-                  //     }
-                  //     firebase.db.collection("jobs").add({
-                  //       title: values.jobTitle,
-                  //       info: values.jobInfo,
-                  //       deadline: values.jobDl,
-                  //       companyID: values.companyID,
-                  //       companyName: doc.data().companyName,
-                  //       applicants: []
-                  //     }).then(function (jobRef) {
-                  //       let newJobs = doc.data().jobs.concat([jobRef.id])
-                  //       console.log("jobRef:", jobRef)
-                  //       console.log("jobs", doc.data().jobs)
-                  //       console.log("newJobs", newJobs)
-                  //       transaction.update(docRef, { jobs: newJobs })
-                  //     })
-                  //   }).then(function () {
-                  //     console.log("Transaction successfully committed!")
-                  //   }).catch(function (error) {
-                  //     console.log("Transaction failed: ", error);
-                  //   })
-                  // })
-
                   docRef.get().then(function (doc) {
                     if (doc.exists) { // found intended company
                       firebase.db.collection("jobs").add({
@@ -256,7 +229,7 @@ function CompanyForm() {
                         companyName: doc.data().companyName,
                         applicants: []
                       }).then(function (jobRef) {
-                        docRef.update({jobs: firebase.raw.firestore.FieldValue.arrayUnion(jobRef.id)})
+                        docRef.update({jobs: firebase.raw.firestore.FieldValue.arrayUnion(jobRef.id)}) // add the job id to the company doc
                         alert("Job successfully added")
                       })
                     } else {
@@ -265,10 +238,7 @@ function CompanyForm() {
                     }
                   }).catch(function (error) {
                     alert("Error getting document:", error);
-                  });
-                  resetForm()
-                  // alert(JSON.stringify(values, null, 2))
-                  // handleSubmit(values)
+                  })
                 }}
 
               >
