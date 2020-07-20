@@ -38,7 +38,7 @@ function Login() {
   })
   return (
     <div className="w-50 m-auto">
-      <h3>Login to view the page {from.pathname}</h3>
+      <h3>Login {from.pathname !== '/' && "to view the page: "+from.pathname }</h3>
       <form onSubmit={formik.handleSubmit}>
         <div className="form-group">
           <label htmlFor="email">Email: </label>

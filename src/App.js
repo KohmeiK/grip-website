@@ -9,6 +9,7 @@ import Login from './Login'
 import Signup from "./Signup"
 import Test from './Test'
 import Setting from './Setting'
+import AdminSettings from './AdminSettings'
 import {
   BrowserRouter as Router,
   Switch,
@@ -39,6 +40,9 @@ function App(){
           </PrivateRoute>
           <PrivateRoute path="/upload">
             <UploadFrom />
+          </PrivateRoute>
+          <PrivateRoute path="/admin">
+            <AdminSettings/>
           </PrivateRoute>
           <Route path="/test">
             <Test />

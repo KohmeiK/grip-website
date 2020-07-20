@@ -9,6 +9,7 @@ import * as firebase from "firebase/app";
 import 'firebase/firestore';
 import 'firebase/storage';
 import 'firebase/auth';
+import 'firebase/functions';
 
 const config = {
   apiKey: "AIzaSyBI-HC_K_CzKsv7oTV1ERDNDN3PbkRt6cM",
@@ -27,6 +28,7 @@ const Firebase = {
     db: firebase.firestore(),
     storage: firebase.storage().ref(),
     raw: firebase,
+    functions: firebase.functions(),
 }
 export default Firebase;
 
