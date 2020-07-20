@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from "react"
 import FirebaseContext from './Firebase'
 import AuthContext from './Firebase/AuthContext'
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field, ErrorMessage, FieldArray } from 'formik';
 import { Col, Row, Container } from 'react-bootstrap'
 
 
@@ -38,10 +38,20 @@ function CompanyForm() {
 
       firebase.db.collection("jobs").add({
         title: values.jobTitle,
-        info: values.jobInfo, 
-        deadline: values.jobDl, 
-        companyID: user.uid, 
+        info: values.jobInfo,
+        deadline: values.jobDl,
+        companyID: user.uid,
         applicants: new Array(0)
+      })
+
+      values.extraJobs.forEach((job, index) => {
+        firebase.db.collection("jobs").add({
+          title: job.title,
+          info: job.info,
+          deadline: job.dl,
+          companyID: user.uid,
+          applicants: new Array(0)
+        })
       })
 
       alert('Successfully created a company, log in again')
@@ -68,7 +78,7 @@ function CompanyForm() {
           <Col sm={5}>
             <div>
               <Formik
-                initialValues={{ name: '', info: '', email: '', pwd: '', jobTitle: '', jobInfo: '', jobDl: '' }}
+                initialValues={{ name: '', info: '', email: '', pwd: '', jobTitle: '', jobInfo: '', jobDl: '', extraJobs: [] }}
                 validate={values => {
                   const errors = {};
                   if (!values.name) {
@@ -96,6 +106,7 @@ function CompanyForm() {
                 }}
                 onSubmit={(values, { setSubmitting, resetForm }) => {
                   handleSubmit(values)
+                  // alert(JSON.stringify(values, null, 2))
                   // setTimeout(() => {
 
                   //   firebase.db.collection('companies').add({
@@ -112,8 +123,9 @@ function CompanyForm() {
                   // }, 200);
 
                 }}
+                
               >
-                {({ isSubmitting }) => (
+                {({ isSubmitting, values }) => (
                   <Form>
                     Company Name: <br />
                     <Field type="text" name="name" style={{ width: "100%" }} />
@@ -145,9 +157,44 @@ function CompanyForm() {
                     <br />
 
 
+                    <FieldArray
+                      name="extraJobs"
+                      render={arrayHelpers => (
+                        <div>
+                          {values.extraJobs && values.extraJobs.length > 0 ? (
+                            values.extraJobs.map((job, index) => (
+                              <div key={index}>
+                                Job{index + 2} Title: <br /> 
+                                <Field type="text" name={`extraJobs.${index}.title`} style={{width: "100%" }} />
+                                Job{index + 2} Info: <br /> 
+                                <Field type="text" name={`extraJobs.${index}.info`} style={{width: "100%" }} />
+                                Job{index + 2} Deadline: <br /> 
+                                <Field type="text" name={`extraJobs.${index}.dl`} style={{width: "100%" }} />
+                                <button
+                                  type="button"
+                                  onClick={() => arrayHelpers.remove(index)} // remove a job from the list
+                                >
+                                  -
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => arrayHelpers.insert(index, '')} // insert an empty string at a position
+                                >
+                                  +
+                                </button>
+                              </div>
+                            ))
+                          ) : (
+                              <button type="button" onClick={() => arrayHelpers.push('')}>
+                                {/* show this when user has removed all friends from the list */}
+                                Add a job
+                              </button>
+                            )}
+                        </div>
+                      )}
+                    />
 
 
-                    
                     <button className="my-2 btn btn-primary bg-wb" type="submit" disabled={isSubmitting}>
                       Submit
                 </button>
