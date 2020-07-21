@@ -12,7 +12,7 @@ function ApplyModal(props) {
     //Close Modal
     props.handleClose()
   }
-
+  console.log(props)
   return (
     <>
       <Modal show={props.show} onHide={props.handleClose}>
@@ -20,11 +20,10 @@ function ApplyModal(props) {
           <Modal.Title>Confirm Apply</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        <b>Uid: {props.uid}</b>
-        <br />
+        <b>User: {props.studentName} &nbsp;</b> {/*nbsp is to force space*/}
         is about to apply to
         <br />
-        <b>CompanyUser: {props.cid}</b>
+        <b>Internship: {props.jobTitle} at {props.companyName}</b>
         <br />
         The follow resume will be uploaded:
         <br />

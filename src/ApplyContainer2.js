@@ -59,7 +59,7 @@ function ApplyContainer2(){
             handleClose={handleClose}
             handleShow={handleShow}
             show={show && (index === indexToShow) ? true : false}
-            uid={authContext.user.uid}
+            studentName={authContext.user.displayName}
             cid={"(Ethan) Set CID in ApplyContainer.js line 58"}
            />
         </div>

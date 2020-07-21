@@ -1,20 +1,23 @@
 import Button from 'react-bootstrap/Button'
 import ProgressBar from 'react-bootstrap/ProgressBar'
-import React, {setState} from 'react';
+import React, {setState, useContext} from 'react';
 import { Formik } from "formik";
 import * as yup from "yup"
 import Thumbnail from "./Thumbnail.js"
 import FirebaseContext from "./Firebase/"
+import AuthContext from './Firebase/AuthContext'
 
 class UploadForm extends React.Component {
   constructor(props){
     super(props)
     this.state={progressBar: 0,uploading: false}
+    
   }
   static contextType = FirebaseContext;
   render() {
     const that = this;
     let firebase = this.context;
+    const user = firebase.auth.currentUser
     return (
       <div className="container">
         <Formik
@@ -43,7 +46,7 @@ class UploadForm extends React.Component {
             }
 
             let storageRef = firebase.storage
-            let resumeRef = storageRef.child(resume.name)
+            let resumeRef = storageRef.child(user.uid + '.pdf')
             let uploadTask = resumeRef.put(resume)
             that.setState({uploading: true})
             uploadTask.on('state_changed', function(snapshot){

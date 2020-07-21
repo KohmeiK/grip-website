@@ -32,8 +32,9 @@ function JobContainer(props){
       </Card>
       {/*Normally Hidden*/}
       <ApplyModal
-        uid={props.uid}
-        cid={props.cid}
+        studentName={props.studentName}
+        jobTitle={props.name}
+        companyName={props.companyName}
         key={props.index}
         index= {props.index}
         handleClose={props.handleClose}
