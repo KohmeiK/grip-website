@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }) => {
         user: user,
         isAuthenticated: user !== null && typeof user !== 'undefined',
         setUser: setUser,
-        isloadingAuthSate: loadingAuthState
+        isloadingAuthState: loadingAuthState
       }}
     >
 

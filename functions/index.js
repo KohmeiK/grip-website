@@ -14,22 +14,15 @@ admin.initializeApp();
 
 exports.addAdminRole = functions.https.onCall(async (data, context) => {
   console.log("Running addAdmin")
+  console.log(data.email,"email")
   try{
     const user = await admin.auth().getUserByEmail(data.email)
-    const isAdmin = user.customClaims['admin']
-    console.log(isAdmin, "isAdmin")
-    console.log(user, "user")
-    if(isAdmin){
-      console.log({message: `${data.email} is already an admin!`}, "return")
-      return({message: `${data.email} is already an admin!`})
-    }else if(!isAdmin){
-      await admin.auth().setCustomUserClaims(user.uid, {admin: true})
-      console.log({message: `Successfully made ${data.email} an admin!`}, "return")
-      return({message: `Successfully made ${data.email} an admin!`})
-    }
-
+    await admin.auth().setCustomUserClaims(user.uid, {admin: true})
+    console.log({message: `Successfully made ${data.email} an admin!`}, "return")
+    return({message: `Successfully made ${data.email} an admin!`})
   }catch(err){
-    return(err)
+    console.log("Send html error:",err.message)
+    throw new functions.https.HttpsError("invalid-argument", err.message)
   }
 
 })
