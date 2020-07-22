@@ -33,10 +33,11 @@ function Signup() {
         firebase.db.collection("students").doc(user.uid).set({
             school: values.school,
             classYear: values.classYear,
+            jobsAppliedTo: []
         })
 
         user.sendEmailVerification()
-        alert('Signup Successful,' + user.email + ', please verify your email')
+        alert('Signup Successful,' + user.displayName + ', please verify your email')
         history.push("/upload")
 
       } catch(err){

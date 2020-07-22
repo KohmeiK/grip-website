@@ -32,9 +32,12 @@ function ApplyContainer2(){
           return(<h1> Oops, there are currently no available internships! </h1>)
         }
         querySnapshot.forEach(function (doc){
-          setJobs(jobs.push(doc.data())) //Add all jobs to array
+          let job = doc.data()
+          job.jobID = doc.id // so this way job's document id is included
+          setJobs(jobs.push(job)) //Add all jobs to array
         })
         setJobs(jobs)
+        console.log(jobs)
         setLoading(false)
     }).catch(function(error){
         console.log(error)
@@ -60,7 +63,8 @@ function ApplyContainer2(){
             handleShow={handleShow}
             show={show && (index === indexToShow) ? true : false}
             studentName={authContext.user.displayName}
-            cid={"(Ethan) Set CID in ApplyContainer.js line 58"}
+            studentID={authContext.user.uid}
+            jobID={job.jobID}
            />
         </div>
       );

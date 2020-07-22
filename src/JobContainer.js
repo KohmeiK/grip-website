@@ -33,7 +33,9 @@ function JobContainer(props){
       {/*Normally Hidden*/}
       <ApplyModal
         studentName={props.studentName}
+        studentID={props.studentID}
         jobTitle={props.name}
+        jobID={props.jobID}
         companyName={props.companyName}
         key={props.index}
         index= {props.index}
