@@ -14,7 +14,15 @@ export const AuthProvider = ({ children }) => {
   const firebase = useContext(FirebaseContext)
   const [user, setUser] = useState(null);
   const [loadingAuthState, setLoadingAuthState] = useState(true);
-  const [isAdmin, setAdmin] = useState(false)
+  const [isAdmin, setAdmin] = useState(null)
+
+  const updateAdminState = async(pUser) => {
+    const idTok = await pUser.getIdTokenResult()
+    //Relying on this part to end after onAuthStateChanged
+    console.log("upading isAdmin",!!idTok.claims.admin)
+    setAdmin(!!idTok.claims.admin)
+    setLoadingAuthState(false);
+  }
 
   useEffect(() => {
     //Run only on mount
@@ -22,11 +30,10 @@ export const AuthProvider = ({ children }) => {
 
       if(user){
         setUser(user);
-        // const idTok = await authContext.user.getIdTokenResult()
+        updateAdminState(user);
       }else{
         setUser(null)
       }
-      setLoadingAuthState(false);
 
     });
   }, []);
@@ -37,7 +44,8 @@ export const AuthProvider = ({ children }) => {
         user: user,
         isAuthenticated: user !== null && typeof user !== 'undefined',
         setUser: setUser,
-        isLoadingAuthState: loadingAuthState
+        isLoadingAuthState: loadingAuthState,
+        isAdmin: isAdmin,
       }}
     >
 

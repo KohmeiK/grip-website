@@ -39,7 +39,7 @@ function NavBar(props){
           <LinkContainer to="/">
             <Nav.Link>Home</Nav.Link>
           </LinkContainer>
-          <RestOfNavBar isLoggedIn={authContext.isAuthenticated}/>
+          <RestOfNavBar isLoggedIn={authContext.isAuthenticated} isAdmin={authContext.isAdmin}/>
         </Nav>
       </Navbar.Collapse>
       <Nav>
@@ -51,23 +51,34 @@ function NavBar(props){
 }
 
 function RestOfNavBar(props){
-  if(props.isLoggedIn){
+  if(props.isLoggedIn && props.isAdmin){
     return(
       <> {/*Fragments - aren't they cool?*/}
-        <LinkContainer to="/company">
-          <Nav.Link>Create Company</Nav.Link>
-        </LinkContainer>
         <LinkContainer to="/apply">
           <Nav.Link>Apply (Comp)</Nav.Link>
         </LinkContainer>
         <LinkContainer to="/test">
           <Nav.Link>Apply (Job)</Nav.Link>
         </LinkContainer>
+        <LinkContainer to="/company">
+          <Nav.Link>Create Company</Nav.Link>
+        </LinkContainer>
         <LinkContainer to="/admin">
           <Nav.Link>Super Secret</Nav.Link>
         </LinkContainer>
       </>
     );
+  }else if(props.isLoggedIn){
+    return (
+    <> {/*Fragments - aren't they cool?*/}
+      <LinkContainer to="/apply">
+        <Nav.Link>Apply (Comp)</Nav.Link>
+      </LinkContainer>
+      <LinkContainer to="/test">
+        <Nav.Link>Apply (Job)</Nav.Link>
+      </LinkContainer>
+    </>
+    )
   }
   return(null)
 }
