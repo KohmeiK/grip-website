@@ -64,7 +64,7 @@ function RestOfNavBar(props){
           <Nav.Link>Create Company</Nav.Link>
         </LinkContainer>
         <LinkContainer to="/admin">
-          <Nav.Link>Super Secret</Nav.Link>
+          <Nav.Link>Admin Settings</Nav.Link>
         </LinkContainer>
       </>
     );

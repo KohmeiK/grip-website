@@ -1,5 +1,5 @@
 import React, {useContext, useState} from "react"
-import { Button } from 'react-bootstrap'
+import { Button, Spinner } from 'react-bootstrap'
 import AuthContext from './Firebase/AuthContext'
 import FirebaseContext from './Firebase/'
 
@@ -29,13 +29,22 @@ function OtherSettings(){
       alert(err)
     }
   }
-  if(authContext.isLoadingAuthSate){
+  if(authContext.isLoadingAuthState){
     return(<div>Loading More Stuff...</div>)
   }else{
     return(
       <>
         <p>{isSent && `Email sent to ${authContext.user.email}. Please wait a few mintues before sending another one.`}</p>
-        <Button disabled={authContext.isLoadingAuthState | isSending} onClick={handlePassReset} variant="success"> Send Password Reset Email </Button>
+        <Button disabled={authContext.isLoadingAuthState | isSending} onClick={handlePassReset} variant="success">
+        {isSending && <Spinner
+          as="span"
+          animation="border"
+          size="sm"
+          role="status"
+          aria-hidden="true"
+          />}
+         Send Password Reset Email
+         </Button>
         <br/>
         <br/>
         <Button
@@ -43,6 +52,13 @@ function OtherSettings(){
           onClick={handleVerEmail}
           variant="success"
         >
+        {isSending && <Spinner
+          as="span"
+          animation="border"
+          size="sm"
+          role="status"
+          aria-hidden="true"
+          />}
           {authContext.user.emailVerified ? "Email Already Verified" : "Re-send Verification E-mail"}
         </Button>
       </>

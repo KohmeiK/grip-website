@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from "react"
 import { Formik, Field, Form } from 'formik';
-import { Button, Modal } from 'react-bootstrap'
+import { Button, Modal, Spinner} from 'react-bootstrap'
 import AuthContext from './Firebase/AuthContext'
 import FirebaseContext from './Firebase'
 import { useHistory } from "react-router-dom";
@@ -82,9 +82,9 @@ function InfoUpdate(){
       })
       await authContext.user.updateProfile({displayName: finalFormVals.name,})
       await authContext.user.updateEmail(finalFormVals.email)
-      alert("Info Updated!")
       handleClose()
       setIsUpdating(false)
+      alert("Info Updated!")
     }catch(err){
       alert(err)
     }
@@ -95,13 +95,13 @@ function InfoUpdate(){
       <Formik
         enableReinitialize={true}
         initialValues={initVals}
-        onSubmit={async values => {
+        onSubmit={async (values, {setSubmitting}) => {
             handleShow()
             console.log("Vals",values)
             setFinalFormVals(values)
         }}
       >
-      {({ values }) => (
+      {({ values, isSubmitting, dirty }) => (
         <Form>
           <label htmlFor="name">Display Name</label>
           <br/ >
@@ -143,7 +143,16 @@ function InfoUpdate(){
             </label>
           </div>
 
-          <Button disabled={!authContext.isAuthenticated} type="submit">Update Info</Button>
+          <Button disabled={authContext.isLoadingAuthState || !dirty} type="submit">
+          {isUpdating && <Spinner
+            as="span"
+            animation="border"
+            size="sm"
+            role="status"
+            aria-hidden="true"
+            />}
+          Update Info
+          </Button>
         </Form>
       )}
       </Formik>
@@ -169,7 +178,14 @@ function InfoUpdate(){
             Cancel
           </Button>
           <Button disabled={isUpdating} type="submit" value="Submit" variant="primary">
-            {isUpdating? "Updating..." : "Update Info"}
+          {isUpdating && <Spinner
+            as="span"
+            animation="border"
+            size="sm"
+            role="status"
+            aria-hidden="true"
+            />}
+            Update Info
           </Button>
         </Modal.Footer>
         </form>

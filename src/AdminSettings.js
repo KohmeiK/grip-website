@@ -1,7 +1,7 @@
 import React, {useContext} from 'react'
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import FirebaseContext from './Firebase/'
-import {Button} from "react-bootstrap"
+import {Button, Spinner} from "react-bootstrap"
 import AuthContext from "./Firebase/AuthContext"
 
 function AdminSettings(){
@@ -46,7 +46,16 @@ function AdminSettings(){
         <label htmlFor="email">Email Address</label>
         <Field name="email" type="email" />
         <ErrorMessage name="email" />
-        <Button disabled={isSubmitting || !dirty} type="submit">Make Admin</Button>
+        <Button disabled={isSubmitting || !dirty} type="submit">
+          {isSubmitting && <Spinner
+            as="span"
+            animation="border"
+            size="sm"
+            role="status"
+            aria-hidden="true"
+          />}
+          Make Admin
+        </Button>
       </Form>
     )}
     </Formik>
@@ -77,7 +86,16 @@ function AdminSettings(){
         <label htmlFor="email">Email Address</label>
         <Field name="email" type="email" />
         <ErrorMessage name="email" />
-        <Button disabled={isSubmitting || !dirty} type="submit">Unmake Admin</Button>
+        <Button disabled={isSubmitting || !dirty} type="submit">
+        {isSubmitting && <Spinner
+          as="span"
+          animation="border"
+          size="sm"
+          role="status"
+          aria-hidden="true"
+          />}
+          Unmake Admin
+        </Button>
       </Form>
     )}
     </Formik>

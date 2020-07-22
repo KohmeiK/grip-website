@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from "react"
 import FirebaseContext from './Firebase'
 import AuthContext from './Firebase/AuthContext'
 import { Formik, Form, Field, ErrorMessage, FieldArray } from 'formik';
-import { Col, Row, Container } from 'react-bootstrap'
+import { Col, Row, Container, Spinner } from 'react-bootstrap'
 
 
 function CompanyForm() {
@@ -13,61 +13,24 @@ function CompanyForm() {
 
   }, []);
 
-  const handleSubmit = async (values) => {
-    try {
+  const handleSubmit = async (values, setSubmitting, resetForm) => {
+      try{
+        console.log("RequestSent")
+        console.log(values,"values")
+        const createNewCompany = firebase.functions.httpsCallable('createNewCompany')
+        const result = await createNewCompany({formVals: values})
+        console.log(result.data.message, "result.data.message")
+        setSubmitting(false)
+        resetForm()
+        alert("Keep of a copy of the Company ID!         " + result.data.message)
+        return(null);
 
-      //Wait to do anything until account is made
-      const res = await firebase.auth.createUserWithEmailAndPassword(values.email, values.pwd)
-
-      //make changes to user before saving, wait until changes made
-      await res.user.updateProfile({ displayName: values.name })
-
-      //update user value for context
-      authContext.setUser(res.user);
-
-      //I can access authContext.user immedealty here
-      //setUser is async so we need to deal with that
-
-      const user = res.user
-
-      // write in database
-      firebase.db.collection("jobs").add({
-        title: values.jobTitle,
-        info: values.jobInfo,
-        deadline: values.jobDl,
-        companyID: user.uid,
-        companyName: user.displayName,
-        applicants: new Array(0)
-      })
-        .then(function (docRef) { // write a company document after writing the job to get its id
-          firebase.db.collection("companies").doc(user.uid).set({
-            info: values.info,
-            jobs: [docRef.id],
-            hasTempPass: true
-          })
-        })
-
-
-
-
-      values.extraJobs.forEach((job, index) => {
-        firebase.db.collection("jobs").add({
-          title: job.title,
-          info: job.info,
-          deadline: job.dl,
-          companyID: user.uid,
-          applicants: new Array(0)
-        })
-      })
-
-      alert('Successfully created a company, log in again')
-      // history.push("/upload")
-
-    } catch (err) {
-      //Catch all errors here!
-      console.log(err)
-      alert(err)
-    }
+      }catch(error){
+        console.log(error, "Error")
+        setSubmitting(false)
+        alert(error.message)
+        return("error");
+      }
   }
 
   return (
@@ -84,7 +47,7 @@ function CompanyForm() {
           <Col sm={5}>
             <div>
               <Formik
-                initialValues={{ name: '', info: '', email: '', pwd: '', jobTitle: '', jobInfo: '', jobDl: '', extraJobs: [] }}
+                initialValues={{ name: '', info: '', email: '', pwd: '',}}
                 validate={values => {
                   const errors = {};
                   if (!values.name) {
@@ -99,21 +62,12 @@ function CompanyForm() {
                   if (!values.pwd) {
                     errors.pwd = 'Required';
                   }
-                  if (!values.jobTitle) {
-                    errors.jobTitle = 'Required';
-                  }
-                  if (!values.jobInfo) {
-                    errors.jobInfo = 'Required';
-                  }
-                  if (!values.jobDl) {
-                    errors.jobDl = 'Required';
-                  }
                   return errors;
                 }}
                 onSubmit={(values, { setSubmitting, resetForm }) => {
-                  resetForm()
+                  // resetForm()
                   // alert(JSON.stringify(values, null, 2))
-                  handleSubmit(values)
+                  handleSubmit(values, setSubmitting, resetForm)
                 }}
 
               >
@@ -135,59 +89,15 @@ function CompanyForm() {
                     <Field type="text" name="pwd" style={{ width: "100%" }} />
                     <ErrorMessage name="pwd" component="div" />
                     <br />
-                    Job1 Title: <br />
-                    <Field type="text" name="jobTitle" style={{ width: "100%" }} />
-                    <ErrorMessage name="jobTitle" component="div" />
-                    <br />
-                    Job1 Info: <br />
-                    <Field type="text" name="jobInfo" as="textarea" style={{ width: "100%" }} />
-                    <ErrorMessage name="jobInfo" component="div" />
-                    <br />
-                    Job1 Deadline: <br />
-                    <Field type="text" name="jobDl" style={{ width: "100%" }} />
-                    <ErrorMessage name="jobDl" component="div" />
-                    <br />
-
-
-                    <FieldArray
-                      name="extraJobs"
-                      render={arrayHelpers => (
-                        <div>
-                          {values.extraJobs && values.extraJobs.length > 0 ? (
-                            values.extraJobs.map((job, index) => (
-                              <div key={index}>
-                                Job{index + 2} Title: <br />
-                                <Field type="text" name={`extraJobs.${index}.title`} style={{ width: "100%" }} />
-                                Job{index + 2} Info: <br />
-                                <Field type="text" name={`extraJobs.${index}.info`} style={{ width: "100%" }} />
-                                Job{index + 2} Deadline: <br />
-                                <Field type="text" name={`extraJobs.${index}.dl`} style={{ width: "100%" }} />
-                                <button
-                                  type="button"
-                                  onClick={() => arrayHelpers.remove(index)} // remove a job from the list
-                                >
-                                  -
-                                </button>
-                                <button
-                                  type="button"
-                                  onClick={() => arrayHelpers.insert(index, '')} // insert an empty string at a position
-                                >
-                                  +
-                                </button>
-                              </div>
-                            ))
-                          ) : (
-                              <button type="button" onClick={() => arrayHelpers.push('')}>
-                                {/* show this when user has removed all friends from the list */}
-                                Add a job
-                              </button>
-                            )}
-                        </div>
-                      )}
-                    />
-
 
                     <button className="my-2 btn btn-primary bg-wb" type="submit" disabled={isSubmitting}>
+                    {isSubmitting && <Spinner
+                      as="span"
+                      animation="border"
+                      size="sm"
+                      role="status"
+                      aria-hidden="true"
+                      />}
                       Submit
                     </button>
                   </Form>
@@ -215,32 +125,25 @@ function CompanyForm() {
                   }
                   return errors;
                 }}
-                onSubmit={(values, { setSubmitting, resetForm }) => {
-                  resetForm()
+                onSubmit={async(values, { setSubmitting, resetForm }) => {
+                  try{
+                    console.log("RequestSent")
+                    console.log(values,"values")
+                    const addNewJob = firebase.functions.httpsCallable('addNewJob')
+                    const result = await addNewJob({formVals: values})
+                    console.log(result.data.message, "result.data.message")
+                    resetForm()
+                    setSubmitting(false)
+                    alert(result.data.message)
+                    return(null);
 
-                  let docRef = firebase.db.collection("companies").doc(values.companyID)
-                  docRef.get().then(function (doc) {
-                    if (doc.exists) { // found intended company
-                      firebase.db.collection("jobs").add({
-                        title: values.jobTitle,
-                        info: values.jobInfo,
-                        deadline: values.jobDl,
-                        companyID: values.companyID,
-                        companyName: doc.data().companyName,
-                        applicants: []
-                      }).then(function (jobRef) {
-                        docRef.update({jobs: firebase.raw.firestore.FieldValue.arrayUnion(jobRef.id)}) // add the job id to the company doc
-                        alert("Job successfully added")
-                      })
-                    } else {
-                      // doc.data() will be undefined in this case
-                      alert("Company ID not found")
-                    }
-                  }).catch(function (error) {
-                    alert("Error getting document:", error);
-                  })
+                  }catch(error){
+                    console.log(error, "Error")
+                    setSubmitting(false)
+                    alert(error.message)
+                    return("error");
+                  }
                 }}
-
               >
                 {({ isSubmitting }) => (
                   <Form>
@@ -263,6 +166,13 @@ function CompanyForm() {
 
 
                     <button className="my-2 btn btn-primary bg-wb" type="submit" disabled={isSubmitting}>
+                      {isSubmitting && <Spinner
+                        as="span"
+                        animation="border"
+                        size="sm"
+                        role="status"
+                        aria-hidden="true"
+                        />}
                       Submit
                     </button>
                   </Form>
