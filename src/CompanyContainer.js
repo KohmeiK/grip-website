@@ -24,7 +24,7 @@ function CompanyContainer(props){
           </Card.Text>
         </Card.Body>
         <Card.Footer>
-          <Button onClick={handleClick}> Apply! </Button>
+          <Button disabled> Jobs at This Company </Button>
         </Card.Footer>
       </Card>
       {/*Normally Hidden*/}
