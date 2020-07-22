@@ -28,7 +28,9 @@ function NavAuthSection(){
     return(
       <>
       <ButtonGroup aria-label="Basic example">
-        <Button variant={authContext.isAdmin ? "danger":"light"}>
+        <Button variant=
+          {authContext.isAdmin ? authContext.isCompany ? "warning" : "danger ": authContext.isCompany ? "primary" : "light"}
+        >
           <img src={imgDIR} width="30" height="30" />
         </Button>
           <DropdownButton as={ButtonGroup} variant= "secondary" id="bg-nested-dropdown" title={authContext.user.displayName + ' '}>

@@ -15,12 +15,15 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loadingAuthState, setLoadingAuthState] = useState(true);
   const [isAdmin, setAdmin] = useState(null)
+  const [isCompany, setCompany] = useState(null)
 
   const updateAdminState = async(pUser) => {
     const idTok = await pUser.getIdTokenResult()
     //Relying on this part to end after onAuthStateChanged
     console.log("upading isAdmin",!!idTok.claims.admin)
+    console.log("upading isCompany",!!idTok.claims.company)
     setAdmin(!!idTok.claims.admin)
+    setCompany(!!idTok.claims.company)
     setLoadingAuthState(false);
   }
 
@@ -48,6 +51,7 @@ export const AuthProvider = ({ children }) => {
         setUser: setUser,
         isLoadingAuthState: loadingAuthState,
         isAdmin: isAdmin,
+        isCompany: isCompany,
       }}
     >
 

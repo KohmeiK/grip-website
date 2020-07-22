@@ -12,6 +12,33 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 admin.initializeApp();
 
+exports.findRoles = functions.https.onCall(async (data, context) => {
+  console.log("Running findRoles")
+  console.log(data.email,"email")
+  let isAdmin = false;
+  let isCompany = false;
+  try{
+    const user = await admin.auth().getUserByEmail(data.email)
+    isAdmin = (user.customClaims && user.customClaims.admin === true)
+    isCompany = (user.customClaims && user.customClaims.company === true)
+
+    if(isAdmin && isCompany){
+      return({message: `User: ${data.email} is a dev with both <admin> and <company> roles!`})
+    }else if(isAdmin){
+      return({message: `User: ${data.email} is a admin with the <admin> role!`})
+    }else if(isCompany){
+      return({message: `User: ${data.email} is a company with the <company> role!`})
+    }else{
+      return({message: `User: ${data.email} is a student with no roles!`})
+    }
+
+  }catch(err){
+    console.log("Send html error:",err.message)
+    throw new functions.https.HttpsError("invalid-argument", err.message)
+  }
+
+})
+
 exports.addAdminRole = functions.https.onCall(async (data, context) => {
   console.log("Running addAdmin")
   console.log(data.email,"email")
@@ -27,8 +54,38 @@ exports.addAdminRole = functions.https.onCall(async (data, context) => {
 
 })
 
-exports.deleteAdminRole = functions.https.onCall(async (data, context) => {
-  console.log("Running delAdmin")
+exports.addCompanyRole = functions.https.onCall(async (data, context) => {
+  console.log("Running add Comp")
+  console.log(data.email,"email")
+  try{
+    const user = await admin.auth().getUserByEmail(data.email)
+    await admin.auth().setCustomUserClaims(user.uid, {company: true})
+    console.log({message: `Made ${data.email} a company user!`}, "return")
+    return({message: `Made ${data.email} a company user!`})
+  }catch(err){
+    console.log("Send html error:",err.message)
+    throw new functions.https.HttpsError("invalid-argument", err.message)
+  }
+
+})
+
+exports.addDeveloperRole = functions.https.onCall(async (data, context) => {
+  console.log("Running add Dev")
+  console.log(data.email,"email")
+  try{
+    const user = await admin.auth().getUserByEmail(data.email)
+    await admin.auth().setCustomUserClaims(user.uid, {company: true, admin: true})
+    console.log({message: `Made ${data.email} a developer user!`}, "return")
+    return({message: `Made ${data.email} a developer user!`})
+  }catch(err){
+    console.log("Send html error:",err.message)
+    throw new functions.https.HttpsError("invalid-argument", err.message)
+  }
+
+})
+
+exports.deleteRoles = functions.https.onCall(async (data, context) => {
+  console.log("Running delRoles")
   console.log(data.email,"email")
   try{
     const user = await admin.auth().getUserByEmail(data.email)
@@ -41,6 +98,8 @@ exports.deleteAdminRole = functions.https.onCall(async (data, context) => {
   }
 
 })
+
+
 
 exports.createNewCompany = functions.https.onCall(async (data, context) => {
   console.log("Running new Comp")

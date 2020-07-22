@@ -10,6 +10,8 @@ import Signup from "./Signup"
 import Test from './Test'
 import Setting from './Setting'
 import NeedAdmin from './NeedAdmin'
+import NeedCompany from './NeedCompany'
+import MyJobs from './MyJobs'
 import AdminSettingsContainer from './AdminSettingsContainer'
 import {
   BrowserRouter as Router,
@@ -19,6 +21,7 @@ import {
 } from "react-router-dom";
 import PrivateRoute from './PrivateRoute'
 import PrivateAdminRoute from './PrivateAdminRoute'
+import PrivateCompanyRoute from './PrivateCompanyRoute'
 
 function App(){
     return(
@@ -46,11 +49,17 @@ function App(){
           <PrivateAdminRoute path="/admin">
             <AdminSettingsContainer/>
           </PrivateAdminRoute>
+          <PrivateCompanyRoute path="/jobs">
+            <MyJobs/>
+          </PrivateCompanyRoute>
           <Route path="/test">
             <Test />
           </Route>
           <Route path="/needAdmin">
             <NeedAdmin />
+          </Route>
+          <Route path="/needCompany">
+            <NeedCompany />
           </Route>
           <Route path="/">
             <LandingCarousel/>

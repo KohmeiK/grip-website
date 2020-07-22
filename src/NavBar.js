@@ -39,7 +39,7 @@ function NavBar(props){
           <LinkContainer to="/">
             <Nav.Link>Home</Nav.Link>
           </LinkContainer>
-          <RestOfNavBar isLoggedIn={authContext.isAuthenticated} isAdmin={authContext.isAdmin}/>
+          <RestOfNavBar isLoggedIn={authContext.isAuthenticated} isAdmin={authContext.isAdmin} isCompany={authContext.isCompany}/>
         </Nav>
       </Navbar.Collapse>
       <Nav>
@@ -50,8 +50,10 @@ function NavBar(props){
   );
 }
 
+//This sections can be done so my better by appending new links.
+//Please someone redo this before we ship
 function RestOfNavBar(props){
-  if(props.isLoggedIn && props.isAdmin){
+  if(props.isLoggedIn && props.isAdmin && props.isCompany){
     return(
       <> {/*Fragments - aren't they cool?*/}
         <LinkContainer to="/apply">
@@ -59,6 +61,9 @@ function RestOfNavBar(props){
         </LinkContainer>
         <LinkContainer to="/test">
           <Nav.Link>Apply (Job)</Nav.Link>
+        </LinkContainer>
+        <LinkContainer to="/jobs">
+          <Nav.Link>My Posted Jobs</Nav.Link>
         </LinkContainer>
         <LinkContainer to="/company">
           <Nav.Link>Create Company</Nav.Link>
@@ -68,6 +73,37 @@ function RestOfNavBar(props){
         </LinkContainer>
       </>
     );
+  }else if(props.isLoggedIn && props.isAdmin){
+    return(
+      <> {/*Fragments - aren't they cool?*/}
+      <LinkContainer to="/apply">
+        <Nav.Link>Apply (Comp)</Nav.Link>
+      </LinkContainer>
+      <LinkContainer to="/test">
+        <Nav.Link>Apply (Job)</Nav.Link>
+      </LinkContainer>
+      <LinkContainer to="/company">
+        <Nav.Link>Create Company</Nav.Link>
+      </LinkContainer>
+      <LinkContainer to="/admin">
+        <Nav.Link>Admin Settings</Nav.Link>
+      </LinkContainer>
+    </>
+    )
+  }else if(props.isLoggedIn && props.isCompany){
+    return(
+    <> {/*Fragments - aren't they cool?*/}
+      <LinkContainer to="/apply">
+        <Nav.Link>Apply (Comp)</Nav.Link>
+      </LinkContainer>
+      <LinkContainer to="/test">
+        <Nav.Link>Apply (Job)</Nav.Link>
+      </LinkContainer>
+      <LinkContainer to="/jobs">
+        <Nav.Link>My Posted Jobs</Nav.Link>
+      </LinkContainer>
+    </>
+    )
   }else if(props.isLoggedIn){
     return (
     <> {/*Fragments - aren't they cool?*/}
