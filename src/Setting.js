@@ -1,6 +1,5 @@
 import React from 'react'
 import FirebaseContext from './Firebase'
-import AuthContext from './Firebase/AuthContext'
 import {CardColumns, Form, InputGroup, FormControl, Row, Col, Container} from 'react-bootstrap'
 import InfoUpdate from "./InfoUpdate"
 import OtherSettings from "./OtherSettings"

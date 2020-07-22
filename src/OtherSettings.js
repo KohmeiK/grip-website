@@ -29,17 +29,17 @@ function OtherSettings(){
       alert(err)
     }
   }
-  if(authContext.loadingAuthSate){
+  if(authContext.isLoadingAuthSate){
     return(<div>Loading More Stuff...</div>)
   }else{
     return(
       <>
         <p>{isSent && `Email sent to ${authContext.user.email}. Please wait a few mintues before sending another one.`}</p>
-        <Button disabled={authContext.loadingAuthState | isSending} onClick={handlePassReset} variant="success"> Send Password Reset Email </Button>
+        <Button disabled={authContext.isLoadingAuthState | isSending} onClick={handlePassReset} variant="success"> Send Password Reset Email </Button>
         <br/>
         <br/>
         <Button
-          disabled={authContext.loadingAuthState | isSending | authContext.user.emailVerified}
+          disabled={authContext.isLoadingAuthState | isSending | authContext.user.emailVerified}
           onClick={handleVerEmail}
           variant="success"
         >

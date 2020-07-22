@@ -13,8 +13,7 @@ function AdminSettings(){
           const addAdminRole = firebase.functions.httpsCallable('addAdminRole')
           const result = await addAdminRole({email: values.email})
           console.log(result.data.message)
-          console.log(result)
-          alert(result.message)
+          alert(result.data.message)
         }catch(error){
           // Getting the Error details.
           var code = error.code

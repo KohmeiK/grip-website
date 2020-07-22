@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
 import FirebaseContext from './Firebase'
-import AuthContext from './Firebase/AuthContext'
 import { Formik, useFormik, Form, Field, ErrorMessage } from 'formik';
 import { useHistory, useLocation } from "react-router-dom";
 import {Button} from "react-bootstrap"
@@ -9,7 +8,6 @@ function Login() {
   let history = useHistory()
   let location = useLocation()
   const firebase = useContext(FirebaseContext)
-  const authContext = useContext(AuthContext)
   const [isLoading, setLoading] = useState(false)
 
   let { from } = location.state || { from: { pathname: "/" } };

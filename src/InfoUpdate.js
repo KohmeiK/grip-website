@@ -49,7 +49,7 @@ function InfoUpdate(){
   }
 
   useEffect(() => {
-    if(authContext.authenticated){
+    if(authContext.isAuthenticated){
       console.log(authContext.user)
       loadUserFile()
       valsBuilder.name = authContext.user.displayName
@@ -143,7 +143,7 @@ function InfoUpdate(){
             </label>
           </div>
 
-          <Button disabled={!authContext.authenticated} type="submit">Update Info</Button>
+          <Button disabled={!authContext.isAuthenticated} type="submit">Update Info</Button>
         </Form>
       )}
       </Formik>

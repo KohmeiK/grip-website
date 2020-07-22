@@ -4,9 +4,9 @@ import FirebaseContext from "./index";
 //typescript stuff (use as doccumentaiton)
 // type ContextProps = {
 //     user: firebase.User | null;
-//     authenticated: boolean;
+//     isAuthenticated: boolean;
 //     setUser: any;
-//     loadingAuthState: boolean;
+//     isLoadingAuthState: boolean;
 // };
 
 const AuthContext = React.createContext({});
@@ -33,9 +33,9 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={{
         user: user,
-        authenticated: user !== null && typeof user !== 'undefined',
+        isAuthenticated: user !== null && typeof user !== 'undefined',
         setUser: setUser,
-        loadingAuthSate: loadingAuthState
+        isloadingAuthSate: loadingAuthState
       }}
     >
 

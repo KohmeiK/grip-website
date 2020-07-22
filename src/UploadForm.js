@@ -5,13 +5,12 @@ import { Formik } from "formik";
 import * as yup from "yup"
 import Thumbnail from "./Thumbnail.js"
 import FirebaseContext from "./Firebase/"
-import AuthContext from './Firebase/AuthContext'
 
 class UploadForm extends React.Component {
   constructor(props){
     super(props)
     this.state={progressBar: 0,uploading: false}
-    
+
   }
   static contextType = FirebaseContext;
   render() {

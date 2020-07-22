@@ -39,7 +39,7 @@ function NavBar(props){
           <LinkContainer to="/">
             <Nav.Link>Home</Nav.Link>
           </LinkContainer>
-          <RestOfNavBar isLoggedIn={authContext.authenticated}/>
+          <RestOfNavBar isLoggedIn={authContext.isAuthenticated}/>
         </Nav>
       </Navbar.Collapse>
       <Nav>

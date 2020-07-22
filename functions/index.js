@@ -29,8 +29,7 @@ exports.addAdminRole = functions.https.onCall(async (data, context) => {
     }
 
   }catch(err){
-    console.log(err,"err")
-    return({message: err})
+    return(err)
   }
 
 })

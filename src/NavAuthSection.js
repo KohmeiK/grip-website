@@ -12,7 +12,7 @@ function NavAuthSection(){
   let history = useHistory()
 
   const handleAuthChange = ()=>{
-    if(authContext.authenticated){
+    if(authContext.isAuthenticated){
       firebase.auth.signOut()
       history.push('/')
     }else{
@@ -20,11 +20,11 @@ function NavAuthSection(){
     }
   }
 
-  if(authContext.loadingAuthSate){
+  if(authContext.isLoadingAuthSate){
     return(
       "Loading..."
     )
-  }else if(authContext.authenticated && authContext.user){
+  }else if(authContext.isAuthenticated && authContext.user){
     return(
       <>
       <ButtonGroup aria-label="Basic example">
