@@ -33,7 +33,7 @@ function NavAuthSection(){
         >
           <img src={imgDIR} width="30" height="30" />
         </Button>
-          <DropdownButton as={ButtonGroup} variant= "secondary" id="bg-nested-dropdown" title={authContext.user.displayName + ' '}>
+          <DropdownButton as={ButtonGroup} variant= "light" id="bg-nested-dropdown" title={authContext.user.displayName + ' '}>
             <LinkContainer to="/setting">
               <Dropdown.Item>Settings</Dropdown.Item>
             </LinkContainer>
