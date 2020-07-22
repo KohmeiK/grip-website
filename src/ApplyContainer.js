@@ -52,7 +52,7 @@ function ApplyContainer(){
           <CompanyContainer
             key={index}
             index={index}
-            name={company.companyName}
+            name={company.name}
             info={company.info}
             handleClose={handleClose}
             handleShow={handleShow}

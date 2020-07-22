@@ -57,10 +57,10 @@ function RestOfNavBar(props){
     return(
       <> {/*Fragments - aren't they cool?*/}
         <LinkContainer to="/apply">
-          <Nav.Link>Apply (Comp)</Nav.Link>
+          <Nav.Link>Apply (Company Search)</Nav.Link>
         </LinkContainer>
         <LinkContainer to="/test">
-          <Nav.Link>Apply (Job)</Nav.Link>
+          <Nav.Link>Apply (Job Search)</Nav.Link>
         </LinkContainer>
         <LinkContainer to="/jobs">
           <Nav.Link>My Posted Jobs</Nav.Link>

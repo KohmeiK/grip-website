@@ -18,9 +18,9 @@ function CompanyContainer(props){
         <Card.Body>
           <Card.Title>{props.name}</Card.Title>
           <Card.Text>
-            <pre>
+            <div style={{wordWrap: "breakWord"}}>
               {props.info}
-            </pre>
+            </div>
           </Card.Text>
         </Card.Body>
         <Card.Footer>
