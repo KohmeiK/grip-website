@@ -33,6 +33,8 @@ export const AuthProvider = ({ children }) => {
         updateAdminState(user);
       }else{
         setUser(null)
+        setAdmin(false)
+        setLoadingAuthState(false)
       }
 
     });
