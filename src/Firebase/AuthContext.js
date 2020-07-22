@@ -14,6 +14,7 @@ export const AuthProvider = ({ children }) => {
   const firebase = useContext(FirebaseContext)
   const [user, setUser] = useState(null);
   const [loadingAuthState, setLoadingAuthState] = useState(true);
+  const [isAdmin, setAdmin] = useState(false)
 
   useEffect(() => {
     //Run only on mount
@@ -21,6 +22,7 @@ export const AuthProvider = ({ children }) => {
 
       if(user){
         setUser(user);
+        // const idTok = await authContext.user.getIdTokenResult()
       }else{
         setUser(null)
       }
@@ -35,7 +37,7 @@ export const AuthProvider = ({ children }) => {
         user: user,
         isAuthenticated: user !== null && typeof user !== 'undefined',
         setUser: setUser,
-        isloadingAuthState: loadingAuthState
+        isLoadingAuthState: loadingAuthState
       }}
     >
 

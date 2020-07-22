@@ -58,10 +58,10 @@ function RestOfNavBar(props){
           <Nav.Link>Create Company</Nav.Link>
         </LinkContainer>
         <LinkContainer to="/apply">
-          <Nav.Link>Apply</Nav.Link>
+          <Nav.Link>Apply (Comp)</Nav.Link>
         </LinkContainer>
         <LinkContainer to="/test">
-          <Nav.Link>Test</Nav.Link>
+          <Nav.Link>Apply (Job)</Nav.Link>
         </LinkContainer>
         <LinkContainer to="/admin">
           <Nav.Link>Super Secret</Nav.Link>

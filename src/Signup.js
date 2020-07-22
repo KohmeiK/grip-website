@@ -22,7 +22,7 @@ function Signup() {
         await res.user.updateProfile({displayName: values.name})
 
         //update user value for context
-        authContext.setUser(res.user);
+        // authContext.setUser(res.user);
 
         //I can access authContext.user immedealty here
         //setUser is async so we need to deal with that

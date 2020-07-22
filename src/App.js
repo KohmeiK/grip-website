@@ -9,7 +9,7 @@ import Login from './Login'
 import Signup from "./Signup"
 import Test from './Test'
 import Setting from './Setting'
-import AdminSettings from './AdminSettings'
+import AdminSettingsContainer from './AdminSettingsContainer'
 import {
   BrowserRouter as Router,
   Switch,
@@ -42,7 +42,7 @@ function App(){
             <UploadFrom />
           </PrivateRoute>
           <PrivateRoute path="/admin">
-            <AdminSettings/>
+            <AdminSettingsContainer/>
           </PrivateRoute>
           <Route path="/test">
             <Test />

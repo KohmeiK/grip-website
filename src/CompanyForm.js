@@ -71,7 +71,7 @@ function CompanyForm() {
   }
 
   return (
-    <div style={{ background: "#e0e0e0" }} >
+    <div style={{ background: "#ba916e" }} >
       <Container fluid style={{ paddingTop: "2em" }}>
         <Row>
           <Col>

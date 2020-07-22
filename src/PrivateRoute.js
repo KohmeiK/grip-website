@@ -13,7 +13,7 @@ import AuthContext from "./Firebase/AuthContext"
 function PrivateRoute({ children, ...rest }) {
   let authContext = useContext(AuthContext)
   console.log(authContext)
-  if(authContext.isloadingAuthState){
+  if(authContext.isLoadingAuthState){
     return(
       <h1>Redirecting...</h1>
     )

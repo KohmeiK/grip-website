@@ -20,7 +20,7 @@ function NavAuthSection(){
     }
   }
 
-  if(authContext.isLoadingAuthSate){
+  if(authContext.isLoadingAuthState){
     return(
       "Loading..."
     )

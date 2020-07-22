@@ -27,6 +27,21 @@ exports.addAdminRole = functions.https.onCall(async (data, context) => {
 
 })
 
+exports.deleteAdminRole = functions.https.onCall(async (data, context) => {
+  console.log("Running delAdmin")
+  console.log(data.email,"email")
+  try{
+    const user = await admin.auth().getUserByEmail(data.email)
+    await admin.auth().setCustomUserClaims(user.uid, null)
+    console.log({message: `Made ${data.email} a standard user!`}, "return")
+    return({message: `Made ${data.email} a standard user!`})
+  }catch(err){
+    console.log("Send html error:",err.message)
+    throw new functions.https.HttpsError("invalid-argument", err.message)
+  }
+
+})
+
 // Take the text parameter passed to this HTTP endpoint and insert it into
 // Cloud Firestore under the path /messages/:documentId/original
 exports.addMessage = functions.https.onRequest(async (req, res) => {
