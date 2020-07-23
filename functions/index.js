@@ -113,7 +113,7 @@ exports.createNewCompany = functions.https.onCall(async (data, context) => {
       displayName: data.formVals.name,
     })
     console.log(user)
-
+    await admin.auth().setCustomUserClaims(user.uid, {company: true})
     await admin.firestore().collection("companies").doc(user.uid).set({
       name: user.displayName,
       info: data.formVals.info,
