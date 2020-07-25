@@ -4,8 +4,7 @@ import AuthContext from './Firebase/AuthContext'
 import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
-import Card from 'react-bootstrap/Card'
-import Button from 'react-bootstrap/Button'
+import JobCard from './JobCard'
 import { CardColumns, Form, InputGroup, FormControl } from 'react-bootstrap'
 
 function MyJobs() {
@@ -13,17 +12,28 @@ function MyJobs() {
   const authContext = useContext(AuthContext)
   const [jobs, setJobs] = useState([]) //Data from DB
   const [display, setDisplay] = useState("Not Set") //JSX for List
-  const [indexToShow, setIndexToShow] = useState(-1); //Modal
-  const [show, setShow] = useState(false); //Modal show
   const [loading, setLoading] = useState(true); //Still loading array
-  const handleClose = () => setShow(false);
-  const handleShow = (index) => {
-    setIndexToShow(index)
-    setShow(true)
-  }
-  const handleClick = (index) => {
-      // something should happen for each job
-      console.log(index)
+  const handleClick = (index) => { //To downolad resumes
+    console.log(jobs[index])
+    const jobID = jobs[index].jobID
+    let applicants = jobs[index].applicants
+    let resumesRef = applicants.map((applicant, index) => {
+      return applicant = applicant + jobID + '.pdf'
+    })
+    firebase.storage.child(resumesRef[1]).getDownloadURL().then(function (url) {
+      // `url` is the download URL for resume 
+
+      // This can be downloaded directly:
+      var xhr = new XMLHttpRequest();
+      xhr.responseType = 'blob';
+      xhr.onload = function (event) {
+        var blob = xhr.response;
+      };
+      xhr.open('GET', url);
+      xhr.send();
+    }).catch(function (error) {
+      // Handle any errors
+    });
   }
 
   useEffect(() => {
@@ -36,7 +46,8 @@ function MyJobs() {
         }
         querySnapshot.forEach(function (doc) {
           let job = doc.data()
-          job.applicantNum = job.applicants.length // so this way the number of applicant is included
+          job.applicantNum = job.applicants.length //So this way the number of applicant is included
+          job.jobID = doc.id //Similarly, include job's id
           setJobs(jobs.push(job)) //Add all jobs to array
         })
         setJobs(jobs)
@@ -51,24 +62,15 @@ function MyJobs() {
     localDisplay = jobs.map((job, index) => { //Convert each element to JSX
       //convert all elements before reach render, this is only updates when show is changed
       return (
-        <div key={index}>
-          <br />
-          <Card>
-            {/* <Card.Img variant="top" src={imageURL} style={{ height: "7em" }} /> */}
-            <Card.Body>
-              <Card.Title>{job.title}</Card.Title>
-              <Card.Text>
-                <pre>
-                  Deadline: {job.deadline} <br/>
-                  Number of Applicants: {job.applicantNum}
-                </pre>
-              </Card.Text>
-            </Card.Body>
-            <Card.Footer>
-              <Button onClick={handleClick(index)}> Download all resumes </Button>
-            </Card.Footer>
-          </Card>
-        </div>
+        <JobCard
+          key={index}
+          index={index}
+          title={job.title}
+          info={job.info}
+          dl={job.deadline}
+          handleClick={handleClick}
+          applicantNum={job.applicantNum}
+        />
       );
     })
   }
