@@ -3,6 +3,7 @@ import './App.css';
 import NavBar from './NavBar.js'
 import LandingCarousel from './LandingCarousel.js'
 import UploadFrom from './UploadForm.js'
+import Applications from './Applications'
 import ApplyContainer from './ApplyContainer'
 import CompanyForm from './CompanyForm'
 import Login from './Login'
@@ -45,6 +46,9 @@ function App(){
           </PrivateAdminRoute>
           <PrivateRoute path="/upload">
             <UploadFrom />
+          </PrivateRoute>
+          <PrivateRoute path="/applications">
+            <Applications />
           </PrivateRoute>
           <PrivateAdminRoute path="/admin">
             <AdminSettingsContainer/>

@@ -40,9 +40,11 @@ function NavAuthSection(){
             <LinkContainer to="/upload">
               <Dropdown.Item>Upload Resume</Dropdown.Item>
             </LinkContainer>
+            <LinkContainer to="/applications">
+              <Dropdown.Item>Your Applications</Dropdown.Item>
+            </LinkContainer>
 
-            <Dropdown.Item onClick={()=>alert("Not set up yet!")}>Your Applications</Dropdown.Item>
-            <Dropdown.Divider />
+            
 
             <Dropdown.Item onClick={handleAuthChange}>Log Out</Dropdown.Item>
           </DropdownButton>
