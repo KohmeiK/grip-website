@@ -44,7 +44,7 @@ function ApplyModal(props) {
         <br />
           <b>Internship: {props.jobTitle} at {props.companyName}</b>
           <br />
-        The follow resume will be uploaded:
+        {/* The follow resume will be uploaded:
         <br />
           <Container fluid>
             <Row className="justify-content-md-center">
@@ -53,7 +53,7 @@ function ApplyModal(props) {
               </Col>
             </Row>
 
-          </Container>
+          </Container> */}
           <br />
           {/*<p>[Debug] Index:{props.index} Show:{props.show ? "isTrue" : "isFalse"} </p>*/}
 
@@ -65,7 +65,7 @@ function ApplyModal(props) {
                 console.log(props.studentID, '.pdf')
                 let resumeRef = firebase.storage.child(props.studentID + props.jobID + '.pdf')
                 resumeRef.put(values.file).then(
-                  console.log('done')
+                  alert('File uploaded')
                 )
               }}
             >
@@ -86,10 +86,10 @@ function ApplyModal(props) {
                       </div>
                     </label> <br />
                     <Button type="submit">Upload</Button> <br />
-                    <label>
+                    {/* <label>
                       <Field type="radio" name="resume" />
                       Upload Your Existing Resume
-                    </label><br />
+                    </label><br /> */}
                   </div>
 
                   {/* <Button disabled={!authContext.authenticated} type="submit">Update Info</Button> */}

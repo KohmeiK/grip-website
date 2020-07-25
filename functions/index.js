@@ -54,6 +54,10 @@ exports.addAdminRole = functions.https.onCall(async (data, context) => {
 
 })
 
+exports.hello = functions.https.onCall(async (data, context) => {
+  console.log("Running hello")
+})
+
 exports.addCompanyRole = functions.https.onCall(async (data, context) => {
   console.log("Running add Comp")
   console.log(data.email,"email")

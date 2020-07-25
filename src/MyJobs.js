@@ -23,6 +23,7 @@ function MyJobs() {
   }
   const handleClick = (index) => {
       // something should happen for each job
+      console.log(index)
   }
 
   useEffect(() => {
@@ -47,7 +48,7 @@ function MyJobs() {
 
   let localDisplay = "Loading..."
   if (!loading) {
-    localDisplay = jobs.map(function annon(job, index) { //Convert each element to JSX
+    localDisplay = jobs.map((job, index) => { //Convert each element to JSX
       //convert all elements before reach render, this is only updates when show is changed
       return (
         <div key={index}>
