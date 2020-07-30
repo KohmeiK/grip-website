@@ -28,7 +28,7 @@ function NavAuthSection(){
     return(
       <>
       <ButtonGroup aria-label="Basic example">
-        <Button variant=
+        <Button disabled variant=
           {authContext.isAdmin ? authContext.isCompany ? "warning" : "danger ": authContext.isCompany ? "primary" : "light"}
         >
           <img src={imgDIR} width="30" height="30" />
@@ -44,7 +44,7 @@ function NavAuthSection(){
               <Dropdown.Item>Your Applications</Dropdown.Item>
             </LinkContainer>
 
-            
+
 
             <Dropdown.Item onClick={handleAuthChange}>Log Out</Dropdown.Item>
           </DropdownButton>
