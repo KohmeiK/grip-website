@@ -37,7 +37,6 @@ function ApplyContainer2(){
           setJobs(jobs.push(job)) //Add all jobs to array
         })
         setJobs(jobs)
-        console.log(jobs)
         setLoading(false)
     }).catch(function(error){
         console.log(error)
