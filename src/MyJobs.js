@@ -10,30 +10,33 @@ import { CardColumns, Form, InputGroup, FormControl } from 'react-bootstrap'
 function MyJobs() {
   const firebase = useContext(FirebaseContext)
   const authContext = useContext(AuthContext)
+  const [url2, setUrl2] = useState("NothingToSeeHere")
   const [jobs, setJobs] = useState([]) //Data from DB
   const [display, setDisplay] = useState("Not Set") //JSX for List
   const [loading, setLoading] = useState(true); //Still loading array
-  const handleClick = (index) => { //To downolad resumes
-    console.log(jobs[index])
+  const handleClick = async(index) => { //To downolad resumes
+    console.log(jobs[index], "Job Doccuement")
     const jobID = jobs[index].jobID
+    console.log(jobID, "Job ID")
     let applicants = jobs[index].applicants
-    let resumesRef = applicants.map((applicant, index) => {
-      return applicant = applicant + jobID + '.pdf'
+    let resumesRef = applicants.map((applicant) => {
+      return applicant + jobID + '.pdf'
     })
-    firebase.storage.child(resumesRef[1]).getDownloadURL().then(function (url) {
-      // `url` is the download URL for resume 
+    console.log(resumesRef, "Mapped pdf names")
 
-      // This can be downloaded directly:
-      var xhr = new XMLHttpRequest();
-      xhr.responseType = 'blob';
-      xhr.onload = function (event) {
-        var blob = xhr.response;
-      };
-      xhr.open('GET', url);
-      xhr.send();
-    }).catch(function (error) {
-      // Handle any errors
-    });
+    const url = await firebase.storage.child(resumesRef[0]).getDownloadURL();
+    //Temp -> Get url for PDF 1
+    // `url` is the download URL for resume
+    console.log(url, "Storage Url")
+    setUrl2(url)
+    // This can be downloaded directly:
+    var xhr = new XMLHttpRequest();
+    xhr.responseType = 'blob';
+    xhr.onload = function (event) {
+      var blob = xhr.response;
+    };
+    xhr.open('GET', url);
+    xhr.send();
   }
 
   useEffect(() => {
@@ -84,6 +87,7 @@ function MyJobs() {
             <div style={{ marginLeft: "1em", borderRadius: "25px", background: "white", height: "40em" }}>
               <div style={{ margin: "2em", marginTop: "0em", background: "white", height: "40em" }}>
                 Search Options Go Here
+                <a href={url2} download> {url2} </a>
             </div>
             </div>
           </Col>
@@ -98,4 +102,3 @@ function MyJobs() {
 }
 
 export default MyJobs
-

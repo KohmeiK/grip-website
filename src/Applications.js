@@ -7,33 +7,32 @@ import Row from 'react-bootstrap/Row'
 import JobCard from './JobCard'
 import { CardColumns, Form, InputGroup, FormControl } from 'react-bootstrap'
 
+//
 function Applications() {
     const firebase = useContext(FirebaseContext)
     const authContext = useContext(AuthContext)
+    const [url, setUrl] = useState("Nothing Here")
     const [jobs, setJobs] = useState([]) //Data from DB
     const [display, setDisplay] = useState("Not Set") //JSX for List
     const [loading, setLoading] = useState(true); //Still loading array
-    const handleClick = (index) => { //To downolad resumes
+    const handleClick = async(index) => { //To downolad resumes
         console.log(jobs[index])
         const jobID = jobs[index].jobID
         let applicants = jobs[index].applicants
         let resumesRef = applicants.map((applicant, index) => {
-            return applicant = applicant + jobID + '.pdf'
+            return applicant + jobID + '.pdf'
         })
-        firebase.storage.child(resumesRef[1]).getDownloadURL().then(function (url) {
-            // `url` is the download URL for resume 
-
-            // This can be downloaded directly:
-            var xhr = new XMLHttpRequest();
-            xhr.responseType = 'blob';
-            xhr.onload = function (event) {
-                var blob = xhr.response;
-            };
-            xhr.open('GET', url);
-            xhr.send();
-        }).catch(function (error) {
-            // Handle any errors
-        });
+        let url = await firebase.storage.child(resumesRef[1]).getDownloadURL()
+        // `url` is the download URL for resume
+        setUrl(url)
+        // This can be downloaded directly:
+        var xhr = new XMLHttpRequest();
+        xhr.responseType = 'blob';
+        xhr.onload = function (event) {
+            var blob = xhr.response;
+        };
+        xhr.open('GET', url);
+        xhr.send();
     }
 
     useEffect(() => {
@@ -45,7 +44,8 @@ function Applications() {
             jobIDs = doc.data().jobsAppliedTo
             jobIDs.forEach((jobID) => {
                 let jobRef = firebase.db.collection('jobs').doc(jobID)
-                jobRef.get().then(function (doc) {
+                jobRef.get()
+                .then(function (doc) {
                     setJobs(jobs.push(doc.data()))
                 })
             })
@@ -76,7 +76,8 @@ function Applications() {
 
     return (
         <div style={{ background: "#e0e0e0" }}>
-            <h1>A company only page that lists out jobs and allows resume download</h1>
+            <a href={url} download> {url} </a>
+            <h1>A studnet page where you can see your applications</h1>
             <Container fluid style={{ paddingTop: "2em" }}>
                 <Row>
                     <Col>
@@ -97,4 +98,3 @@ function Applications() {
 }
 
 export default Applications
-

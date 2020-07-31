@@ -20,8 +20,8 @@ export const AuthProvider = ({ children }) => {
   const updateAdminState = async(pUser) => {
     const idTok = await pUser.getIdTokenResult()
     //Relying on this part to end after onAuthStateChanged
-    console.log("upading isAdmin",!!idTok.claims.admin)
-    console.log("upading isCompany",!!idTok.claims.company)
+    // console.log("upading isAdmin",!!idTok.claims.admin)
+    // console.log("upading isCompany",!!idTok.claims.company)
     setAdmin(!!idTok.claims.admin)
     setCompany(!!idTok.claims.company)
     setLoadingAuthState(false);

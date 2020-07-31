@@ -18,10 +18,8 @@ function JobCard(props){
         <Card.Body>
           <Card.Title>{props.title}</Card.Title>
           <Card.Text>
-            <pre>
               Deadline: {props.dl} <br/>
               Number of Applicants: {props.applicantNum}
-            </pre>
           </Card.Text>
         </Card.Body>
         <Card.Footer>
@@ -29,7 +27,7 @@ function JobCard(props){
         </Card.Footer>
       </Card>
       {/*Normally Hidden*/}
-      
+
     </>
   )
 }
