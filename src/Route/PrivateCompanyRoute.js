@@ -1,18 +1,15 @@
 import React, {useContext} from "react"
 import {
-  BrowserRouter as Router,
-  Switch,
   Route,
-  Link,
-  Redirect
+  Redirect,
 } from "react-router-dom";
-import AuthContext from "./Firebase/AuthContext"
+import AuthContext from "../Firebase/AuthContext"
 
 // A wrapper for <Route> that redirects to the login
 // screen if you're not yet authenticated.
 function PrivateAdminRoute({ children, ...rest }) {
   let authContext = useContext(AuthContext)
-  console.log(authContext)
+  // console.log(authContext)
   if(authContext.isLoadingAuthState){
     return(
       <h1>Redirecting...</h1>
@@ -22,12 +19,12 @@ function PrivateAdminRoute({ children, ...rest }) {
       <Route
         {...rest}
         render={({ location }) =>
-          authContext.isAuthenticated && authContext.isAdmin ? (
+          authContext.isAuthenticated && authContext.isCompany ? (
             children
           ) : (
             <Redirect
               to={{
-                pathname: "/needAdmin",
+                pathname: "/needCompany",
                 state: { from: location}
               }}
             />

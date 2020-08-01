@@ -1,8 +1,6 @@
 import React, {useState} from "react"
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
-import Image from './Image'
-import ApplyModal from "./ApplyModal.js"
 import {Spinner} from "react-bootstrap"
 
 //JobCard for My Poseted Jobs page

@@ -1,73 +1,56 @@
-import React, { useState, useEffect} from 'react';
+import React from 'react';
 import './App.css';
-import NavBar from './NavBar.js'
-import LandingCarousel from './LandingCarousel.js'
-import UploadFrom from './UploadForm.js'
-import Applications from './Applications'
-import ApplyContainer from './ApplyContainer'
-import CompanyForm from './CompanyForm'
-import Login from './Login'
-import Signup from "./Signup"
-import Test from './Test'
-import Setting from './Setting'
-import NeedAdmin from './NeedAdmin'
-import NeedCompany from './NeedCompany'
-import MyJobs from './MyJobs'
-import AdminSettingsContainer from './AdminSettingsContainer'
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
 } from "react-router-dom";
-import PrivateRoute from './PrivateRoute'
-import PrivateAdminRoute from './PrivateAdminRoute'
-import PrivateCompanyRoute from './PrivateCompanyRoute'
+
+import NavBar from './Nav/NavBar.js'
+import LandingCarousel from './Home/LandingCarousel.js'
+
+import UploadFrom from './User/UploadForm.js'
+import SettingsContainer from './User/SettingsContainer.js'
+
+import Applications from './Applications/Applications'
+
+import ApplyContainer from './Apply/ApplyContainer'
+
+import MyJobs from './Company/MyJobs'
+
+import Login from './Signup/Login'
+import Signup from "./Signup/Signup"
+
+import CompanyCreationContainer from './Admin/CompanyCreationContainer'
+import AdminSettingsContainer from './Admin/AdminSettingsContainer'
+
+import NeedAdmin from './Route/NeedAdmin'
+import NeedCompany from './Route/NeedCompany'
+import PrivateRoute from './Route/PrivateRoute'
+import PrivateAdminRoute from './Route/PrivateAdminRoute'
+import PrivateCompanyRoute from './Route/PrivateCompanyRoute'
+
 
 function App(){
     return(
       <Router>
         <NavBar/>
         <Switch>
-          <PrivateRoute path="/setting">
-            <Setting/>
-          </PrivateRoute>
-          <Route path="/signup">
-            <Signup />
-          </Route>
-          <Route path="/login">
-            <Login />
-          </Route>
-          <PrivateRoute path="/apply">
-            <ApplyContainer />
-          </PrivateRoute>
-          <PrivateAdminRoute path="/company">
-            <CompanyForm />
-          </PrivateAdminRoute>
-          <PrivateRoute path="/upload">
-            <UploadFrom />
-          </PrivateRoute>
-          <PrivateRoute path="/applications">
-            <Applications />
-          </PrivateRoute>
-          <PrivateAdminRoute path="/admin">
-            <AdminSettingsContainer/>
-          </PrivateAdminRoute>
-          <PrivateCompanyRoute path="/jobs">
-            <MyJobs/>
-          </PrivateCompanyRoute>
-          <Route path="/test">
-            <Test />
-          </Route>
-          <Route path="/needAdmin">
-            <NeedAdmin />
-          </Route>
-          <Route path="/needCompany">
-            <NeedCompany />
-          </Route>
-          <Route path="/">
-            <LandingCarousel/>
-          </Route>
+          <PrivateRoute path="/setting"> <SettingsContainer/> </PrivateRoute>
+          <PrivateRoute path="/apply"> <ApplyContainer /> </PrivateRoute>
+          <PrivateRoute path="/upload"> <UploadFrom /> </PrivateRoute>
+          <PrivateRoute path="/applications"> <Applications /> </PrivateRoute>
+
+          <PrivateCompanyRoute path="/jobs"> <MyJobs/> </PrivateCompanyRoute>
+
+          <PrivateAdminRoute path="/create-company"> <CompanyCreationContainer /> </PrivateAdminRoute>
+          <PrivateAdminRoute path="/admin"> <AdminSettingsContainer /> </PrivateAdminRoute>
+
+          <Route path="/needAdmin"> <NeedAdmin /> </Route>
+          <Route path="/needCompany"> <NeedCompany /> </Route>
+          <Route path="/signup"> <Signup /> </Route>
+          <Route path="/login"> <Login /> </Route>
+          <Route path="/"> <LandingCarousel/> </Route>
         </Switch>
       </Router>
     );

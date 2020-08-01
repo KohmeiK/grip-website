@@ -1,20 +1,11 @@
 import React, {useContext} from 'react'
 import { Formik, Field, Form, ErrorMessage } from 'formik';
-import FirebaseContext from './Firebase/'
 import {Button, Spinner} from "react-bootstrap"
-import AuthContext from "./Firebase/AuthContext"
+import FirebaseContext from '../Firebase/'
 
 function AdminSettings(){
   const firebase = useContext(FirebaseContext)
-  const authContext = useContext(AuthContext)
 
-  const handleBut = async() => {
-    if(!authContext.isLoadingAuthState){
-      const idTok = await authContext.user.getIdTokenResult()
-      console.log("isAdmin",!!idTok.claims.admin)
-    }
-    return (null)
-  }
   return(
     <>
     <h5>Enter an email to see what roles this user has. </h5>
