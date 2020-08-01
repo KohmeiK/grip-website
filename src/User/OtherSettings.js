@@ -1,7 +1,7 @@
 import React, {useContext, useState} from "react"
 import { Button, Spinner } from 'react-bootstrap'
-import AuthContext from './Firebase/AuthContext'
-import FirebaseContext from './Firebase/'
+import AuthContext from '../Firebase/AuthContext'
+import FirebaseContext from '../Firebase/'
 
 function OtherSettings(){
   const authContext = useContext(AuthContext)

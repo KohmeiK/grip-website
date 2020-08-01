@@ -1,9 +1,10 @@
 import React, {useContext, useEffect, useState} from "react"
 import { Formik, Field, Form } from 'formik';
 import { Button, Modal, Spinner} from 'react-bootstrap'
-import AuthContext from './Firebase/AuthContext'
-import FirebaseContext from './Firebase'
 import { useHistory } from "react-router-dom";
+
+import AuthContext from '../Firebase/AuthContext'
+import FirebaseContext from '../Firebase'
 
 function InfoUpdate(){
   const authContext = useContext(AuthContext)

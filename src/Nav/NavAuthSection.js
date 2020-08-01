@@ -1,10 +1,11 @@
 import React, {useContext} from "react"
 import { Nav, Navbar, Button, ButtonGroup, DropdownButton, Dropdown } from 'react-bootstrap'
-import AuthContext from './Firebase/AuthContext'
 import {useHistory} from "react-router-dom";
-import FirebaseContext from './Firebase'
 import { LinkContainer, UncontrolledDropdown, Image } from 'react-router-bootstrap'
-import imgDIR from './user.png';
+
+import imgDIR from '../Media/user.png';
+import FirebaseContext from '../Firebase'
+import AuthContext from '../Firebase/AuthContext'
 
 function NavAuthSection(){
   const firebase = useContext(FirebaseContext)

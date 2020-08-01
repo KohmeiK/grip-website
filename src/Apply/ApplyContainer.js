@@ -1,15 +1,15 @@
 import React, {useState, useContext, useEffect} from 'react'
-import JobContainer from './JobContainer'
-import ApplyModal from './ApplyModal'
-import FirebaseContext from './Firebase'
-import AuthContext from './Firebase/AuthContext'
 import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import {CardColumns, Form, InputGroup, FormControl} from 'react-bootstrap'
 
+import JobContainer from './JobContainer'
+import ApplyModal from './ApplyModal'
+import FirebaseContext from '../Firebase'
+import AuthContext from '../Firebase/AuthContext'
 
-function ApplyContainer2(){
+function ApplyContainer(){
   const firebase = useContext(FirebaseContext)
   const authContext = useContext(AuthContext)
   const [jobs, setJobs] = useState([]) //Data from DB
@@ -106,4 +106,4 @@ function ApplyContainer2(){
   )
 }
 
-export default ApplyContainer2
+export default ApplyContainer

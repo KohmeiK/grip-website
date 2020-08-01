@@ -1,11 +1,11 @@
 import React, { useEffect, useContext } from "react"
-import FirebaseContext from './Firebase'
-import AuthContext from './Firebase/AuthContext'
 import { Formik, Form, Field, ErrorMessage, FieldArray } from 'formik';
 import { Col, Row, Container, Spinner } from 'react-bootstrap'
 
+import FirebaseContext from '../Firebase'
+import AuthContext from '../Firebase/AuthContext'
 
-function CompanyForm() {
+function CompanyCreationContainer() {
   const firebase = useContext(FirebaseContext)
   const authContext = useContext(AuthContext)
   useEffect(() => {
@@ -190,4 +190,4 @@ function CompanyForm() {
 
 }
 
-export default CompanyForm
+export default CompanyCreationContainer

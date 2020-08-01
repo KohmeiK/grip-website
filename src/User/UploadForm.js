@@ -3,8 +3,8 @@ import ProgressBar from 'react-bootstrap/ProgressBar'
 import React, {setState, useContext} from 'react';
 import { Formik } from "formik";
 import * as yup from "yup"
-import Thumbnail from "./Thumbnail.js"
-import FirebaseContext from "./Firebase/"
+
+import FirebaseContext from "../Firebase/"
 
 class UploadForm extends React.Component {
   constructor(props){
@@ -75,7 +75,6 @@ class UploadForm extends React.Component {
                   <input id="file" name="file" type="file" onChange={(event) => {
                     setFieldValue("file", event.currentTarget.files[0]);
                   }} className="form-control" />
-                  <Thumbnail file={values.file} />
                 </div>
                 {this.state.uploading && <ProgressBar now={this.state.progressBar}/>}
                 <br />

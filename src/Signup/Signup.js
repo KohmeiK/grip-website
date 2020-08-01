@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
-import FirebaseContext from './Firebase'
-import AuthContext from './Firebase/AuthContext'
+import FirebaseContext from '../Firebase'
+import AuthContext from '../Firebase/AuthContext'
 import {Button} from 'react-bootstrap'
 import { useHistory } from "react-router-dom";
 

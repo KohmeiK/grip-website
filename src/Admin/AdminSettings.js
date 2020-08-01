@@ -1,8 +1,8 @@
 import React, {useContext} from 'react'
 import { Formik, Field, Form, ErrorMessage } from 'formik';
-import FirebaseContext from './Firebase/'
 import {Button, Spinner} from "react-bootstrap"
-import AuthContext from "./Firebase/AuthContext"
+import FirebaseContext from '../Firebase/'
+import AuthContext from "../Firebase/AuthContext"
 
 function AdminSettings(){
   const firebase = useContext(FirebaseContext)
