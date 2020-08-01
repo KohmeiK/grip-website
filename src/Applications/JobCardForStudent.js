@@ -1,8 +1,6 @@
 import React from "react"
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
-import Image from './Image'
-import ApplyModal from "./ApplyModal.js"
 
 function JobCardForStudent(props) {
 

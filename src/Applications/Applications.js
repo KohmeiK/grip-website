@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react'
 import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
-import JobCardForStudent from '../JobCardForStudent'
+import JobCardForStudent from './JobCardForStudent'
 import { CardColumns, Form, InputGroup, FormControl } from 'react-bootstrap'
 
 import FirebaseContext from '../Firebase'
