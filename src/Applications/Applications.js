@@ -2,10 +2,9 @@ import React, { useState, useContext, useEffect } from 'react'
 import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
-import JobCardForStudent from './JobCardForStudent'
+import JobCardForStudent from '../JobCardForStudent'
 import { CardColumns, Form, InputGroup, FormControl } from 'react-bootstrap'
 
-import JobCard from './JobCard'
 import FirebaseContext from '../Firebase'
 import AuthContext from '../Firebase/AuthContext'
 
@@ -65,7 +64,7 @@ function Applications() {
                 let jobRef = firebase.db.collection('jobs').doc(jobID)
                 jobRef.get()
                 .then(function (doc) {
-                    setJobs(jobs.push(doc.data()))
+                    jobs.push(doc.data())
                 })
             })
             setJobs(jobs)
