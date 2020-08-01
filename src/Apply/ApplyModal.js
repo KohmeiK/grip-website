@@ -12,14 +12,13 @@ function ApplyModal(props) {
     alert(props.studentID + " is appying to " + props.jobID)
     //Write to DB Here
     //Can be made a cloud function later
-    let docRef = firebase.db.collection('students').doc(props.studentID)
-    docRef.get().then(function (doc) { // append job's document id to studnet's jobsAppliedTo field
-      docRef.update({ jobsAppliedTo: firebase.raw.firestore.FieldValue.arrayUnion(props.jobID) })
+    let studentRef = firebase.db.collection('students').doc(props.studentID)
+    studentRef.get().then(function (doc) { // append job's document id to studnet's jobsAppliedTo field
+      studentRef.update({ jobsAppliedTo: firebase.raw.firestore.FieldValue.arrayUnion(props.jobID) })
     })
-
-    docRef = firebase.db.collection('jobs').doc(props.jobID)
-    docRef.get().then(function (doc) { // append student's id to job's applicants field
-      docRef.update({ applicants: firebase.raw.firestore.FieldValue.arrayUnion(props.studentID) })
+    let jobRef = firebase.db.collection('jobs').doc(props.jobID)
+    jobRef.get().then(function (doc) { // append student's id to job's applicants field
+      jobRef.update({ applicants: firebase.raw.firestore.FieldValue.arrayUnion(props.studentID) })
     })
 
     //Close Modal

@@ -13,6 +13,7 @@ function Applications() {
     const firebase = useContext(FirebaseContext)
     const authContext = useContext(AuthContext)
     const [jobs, setJobs] = useState([]) //Data from DB
+    console.log('jobs00', jobs)
     const [display, setDisplay] = useState("Not Set") //JSX for List
     const [loading, setLoading] = useState(true); //Still loading array
     const handleClick = async (index) => { //To downolad resumes
@@ -35,64 +36,60 @@ function Applications() {
         // xhr.send();
     }
     const updateJobs = async (doc) => {
+        console.log('jobs1', jobs)
         let jobIDs = doc.data().jobsAppliedTo
         await Promise.all(jobIDs.map(async (jobID) => {
             let jobRef = firebase.db.collection('jobs').doc(jobID)
             await getJob(jobRef)
         }))
         // setJobs(jobs)
-        console.log('jobs2', jobs)
+        console.log('when loading is set to false - ', jobs)
         setLoading(false)
     }
     const getJob = async (jobRef) => {
         jobRef.get()
             .then(function (doc) {
-                console.log('jobs1', jobs)
-                jobs.push(doc.data())
-                console.log('jobs3', jobs)
+                // jobs.push(doc.data())
+                setJobs(jobs.concat(doc.data()))
+                console.log('jobs2', jobs)
             })
     }
 
     useEffect(() => {
         //Only on mount
-        let jobIDs = []
+        console.log('jobs0', jobs)
         let studentRef = firebase.db.collection('students').doc(authContext.user.uid)
         studentRef.get().then(function (doc) {
             // console.log(doc.data().jobsAppliedTo)
-            jobIDs = doc.data().jobsAppliedTo
-            jobIDs.forEach((jobID) => {
-                let jobRef = firebase.db.collection('jobs').doc(jobID)
-                jobRef.get()
-                .then(function (doc) {
-                    jobs.push(doc.data())
-                })
-            })
-            setJobs(jobs)
-            setLoading(false)
-        }).catch(function (error){
+            updateJobs(doc)
+            // jobIDs = doc.data().jobsAppliedTo
+            // jobIDs.forEach((jobID) => {
+            //     let jobRef = firebase.db.collection('jobs').doc(jobID)
+            //     jobRef.get()
+            //     .then(function (doc) {
+            //         jobs.push(doc.data())
+            //     })
+            // })
+        }).catch(function (error) {
             console.log(error)
         })
     }, [])
 
     let localDisplay = "Loading..."
     if (!loading) {
+        console.log('jobs3', jobs)
         localDisplay = jobs.map((job, index) => { //Convert each element to JSX
             //convert all elements before reach render, this is only updates when show is changed
             return (
-                <div>
-                    <h1>Hello?</h1>
-                    <JobCardForStudent
-                        key={index}
-                        index={index}
-                        title={job.title}
-                        companyName={job.companyName}
-                        dl={job.deadline}
-                    />
-                </div>
-
+                <JobCardForStudent
+                    key={index}
+                    index={index}
+                    title={job.title}
+                    companyName={job.companyName}
+                    dl={job.deadline}
+                />
             );
         })
-        console.log(localDisplay)
     }
 
     return (

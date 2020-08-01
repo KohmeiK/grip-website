@@ -23,7 +23,6 @@ function JobCardForStudent(props) {
           </Card.Text>
         </Card.Body>
         <Card.Footer>
-          <Button onClick={handleClick}> Download all resumes </Button>
         </Card.Footer>
       </Card>
       {/*Normally Hidden*/}
