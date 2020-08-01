@@ -4,7 +4,7 @@ import AuthContext from './Firebase/AuthContext'
 import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
-import JobCard from './JobCard'
+import JobCardForStudent from './JobCardForStudent'
 import { CardColumns, Form, InputGroup, FormControl } from 'react-bootstrap'
 
 //
@@ -41,7 +41,7 @@ function Applications() {
             let jobRef = firebase.db.collection('jobs').doc(jobID)
             await getJob(jobRef)
         }))
-        setJobs(jobs)
+        // setJobs(jobs)
         console.log('jobs2', jobs)
         setLoading(false)
     }
@@ -49,7 +49,7 @@ function Applications() {
         jobRef.get()
             .then(function (doc) {
                 console.log('jobs1', jobs)
-                setJobs(jobs.push(doc.data()))
+                jobs.push(doc.data())
                 console.log('jobs3', jobs)
             })
     }
@@ -78,27 +78,29 @@ function Applications() {
 
     let localDisplay = "Loading..."
     if (!loading) {
-        console.log(typeof jobs)
+        console.log('here', jobs)
         localDisplay = jobs.map((job, index) => { //Convert each element to JSX
             //convert all elements before reach render, this is only updates when show is changed
             return (
-                <JobCard
-                    key={index}
-                    index={index}
-                    title={job.title}
-                    info={job.info}
-                    dl={job.deadline}
-                    handleClick={handleClick}
-                    applicantNum={job.applicantNum}
-                />
+                <div>
+                    <h1>Hello?</h1>
+                    <JobCardForStudent
+                        key={index}
+                        index={index}
+                        title={job.title}
+                        companyName={job.companyName}
+                        dl={job.deadline}
+                    />
+                </div>
+
             );
         })
+        console.log(localDisplay)
     }
 
     return (
         <div style={{ background: "#e0e0e0" }}>
-            <a href={url} download> {url} </a>
-            <h1>A studnet page where you can see your applications</h1>
+            <h1>A student page where you can see your applications</h1>
             <Container fluid style={{ paddingTop: "2em" }}>
                 <Row>
                     <Col>
