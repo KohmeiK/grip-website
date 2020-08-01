@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 
 import NavBar from './Nav/NavBar.js'
-import LandingCarousel from './Home/LandingCarousel.js'
+import HomeContainer from './Home/HomeContainer.js'
 
 import UploadFrom from './User/UploadForm.js'
 import SettingsContainer from './User/SettingsContainer.js'
@@ -50,7 +50,7 @@ function App(){
           <Route path="/needCompany"> <NeedCompany /> </Route>
           <Route path="/signup"> <Signup /> </Route>
           <Route path="/login"> <Login /> </Route>
-          <Route path="/"> <LandingCarousel/> </Route>
+          <Route path="/"> <HomeContainer/> </Route>
         </Switch>
       </Router>
     );

@@ -1,0 +1,26 @@
+@import '../App.css';
+
+.tagline{
+  padding: 5em;
+  background: var(--background-color);
+  color: var(--text-color);
+}
+
+.mainButton{
+  color: var(--text-color);
+  background: var(--accent-color);
+  font-family: monospace;
+  font-size: 30px;
+  border: none;
+  border-radius: 15px;
+  padding: 0.3em;
+  margin-top: 1em;
+}
+
+.mainButton:hover{
+  background: var(--accent-color-dark);
+}
+
+.mainButton:active{
+  background: black;
+}
