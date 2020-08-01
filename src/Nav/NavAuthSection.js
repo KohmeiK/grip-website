@@ -1,7 +1,7 @@
 import React, {useContext} from "react"
-import { Nav, Navbar, Button, ButtonGroup, DropdownButton, Dropdown } from 'react-bootstrap'
+import { Button, ButtonGroup, DropdownButton, Dropdown } from 'react-bootstrap'
 import {useHistory} from "react-router-dom";
-import { LinkContainer, UncontrolledDropdown, Image } from 'react-router-bootstrap'
+import { LinkContainer } from 'react-router-bootstrap'
 
 import imgDIR from '../Media/user.png';
 import FirebaseContext from '../Firebase'
@@ -32,7 +32,7 @@ function NavAuthSection(){
         <Button disabled variant=
           {authContext.isAdmin ? authContext.isCompany ? "warning" : "danger ": authContext.isCompany ? "primary" : "light"}
         >
-          <img src={imgDIR} width="30" height="30" />
+          <img src={imgDIR} width="30" height="30" alt="profile pic"/>
         </Button>
           <DropdownButton as={ButtonGroup} variant= "light" id="bg-nested-dropdown" title={authContext.user.displayName + ' '}>
             <LinkContainer to="/setting">

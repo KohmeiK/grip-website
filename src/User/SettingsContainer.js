@@ -1,11 +1,10 @@
 import React from 'react'
-import {CardColumns, Form, InputGroup, FormControl, Row, Col, Container} from 'react-bootstrap'
+import {Row, Col, Container} from 'react-bootstrap'
 
-import FirebaseContext from '../Firebase'
 import InfoUpdate from "./InfoUpdate"
 import OtherSettings from "./OtherSettings"
 
-function Setting(){
+function SettingsContainer(){
 
   return(
     <div style={{background:"#e0e0e0"}} >
@@ -29,4 +28,4 @@ function Setting(){
   )
 }
 
-export default Setting
+export default SettingsContainer

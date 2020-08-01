@@ -10,6 +10,7 @@ import FirebaseContext from "./index";
 // };
 
 const AuthContext = React.createContext({});
+
 export const AuthProvider = ({ children }) => {
   const firebase = useContext(FirebaseContext)
   const [user, setUser] = useState(null);
@@ -41,6 +42,7 @@ export const AuthProvider = ({ children }) => {
       }
 
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

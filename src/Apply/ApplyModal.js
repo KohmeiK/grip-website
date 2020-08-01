@@ -1,13 +1,11 @@
-import React, { useState, useContext } from "react"
-import { Modal, Button, Container, Row, Col } from 'react-bootstrap'
-import { Formik, Field, Form, useFormikContext } from 'formik';
+import React, {useContext } from "react"
+import { Modal, Button } from 'react-bootstrap'
+import { Formik, Field, Form } from 'formik';
 
 import FirebaseContext from '../Firebase'
-import AuthContext from '../Firebase/AuthContext'
 
 function ApplyModal(props) {
   const firebase = useContext(FirebaseContext)
-  const authContext = useContext(AuthContext)
   console.log(props)
 
   const handleConfirm = () => {

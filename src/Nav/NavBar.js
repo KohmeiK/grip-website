@@ -1,23 +1,13 @@
 import React, {useContext} from 'react'
-import { Nav, Navbar, Button, ButtonGroup, DropdownButton, Dropdown } from 'react-bootstrap'
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useHistory,
-} from "react-router-dom";
+import { Nav, Navbar } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 
 import AuthContext from '../Firebase/AuthContext'
-import FirebaseContext from '../Firebase'
 import NavAuthSection from './NavAuthSection'
 
 
 function NavBar(props){
-  const firebase = useContext(FirebaseContext)
   const authContext = useContext(AuthContext)
-  let history = useHistory()
 
   return(
     <Navbar expand="lg" bg="dark" variant="dark">

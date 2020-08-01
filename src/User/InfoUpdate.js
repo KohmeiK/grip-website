@@ -1,7 +1,6 @@
 import React, {useContext, useEffect, useState} from "react"
 import { Formik, Field, Form } from 'formik';
 import { Button, Modal, Spinner} from 'react-bootstrap'
-import { useHistory } from "react-router-dom";
 
 import AuthContext from '../Firebase/AuthContext'
 import FirebaseContext from '../Firebase'
@@ -9,7 +8,6 @@ import FirebaseContext from '../Firebase'
 function InfoUpdate(){
   const authContext = useContext(AuthContext)
   const firebase = useContext(FirebaseContext)
-  const history = useHistory()
   const [initVals, setInitVals] = useState({
     name: "Loading...",
     email: "Loading...",
@@ -56,7 +54,7 @@ function InfoUpdate(){
       valsBuilder.name = authContext.user.displayName
       valsBuilder.email = authContext.user.email
     }
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[authContext])
 
   const handleSubmit = (evt) => {

@@ -2,10 +2,9 @@ import React, {useState, useContext, useEffect} from 'react'
 import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
-import {CardColumns, Form, InputGroup, FormControl} from 'react-bootstrap'
+import {Form, InputGroup, FormControl} from 'react-bootstrap'
 
 import JobContainer from './JobContainer'
-import ApplyModal from './ApplyModal'
 import FirebaseContext from '../Firebase'
 import AuthContext from '../Firebase/AuthContext'
 
@@ -13,7 +12,6 @@ function ApplyContainer(){
   const firebase = useContext(FirebaseContext)
   const authContext = useContext(AuthContext)
   const [jobs, setJobs] = useState([]) //Data from DB
-  const [display, setDisplay] = useState("Not Set") //JSX for List
   const [indexToShow, setIndexToShow] = useState(-1); //Modal
   const [show, setShow] = useState(false); //Modal show
   const [loading, setLoading] = useState(true); //Still loading array
@@ -41,6 +39,7 @@ function ApplyContainer(){
     }).catch(function(error){
         console.log(error)
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
 
   let localDisplay = "Loading..."

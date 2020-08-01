@@ -1,10 +1,9 @@
-import React, { useState, useEffect} from 'react';
+import React from 'react';
 import './App.css';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
 } from "react-router-dom";
 
 import NavBar from './Nav/NavBar.js'
@@ -42,10 +41,10 @@ function App(){
           <PrivateRoute path="/upload"> <UploadFrom /> </PrivateRoute>
           <PrivateRoute path="/applications"> <Applications /> </PrivateRoute>
 
+          <PrivateCompanyRoute path="/jobs"> <MyJobs/> </PrivateCompanyRoute>
+
           <PrivateAdminRoute path="/create-company"> <CompanyCreationContainer /> </PrivateAdminRoute>
           <PrivateAdminRoute path="/admin"> <AdminSettingsContainer /> </PrivateAdminRoute>
-
-          <PrivateCompanyRoute path="/jobs"> <MyJobs/> </PrivateCompanyRoute>
 
           <Route path="/needAdmin"> <NeedAdmin /> </Route>
           <Route path="/needCompany"> <NeedCompany /> </Route>
