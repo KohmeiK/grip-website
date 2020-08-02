@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react'
 import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
+import { CardColumns, Form, InputGroup, FormControl } from 'react-bootstrap'
 
 import JobCard from './JobCard'
 import FirebaseContext from '../Firebase'
@@ -10,7 +11,7 @@ import AuthContext from '../Firebase/AuthContext'
 function MyJobs() {
   const firebase = useContext(FirebaseContext)
   const authContext = useContext(AuthContext)
-  const [url2, setUrl2] = useState(null)
+  const [btnUrl, setBtnUrl] = useState(null)
   const [jobs, setJobs] = useState([]) //Data from DB
   const [display, setDisplay] = useState("Not Set") //JSX for List
   const [loading, setLoading] = useState(true); //Still loading array
@@ -35,29 +36,20 @@ function MyJobs() {
       //Temp -> Get url for PDF 1
       // `url` is the download URL for resume
       console.log(url, "Storage Url")
-      setUrl2(url)
-      // This can be downloaded directly:
-      var xhr = new XMLHttpRequest();
-      xhr.responseType = 'blob';
-      xhr.onload = function (event) {
-        var blob = xhr.response;
-      };
-      xhr.open('GET', url);
-      xhr.send();
+      setBtnUrl(url) //wait the url from firestore and set it to state
     }
     catch(err){
       alert(err.message)
     }
   }
 
-  useEffect(() => {
+  useEffect(async() => {
     //Only on mount
-    firebase.db.collection('jobs').where("companyID", "==", authContext.user.uid)
-      .get()
-      .then(function (querySnapshot) { // search for jobs belonging to this company
-        if (querySnapshot.docs.length === 0) {
-          return (<h1> You have no currently posted jobs! </h1>)
-        }
+    try{
+      let querySnapshot = await firebase.db.collection('jobs').where("companyID", "==", authContext.user.uid).get()
+      if (querySnapshot.docs.length === 0) {
+        setJobs("No Jobs");
+      }else{
         querySnapshot.forEach(function (doc) {
           let job = doc.data()
           job.applicantNum = job.applicants.length //So this way the number of applicant is included
@@ -65,30 +57,35 @@ function MyJobs() {
           setJobs(jobs.push(job)) //Add all jobs to array
         })
         setJobs(jobs)
-        setLoading(false)
-      }).catch(function (error) {
-        console.log(error)
-      })
+      }
+      setLoading(false)
+    }catch(error) {
+      alert(error)
+    }
   }, [])
 
   let localDisplay = "Loading..."
   if (!loading) {
-    localDisplay = jobs.map((job, index) => { //Convert each element to JSX
-      //convert all elements before reach render, this is only updates when show is changed
-      return (
-        <JobCard
-          key={index}
-          index={index}
-          title={job.title}
-          info={job.info}
-          dl={job.deadline}
-          handleClick={handleClick}
-          applicantNum={job.applicantNum}
-          loading={(url2 != null)}
-          url={url2}
-        />
-      );
-    })
+    if(jobs === "No Jobs"){
+      localDisplay =  <h3> You have no posted jobs! </h3>
+    }else{
+      localDisplay = jobs.map((job, index) => { //Convert each element to JSX
+        //convert all elements before reach render, this is only updates when show is changed
+        return (
+          <JobCard
+            key={index}
+            index={index}
+            title={job.title}
+            info={job.info}
+            dl={job.deadline}
+            handleClick={handleClick}
+            applicantNum={job.applicantNum}
+            loading={(btnUrl != null)}
+            url={btnUrl} //send button url to jobcard
+          />
+        );
+      })
+    }
   }
 
   return (
