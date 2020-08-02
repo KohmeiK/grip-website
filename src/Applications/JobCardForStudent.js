@@ -16,10 +16,8 @@ function JobCardForStudent(props) {
         <Card.Body>
           <Card.Title>{props.title}</Card.Title>
           <Card.Text>
-            <pre>
               Company: {props.companyName} <br />
               Deadline: {props.dl}
-            </pre>
           </Card.Text>
         </Card.Body>
         <Card.Footer>

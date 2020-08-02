@@ -13,46 +13,32 @@ function Applications() {
     const firebase = useContext(FirebaseContext)
     const authContext = useContext(AuthContext)
     const [jobs, setJobs] = useState([]) //Data from DB
-    console.log('jobs00', jobs)
     const [display, setDisplay] = useState("Not Set") //JSX for List
     const [loading, setLoading] = useState(true); //Still loading array
     const handleClick = async (index) => { //To downolad resumes
-        // console.log(jobs[index])
-        // const jobID = jobs[index].jobID
-        // let applicants = jobs[index].applicants
-        // let resumesRef = applicants.map((applicant, index) => {
-        //     return applicant + jobID + '.pdf'
-        // })
-        // let url = await firebase.storage.child(resumesRef[1]).getDownloadURL()
-        // // `url` is the download URL for resume
-        // setUrl(url)
-        // // This can be downloaded directly:
-        // var xhr = new XMLHttpRequest();
-        // xhr.responseType = 'blob';
-        // xhr.onload = function (event) {
-        //     var blob = xhr.response;
-        // };
-        // xhr.open('GET', url);
-        // xhr.send();
     }
     const updateJobs = async (doc) => {
         console.log('jobs1', jobs)
+        let jobsBuildingArray = []
         let jobIDs = doc.data().jobsAppliedTo
-        await Promise.all(jobIDs.map(async (jobID) => {
+        await Promise.all(jobIDs.map(async (jobID, index) => {
+            console.log(jobID, index, "Calling getJob(JobID, Index, refernce to empty array)")
             let jobRef = firebase.db.collection('jobs').doc(jobID)
-            await getJob(jobRef)
+            await getJob(jobRef, index, jobsBuildingArray)
         }))
-        // setJobs(jobs)
+
+        setJobs(jobsBuildingArray)
+        console.log(jobsBuildingArray, "builder is done")
         console.log('when loading is set to false - ', jobs)
         setLoading(false)
     }
-    const getJob = async (jobRef) => {
-        jobRef.get()
-            .then(function (doc) {
-                // jobs.push(doc.data())
-                setJobs(jobs.concat(doc.data()))
-                console.log('jobs2', jobs)
-            })
+    const getJob = async (jobRef, index, outputArray) => {
+        let doc = await jobRef.get()
+        // jobs.push(doc.data())
+        // setJobs(jobs.concat(doc.data()))
+        console.log('jobs2', jobs) //Nothing will show here since setJobs is aysnc
+        outputArray[index] = doc.data()
+        return("Ethan - You must return something to a promise (when you await soemthing)")
     }
 
     useEffect(() => {
@@ -60,16 +46,13 @@ function Applications() {
         console.log('jobs0', jobs)
         let studentRef = firebase.db.collection('students').doc(authContext.user.uid)
         studentRef.get().then(function (doc) {
-            // console.log(doc.data().jobsAppliedTo)
-            updateJobs(doc)
-            // jobIDs = doc.data().jobsAppliedTo
-            // jobIDs.forEach((jobID) => {
-            //     let jobRef = firebase.db.collection('jobs').doc(jobID)
-            //     jobRef.get()
-            //     .then(function (doc) {
-            //         jobs.push(doc.data())
-            //     })
-            // })
+            if(doc.data().jobsAppliedTo == null){
+              alert("You do not have a jobsAppliedTo array. Aborting updateJobs")
+            } else if(doc.data().jobsAppliedTo.length == 0){
+              alert("You have not applied to any jobs! Aborting updateJobs")
+            }else{
+              updateJobs(doc)
+            }
         }).catch(function (error) {
             console.log(error)
         })
