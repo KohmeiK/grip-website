@@ -51,13 +51,14 @@ function MyJobs() {
       if (querySnapshot.docs.length === 0) {
         setJobs("No Jobs");
       }else{
+        let jobsBuilder = []
         querySnapshot.forEach(function (doc) {
           let job = doc.data()
           job.applicantNum = job.applicants.length //So this way the number of applicant is included
           job.jobID = doc.id //Similarly, include job's id
-          jobs.push(job) //Add all jobs to array
+          jobsBuilder.push(job) //Add all jobs to array
         })
-        setJobs(jobs)
+        setJobs(jobsBuilder)
       }
       setLoading(false)
     }catch(error) {
