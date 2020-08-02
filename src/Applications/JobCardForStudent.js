@@ -14,15 +14,13 @@ function JobCardForStudent(props) {
       <Card>
         {/* <Card.Img variant="top" src={imageURL} style={{height:"7em"}} /> */}
         <Card.Body>
-          <Card.Title>{props.title}</Card.Title>
+          <Card.Title>{props.companyName} - {props.title}</Card.Title>
           <Card.Text>
-              Company: {props.companyName} <br />
-              Deadline: {props.dl}
+              Applications Close: {props.dl}
           </Card.Text>
         </Card.Body>
-        <Card.Footer>
-        </Card.Footer>
       </Card>
+      <br/>
       {/*Normally Hidden*/}
 
     </>
