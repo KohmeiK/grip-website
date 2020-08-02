@@ -15,6 +15,7 @@ function MyJobs() {
   const [jobs, setJobs] = useState([]) //Data from DB
   const [display, setDisplay] = useState("Not Set") //JSX for List
   const [loading, setLoading] = useState(true); //Still loading array
+
   const handleClick = async(index) => { //To downolad resumes
     console.log(jobs[index], "Job Doccuement")
     const jobID = jobs[index].jobID
@@ -54,7 +55,7 @@ function MyJobs() {
           let job = doc.data()
           job.applicantNum = job.applicants.length //So this way the number of applicant is included
           job.jobID = doc.id //Similarly, include job's id
-          setJobs(jobs.push(job)) //Add all jobs to array
+          jobs.push(job) //Add all jobs to array
         })
         setJobs(jobs)
       }
