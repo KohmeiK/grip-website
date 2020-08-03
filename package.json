@@ -11,6 +11,7 @@
     "firebase": "^7.16.0",
     "formik": "^2.1.4",
     "jszip": "^3.5.0",
+    "jszip-utils": "^0.1.0",
     "npm-run-all": "^4.1.5",
     "react": "^16.13.1",
     "react-bootstrap": "^1.1.1",
