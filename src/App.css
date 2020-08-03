@@ -3,6 +3,7 @@
 :global(:root) {
   --c-background: #F5F5F5;
   --c-dark-blue:#233F71;
+  --c-blue: #77C3EC;
   --c-pink: #CB6A79;
   --text-color:#fff;
 }

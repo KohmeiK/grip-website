@@ -1,9 +1,4 @@
 @import '../App.css';
-*{
-  margin: 0;
-  padding: 0;
-  font-family: 'Raleway', sans-serif;
-}
 
 .wrapper{
   background: var(--c-background) url('../Media/HeroIcon-mobile.svg');
@@ -18,7 +13,8 @@
   align-items: baseline;
   list-style: none;
   justify-content: space-between;
-  color: var(--c-dark-blue)
+  color: var(--c-dark-blue);
+  padding: 0;
 }
 
 .nav li{
@@ -26,6 +22,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.body{
+  margin: 0;
+  padding: 0;
+  font-family: 'Raleway', sans-serif;
+  background: var(--c-background);
+  color:white;
 }
 
 .logo img{
@@ -70,7 +74,7 @@
 
 .buttonWrap{
   margin-top: 6em;
-  margin-bottom: 0;
+  margin-bottom: 1em;
   display: flex;
   justify-content: center;
 }
@@ -81,12 +85,11 @@
 
 .diagonalBox {
   position: relative;
-  padding: 3em 0;
   margin-top: -1px;
+  /* padding: 3em 0; */
 
 }
 .diagonalBox::before{
-  /* background-color: var(--c-dark-blue); */
   content: "";
   position: absolute;
   left: 0;
@@ -99,26 +102,21 @@
   backface-visibility: hidden;
 }
 
-.prevSection{
-  height: 200px;
-  background-color: blue;
+.bgOne:before {
+  background: var(--c-dark-blue)
+}
+.bgOne{
+  height: 30px;
 }
 
-.nextSection{
-  height: 300px;
-  background-color: red;
+.bgTwo:before {
+  height: 1000px;
+  background: var(--c-blue)
 }
 
 .content {
   max-width: 100;
   margin: 0 auto;
-  padding: 1.5em;
+  padding: 0;
   position: relative;
-
-  /* -----------
-  enable the border to see, that the content
-  perfectly fits into the section withou
-  bleeding into the adjecting areas:
-  ------------ */
-  /* border: 2px dashed #fff8; */
 }
