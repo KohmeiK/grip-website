@@ -1,0 +1,187 @@
+@import '../colorCodes.scss';
+
+.heroImage{
+  background-position: 45% 55%;
+  background-size: 60% 60%;
+  background-image: url('../Media/HeroIcon-mobile.svg'); /* The image used */
+  background-color: $c-background; /* Used if the image is unavailable */
+  height: 500px;
+  background-repeat: no-repeat; /* Do not repeat the image */
+}
+
+.nav{
+  display: flex;
+  align-items: stretch;
+  list-style: none;
+  justify-content: space-between;
+  color: $c-darkBlue;
+  padding: 0;
+}
+
+.logo{
+  padding: 1.1em;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.signIn{
+  padding: 1.5em;
+  margin: 0;
+}
+
+.logo img{
+  width: 40px;
+  height: 40px;
+}
+
+.backImg{
+  left: 40px;
+}
+
+.tagline{
+  padding: 1.5em;
+  color: $c-darkBlue;
+  position: relative;
+}
+
+.tagline h1{
+  font-weight: 800;
+  font-size: 1.4rem;
+  letter-spacing: 0.1em;
+  max-width: 400px;
+
+}
+
+.tagline p{
+  font-weight: 400;
+  font-size: 1em;
+  width: 60%;
+  line-height: 1.2em;
+}
+
+.mainButton{
+  color: $c-background;
+  background: $c-pink;
+  font-size: 1.1em;
+  font-weight: 800;
+  border: none;
+  border-radius: 2em;
+  padding: 0.25em 1.4em;
+
+}
+
+.buttonWrap{
+  margin-top: 6em;
+  margin-bottom: 1em;
+  display: flex;
+  justify-content: center;
+}
+
+.mainButton:active{
+  color:grey;
+}
+
+.diagonalBox {
+  position: relative;
+  margin-top: -1px;
+  /* padding: 3em 0; */
+
+}
+.diagonalBox::before{
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  transform: skewY(-7deg);
+  transform-origin: 50% 0;
+  outline: 1px solid transparent;
+  backface-visibility: hidden;
+}
+
+.bgOne:before {
+  background: $c-darkBlue;
+}
+.bgOne{
+  height: 30px;
+}
+
+.content {
+  max-width: 100;
+  margin: 0 auto;
+  padding: 0;
+  position: relative;
+
+}
+
+.asesText{
+  display: none;
+}
+.abroadText{
+  font-weight: 800;
+  margin: 0;
+  padding: 0;
+}
+
+@media screen and (min-width: $s-desktopMin) {
+  .buttonWrap{
+    // margin-top: 6em;
+    // margin-bottom: 1em;
+    display: initial;
+    justify-content: none;
+  }
+
+  .heroImage{
+    background-position: 95% 55%,50% 0%;
+    background-size: 40%, 100%;
+    background-image: url('../Media/HeroIcon-desktop.svg'),
+    url('../Media/BackgroundShape.svg'); /* The image used */
+    background-color: $c-background; /* sUsed if the image is unavailable */
+    height: 600px;
+    background-repeat: no-repeat; /* Do not repeat the image */
+  }
+
+  .diagonalBox::before{
+    transform: skewY(0deg);
+  }
+
+  .signIn{
+    color: $c-background;
+    // padding: 0;
+  }
+
+  .logo{
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .asesText{
+    display: initial;
+    font-weight: 600;
+    padding: 0.8em;
+    margin: 0;
+  }
+  .abroadText{
+    font-weight: 400;
+    padding: 0;
+  }
+
+  .tagline{
+    padding-top: 12em;
+    margin-left: 2em;
+    color: $c-darkBlue;
+    position: relative;
+  }
+
+  .tagline h1{
+    font-size: 2rem;
+    letter-spacing: 0.1em;
+    width: #{'max(57vw, 400px)'};
+    max-width: none;
+  }
+
+
+}
