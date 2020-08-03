@@ -1,8 +1,8 @@
 /* Constants.css – imported in app entry point */
 
 :global(:root) {
-  --background-color: #333;
-  --accent-color:teal;
-  --accent-color-dark: blue;
+  --c-background: #F5F5F5;
+  --c-dark-blue:#233F71;
+  --c-pink: #CB6A79;
   --text-color:#fff;
 }

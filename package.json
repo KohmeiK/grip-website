@@ -28,7 +28,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "serve": "firebase serve",
-    "dev": "concurrently \"react-scripts build\" \"firebase sesrve\""
+    "dev": "concurrently \"react-scripts build\" \"firebase serve\""
   },
   "eslintConfig": {
     "extends": "react-app"
