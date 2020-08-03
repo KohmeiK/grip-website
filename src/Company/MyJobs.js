@@ -13,7 +13,7 @@ import AuthContext from '../Firebase/AuthContext'
 function MyJobs() {
   const firebase = useContext(FirebaseContext)
   const authContext = useContext(AuthContext)
-  const [btnUrl, setBtnUrl] = useState(null)
+  const [downloaded, setDownloaded] = useState([])
   const [jobs, setJobs] = useState([]) //Data from DB
   const [display, setDisplay] = useState("Not Set") //JSX for List
   const [loading, setLoading] = useState(true); //Still loading array
@@ -28,43 +28,28 @@ function MyJobs() {
     return urlsBuildingArray
   }
 
-  const getApplicantNames = async(applicants) => {
-    
-  }
-
-  // const getUrl = async(resumeRef, index, outputArray) => {
-  //   let url = await firebase.storage.child(resumeRef).getDownloadURL()
-  //   outputArray[index] = url
-  //   return("")
-  // }
   const handleClick = async (index, jobTitle) => { //To downolad resumes
-    // console.log(jobs[index], "Job Doccuement")
     const jobID = jobs[index].jobID
-    // console.log(jobID, "Job ID")
     let applicants = jobs[index].applicants
     let resumeRefs = applicants.map((applicant) => {
       return applicant + jobID + '.pdf'
     })
-    // console.log(resumesRef, "Mapped pdf names")
 
     //Delay for UI demo
     let promise = new Promise((res, rej) => {
-      setTimeout(() => res("Now it's done!"), 5000)
+      setTimeout(() => res("Now it's done!"), 2000)
     });
     let result = await promise;
 
     try {
-      // const url = await firebase.storage.child(resumeRefs[0]).getDownloadURL();
-      //Temp -> Get url for PDF 1
-      // `url` is the download URL for resume
-      var zip = new JSZip();
-      var count = 0;
-      var zipFilename = jobTitle + ".zip";
-      var urls = await updateUrls(resumeRefs)
+      let zip = new JSZip();
+      let count = 0;
+      let zipFilename = jobTitle + ".zip";
+      let urls = await updateUrls(resumeRefs)
 
-      urls.forEach(function (url, index) {
-        index++
-        var filename = jobTitle + ' ' + index + ".pdf";
+      urls.forEach(function (url, indexForUrl) { // build a zip file containing all resumes
+        indexForUrl++
+        let filename = jobTitle + ' ' + indexForUrl + ".pdf";
         // loading a file and add it in a zip file
         JSZipUtils.getBinaryContent(url, function (err, data) {
           if (err) {
@@ -74,15 +59,16 @@ function MyJobs() {
           count++;
           if (count == urls.length) {
             zip.generateAsync({ type: 'blob' }).then(function (content) {
-              saveAs(content, zipFilename);
-              console.log('reached')
+              saveAs(content, zipFilename)
+              let downloadedBuilder = downloaded
+              downloadedBuilder[index] = true
+              setDownloaded(downloadedBuilder)
+              setLoading(true)
+              setLoading(false) // not sure why setDownloaded doesn't trigger re-render, but re-setting loading does
             });
           }
         });
       });
-
-      // console.log(url, "Storage Url")
-      // setBtnUrl(url) //wait the url from firestore and set it to state
     }
     catch (err) {
       alert(err.message)
@@ -97,13 +83,16 @@ function MyJobs() {
         setJobs("No Jobs");
       } else {
         let jobsBuilder = []
+        let downloadedBuilder = []
         querySnapshot.forEach(function (doc) {
           let job = doc.data()
           job.applicantNum = job.applicants.length //So this way the number of applicant is included
           job.jobID = doc.id //Similarly, include job's id
           jobsBuilder.push(job) //Add all jobs to array
+          downloadedBuilder.push(false)
         })
         setJobs(jobsBuilder)
+        setDownloaded(downloadedBuilder)
       }
       setLoading(false)
     } catch (error) {
@@ -127,8 +116,7 @@ function MyJobs() {
             dl={job.deadline}
             handleClick={handleClick}
             applicantNum={job.applicantNum}
-            loading={(btnUrl != null)}
-            url={btnUrl} //send button url to jobcard
+            loading={downloaded[index]}
           />
         );
       })

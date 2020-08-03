@@ -17,9 +17,9 @@ function JobCard(props){
     if(clicked){
       buttonHTML =
       <>
-      Collecting your resumes and prepearing for download. Give us a few secconds...
+      Downloading all resumes, this might take a while...
       <br/>
-      <Button disabled variant="warning" onClick={handleClick}>
+      <Button disabled onClick={handleClick}>
        Download all resumes
        <Spinner
          as="span"
@@ -32,17 +32,16 @@ function JobCard(props){
        </>
     }
     else{
-      buttonHTML = <Button variant="warning" onClick={handleClick}> Download all resumes </Button>
+      buttonHTML = <Button onClick={handleClick}> Download all resumes </Button>
     }
   }else{
     buttonHTML =
     <>
-    Your download is ready!
+    Resumes downloaded
     <br/>
-    <Button href={props.url} download> Download </Button>
+    <Button disabled onClick={handleClick}> Download </Button>
     </>
   }
-  // console.log(buttonHTML)
 
   return(
     <>
