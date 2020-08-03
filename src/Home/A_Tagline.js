@@ -5,7 +5,18 @@ import background from '../Media/HeroIcon-mobile.svg'
 
 import styles from './A_Tagline.module.scss';
 
+import { LinkContainer } from 'react-router-bootstrap'
+
 function Tagline(){
+
+  const handleLogin = ()=>{
+    alert("Hi")
+  }
+
+  const handleApply = ()=>{
+    alert("Please log in first!");
+  }
+
   return(
     <>
       <div className={styles.diagonalBox}>
@@ -18,14 +29,18 @@ function Tagline(){
                         <p className={styles.asesText}>ASES</p>
                         <p className={styles.abroadText}>Abroad</p>
                     </li>
-                    <li><div className={styles.signIn}>Sign in</div></li>
+                    <li>
+                        <LinkContainer to="/login">
+                          <div className={styles.signIn}>Sign in</div>
+                        </LinkContainer>
+                    </li>
                 </ul>
 
                 <div className={styles.tagline}>
                     <h1>STANFORD'S GLOBALLY FOCUSED STUDENT ENTRIPRENEURSHIP</h1>
                     <p>Lorem ipsum dolor sit amet. cons adipiscing elit.</p>
                     <div className={styles.buttonWrap}>
-                      <button className={styles.mainButton} type="button">
+                      <button onClick={handleApply}className={styles.mainButton} type="button">
                         APPLY
                         </button>
                     </div>

@@ -4,11 +4,15 @@ import { LinkContainer } from 'react-router-bootstrap'
 
 import AuthContext from '../Firebase/AuthContext'
 import NavAuthSection from './NavAuthSection'
+import { useLocation } from 'react-router-dom'
 
 
 function NavBar(props){
   const authContext = useContext(AuthContext)
-
+  const location = useLocation();
+  if(location.pathname === "/"){
+    return null;
+  }
   return(
     <Navbar expand="lg" bg="dark" variant="dark">
       <LinkContainer to="/">
