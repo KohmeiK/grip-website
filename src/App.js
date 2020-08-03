@@ -33,7 +33,7 @@ import PrivateCompanyRoute from './Route/PrivateCompanyRoute'
 function App(){
     return(
       <Router>
-        {/*<NavBar/>*/}
+        <NavBar/>
         <Switch>
           <PrivateRoute path="/setting"> <SettingsContainer/> </PrivateRoute>
           <PrivateRoute path="/apply"> <ApplyContainer /> </PrivateRoute>
