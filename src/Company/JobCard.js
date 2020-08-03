@@ -9,7 +9,7 @@ function JobCard(props){
   const [clicked, setClicked] = useState(false)
   const handleClick = () => {
     setClicked(true)
-    props.handleClick(props.index)
+    props.handleClick(props.index, props.title)
   }
 
   let buttonHTML;
@@ -42,7 +42,7 @@ function JobCard(props){
     <Button href={props.url} download> Download </Button>
     </>
   }
-  console.log(buttonHTML)
+  // console.log(buttonHTML)
 
   return(
     <>

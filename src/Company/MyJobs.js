@@ -4,6 +4,7 @@ import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import { CardColumns, Form, InputGroup, FormControl } from 'react-bootstrap'
 import * as JSZip from 'jszip'
+import * as JSZipUtils from 'jszip-utils'
 import { saveAs } from 'save-as'
 import JobCard from './JobCard'
 import FirebaseContext from '../Firebase'
@@ -17,41 +18,84 @@ function MyJobs() {
   const [display, setDisplay] = useState("Not Set") //JSX for List
   const [loading, setLoading] = useState(true); //Still loading array
 
-  const handleClick = async(index) => { //To downolad resumes
-    console.log(jobs[index], "Job Doccuement")
+  const updateUrls = async (resumeRefs) => {
+    let urlsBuildingArray = []
+    await Promise.all(resumeRefs.map(async (resumeRef, index) => {
+      // await getUrl(resumeRef, index, urlsBuildingArray)
+      let url = await firebase.storage.child(resumeRef).getDownloadURL()
+      urlsBuildingArray[index] = url
+    }))
+    return urlsBuildingArray
+  }
+
+  const getApplicantNames = async(applicants) => {
+    
+  }
+
+  // const getUrl = async(resumeRef, index, outputArray) => {
+  //   let url = await firebase.storage.child(resumeRef).getDownloadURL()
+  //   outputArray[index] = url
+  //   return("")
+  // }
+  const handleClick = async (index, jobTitle) => { //To downolad resumes
+    // console.log(jobs[index], "Job Doccuement")
     const jobID = jobs[index].jobID
-    console.log(jobID, "Job ID")
+    // console.log(jobID, "Job ID")
     let applicants = jobs[index].applicants
-    let resumesRef = applicants.map((applicant) => {
+    let resumeRefs = applicants.map((applicant) => {
       return applicant + jobID + '.pdf'
     })
-    console.log(resumesRef, "Mapped pdf names")
+    // console.log(resumesRef, "Mapped pdf names")
 
     //Delay for UI demo
     let promise = new Promise((res, rej) => {
-    setTimeout(() => res("Now it's done!"), 5000)
+      setTimeout(() => res("Now it's done!"), 5000)
     });
     let result = await promise;
 
-    try{
-      const url = await firebase.storage.child(resumesRef[0]).getDownloadURL();
+    try {
+      // const url = await firebase.storage.child(resumeRefs[0]).getDownloadURL();
       //Temp -> Get url for PDF 1
       // `url` is the download URL for resume
-      console.log(url, "Storage Url")
-      setBtnUrl(url) //wait the url from firestore and set it to state
+      var zip = new JSZip();
+      var count = 0;
+      var zipFilename = jobTitle + ".zip";
+      var urls = await updateUrls(resumeRefs)
+
+      urls.forEach(function (url, index) {
+        index++
+        var filename = jobTitle + ' ' + index + ".pdf";
+        // loading a file and add it in a zip file
+        JSZipUtils.getBinaryContent(url, function (err, data) {
+          if (err) {
+            throw err; // or handle the error
+          }
+          zip.file(filename, data, { binary: true });
+          count++;
+          if (count == urls.length) {
+            zip.generateAsync({ type: 'blob' }).then(function (content) {
+              saveAs(content, zipFilename);
+              console.log('reached')
+            });
+          }
+        });
+      });
+
+      // console.log(url, "Storage Url")
+      // setBtnUrl(url) //wait the url from firestore and set it to state
     }
-    catch(err){
+    catch (err) {
       alert(err.message)
     }
   }
 
-  useEffect(async() => {
+  useEffect(async () => {
     //Only on mount
-    try{
+    try {
       let querySnapshot = await firebase.db.collection('jobs').where("companyID", "==", authContext.user.uid).get()
       if (querySnapshot.docs.length === 0) {
         setJobs("No Jobs");
-      }else{
+      } else {
         let jobsBuilder = []
         querySnapshot.forEach(function (doc) {
           let job = doc.data()
@@ -62,16 +106,16 @@ function MyJobs() {
         setJobs(jobsBuilder)
       }
       setLoading(false)
-    }catch(error) {
+    } catch (error) {
       alert(error)
     }
   }, [])
 
   let localDisplay = "Loading..."
   if (!loading) {
-    if(jobs === "No Jobs"){
-      localDisplay =  <h3> You have no posted jobs! </h3>
-    }else{
+    if (jobs === "No Jobs") {
+      localDisplay = <h3> You have no posted jobs! </h3>
+    } else {
       localDisplay = jobs.map((job, index) => { //Convert each element to JSX
         //convert all elements before reach render, this is only updates when show is changed
         return (
