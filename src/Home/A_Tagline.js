@@ -9,14 +9,6 @@ import { LinkContainer } from 'react-router-bootstrap'
 
 function Tagline(){
 
-  const handleLogin = ()=>{
-    alert("Hi")
-  }
-
-  const handleApply = ()=>{
-    alert("Please log in first!");
-  }
-
   return(
     <>
       <div className={styles.diagonalBox}>
@@ -30,7 +22,7 @@ function Tagline(){
                         <p className={styles.abroadText}>Abroad</p>
                     </li>
                     <li>
-                        <LinkContainer to="/login">
+                        <LinkContainer to="/apply">
                           <div className={styles.signIn}>Sign in</div>
                         </LinkContainer>
                     </li>
@@ -40,9 +32,11 @@ function Tagline(){
                     <h1>STANFORD'S GLOBALLY FOCUSED STUDENT ENTRIPRENEURSHIP</h1>
                     <p>Lorem ipsum dolor sit amet. cons adipiscing elit.</p>
                     <div className={styles.buttonWrap}>
-                      <button onClick={handleApply}className={styles.mainButton} type="button">
+                      <LinkContainer to="/apply">
+                      <button className={styles.mainButton} type="button">
                         APPLY
                         </button>
+                        </LinkContainer>
                     </div>
                 </div>
 
