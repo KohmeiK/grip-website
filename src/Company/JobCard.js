@@ -11,6 +11,10 @@ function JobCard(props){
     setClicked(true)
     props.handleClick(props.index, props.title)
   }
+  const handleSecondClick = () => {
+    props.handleSecondClick(props.index)
+    handleClick()
+  }
 
   let buttonHTML;
   if(!props.loading){
@@ -33,13 +37,14 @@ function JobCard(props){
     }
     else{
       buttonHTML = <Button onClick={handleClick}> Download all resumes </Button>
+      
     }
   }else{
     buttonHTML =
     <>
     Resumes downloaded
     <br/>
-    <Button disabled onClick={handleClick}> Download </Button>
+    <Button onClick={handleSecondClick}> Download again </Button>
     </>
   }
 
