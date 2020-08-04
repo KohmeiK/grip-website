@@ -28,6 +28,20 @@ function MyJobs() {
     return urlsBuildingArray
   }
 
+  const deepCopyArray = (arr) => {
+    let arrayHolder = []
+    arr.forEach((element, index) => {
+      arrayHolder[index] = element
+    })
+    return arrayHolder
+  }
+
+  const handleSecondClick = (index) => { // set loading to false when the user clicks download the second time 
+    let downloadedBuilder = deepCopyArray(downloaded)
+    downloadedBuilder[index] = false
+    setDownloaded(downloadedBuilder)
+  }
+
   const handleClick = async (index, jobTitle) => { //To downolad resumes
     const jobID = jobs[index].jobID
     let applicants = jobs[index].applicants
@@ -60,11 +74,9 @@ function MyJobs() {
           if (count == urls.length) {
             zip.generateAsync({ type: 'blob' }).then(function (content) {
               saveAs(content, zipFilename)
-              let downloadedBuilder = downloaded
+              let downloadedBuilder = deepCopyArray(downloaded)
               downloadedBuilder[index] = true
               setDownloaded(downloadedBuilder)
-              setLoading(true)
-              setLoading(false) // not sure why setDownloaded doesn't trigger re-render, but re-setting loading does
             });
           }
         });
@@ -115,6 +127,7 @@ function MyJobs() {
             info={job.info}
             dl={job.deadline}
             handleClick={handleClick}
+            handleSecondClick={handleSecondClick}
             applicantNum={job.applicantNum}
             loading={downloaded[index]}
           />
