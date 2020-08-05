@@ -41,6 +41,7 @@
 }
 
 .tagline{
+  margin-top: 2em;
   padding: 1.5em;
   color: $c-darkBlue;
   position: relative;
@@ -73,7 +74,7 @@
 }
 
 .buttonWrap{
-  margin-top: 6em;
+  margin-top: 4em;
   margin-bottom: 1em;
   display: flex;
   justify-content: center;
@@ -162,7 +163,7 @@
     }
   }
   .buttonWrap{
-    // margin-top: 6em;
+    padding-top: 6em;
     // margin-bottom: 1em;
     display: initial;
     justify-content: none;
@@ -204,11 +205,10 @@
   }
 
   .tagline{
-    padding-top: 12em;
     margin-left: 2em;
     color: $c-darkBlue;
     position: absolute;
-    bottom: 2em;
+    bottom: 8em; //Main Text vertical
   }
 
   .tagline h1{
@@ -216,7 +216,9 @@
     letter-spacing: 0.1em;
     width: #{'max(50vw, 350px)'};
     max-width: none;
-    bottom: 5em;
+  }
+  .mainButton{
+    margin-top: 1em; //between btn and subtext
   }
 
 
