@@ -139,6 +139,7 @@ li{
     flex-direction: row;
     align-items: center;
     margin: 0 auto;
+    padding: 1em 0;
     width: #{"min(100vw, 1000px)"};
     p{
       padding: 0;
@@ -146,17 +147,21 @@ li{
     }
   }
 
+  .step{
+    padding: 0;
+  }
+
   //Step Icons
   .step img{
     width: #{"min(15vw, 150px)"};
     height: #{"min(15vw, 150px)"};
-    padding-top: 0;
   }
 
   //Arrows
   .steps > img{
-    width: #{"min(6vw, 50px)"};
-    height: #{"min(6vw, 50px)"};
+    padding: 0;
+    width: #{"min(3vw, 30px)"};
+    height: #{"min(3vw, 30px)"};
   }
 
   .bgThree::before{
