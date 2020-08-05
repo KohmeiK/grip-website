@@ -175,7 +175,8 @@
     background-image: url('../Media/HeroIcon-desktop.svg'),
     url('../Media/BackgroundShape.svg'); /* The image used */
     background-color: $c-background; /* sUsed if the image is unavailable */
-    height: calc(100vh - 28px);
+    height: 85vh; /* Fallback for browsers that do not support Custom Properties */
+    height: calc(var(--vh, 1vh) * 100 - 28px); //28 is the arrow called bgOne
     background-repeat: no-repeat; /* Do not repeat the image */
   }
 
