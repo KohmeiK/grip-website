@@ -152,6 +152,7 @@ exports.addNewJob = functions.https.onCall(async (data, context) => {
         companyID: data.formVals.companyID,
         companyName: compDoc.data().name,
         applicants: [],
+        downloaded: ""
       })
       await compRef.update({jobs: admin.firestore.FieldValue.arrayUnion(jobRef.id)}) // add the job id to the company doc
       console.log({message: `Job successfully added`}, "return")

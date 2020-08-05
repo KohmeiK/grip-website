@@ -18,6 +18,15 @@ function MyJobs() {
   const [display, setDisplay] = useState("Not Set") //JSX for List
   const [loading, setLoading] = useState(true); //Still loading array
 
+  const getDate = () => {
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+
+    return mm + '/' + dd
+  }
+
   const updateUrls = async (resumeRefs) => {
     let urlsBuildingArray = []
     await Promise.all(resumeRefs.map(async (resumeRef, index) => {
@@ -81,6 +90,15 @@ function MyJobs() {
           }
         });
       });
+      let docRef = firebase.db.collection('jobs').doc(jobID)
+      docRef.get().then(function(doc) {
+        if (doc.data().downloaded === ""){ // not downloaded yet
+          let date = getDate()
+          docRef.update({
+            downloaded: date // add downloaded date
+          })
+        }
+      })
     }
     catch (err) {
       alert(err.message)
