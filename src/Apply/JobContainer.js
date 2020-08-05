@@ -19,9 +19,7 @@ function JobContainer(props){
         <Card.Body>
           <Card.Title>{props.companyName} - {props.name}</Card.Title>
           <Card.Text>
-            <pre>
               Deadline: {props.dl}
-            </pre>
             <div style={{wordWrap: "breakWord"}}>
               {props.info}
             </div>
