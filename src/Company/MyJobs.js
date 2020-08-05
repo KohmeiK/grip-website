@@ -24,7 +24,7 @@ function MyJobs() {
     var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
     var yyyy = today.getFullYear();
 
-    return mm + '/' + dd
+    return mm + dd + yyyy
   }
 
   const updateUrls = async (resumeRefs) => {
