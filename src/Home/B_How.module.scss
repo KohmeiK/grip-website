@@ -116,6 +116,7 @@ li{
 }
 
 @media screen and (min-width: $s-desktopMin) {
+
   .mobile{
     display: none;
   }
@@ -137,6 +138,8 @@ li{
     display: flex;
     flex-direction: row;
     align-items: center;
+    margin: 0 auto;
+    width: #{"min(100vw, 1000px)"};
     p{
       padding: 0;
       padding-top: 0.5em;
@@ -145,15 +148,15 @@ li{
 
   //Step Icons
   .step img{
-    width: 15vw;
-    height: 15vw;
+    width: #{"min(15vw, 150px)"};
+    height: #{"min(15vw, 150px)"};
     padding-top: 0;
   }
 
   //Arrows
   .steps > img{
-    width: 6vw;
-    height: 6vw;
+    width: #{"min(6vw, 50px)"};
+    height: #{"min(6vw, 50px)"};
   }
 
   .bgThree::before{
@@ -194,7 +197,6 @@ li{
     border: none;
     border-radius: 2em;
     padding: 0.25em 1.4em;
-    padding: auto;
     margin: 0 auto;
   }
 }
