@@ -47,7 +47,7 @@
 }
 
 .tagline h1{
-  font-weight: 800;
+  font-weight: 900;
   font-size: 1.4rem;
   letter-spacing: 0.1em;
   max-width: 400px;
@@ -103,10 +103,14 @@
 }
 
 .bgOne:before {
-  background: $c-darkBlue;
+  background: $c-blackBlue;
 }
 .bgOne{
   height: 30px;
+  z-index: 1;
+  img{
+    display: none;
+  }
 }
 
 .content {
@@ -126,7 +130,37 @@
   padding: 0;
 }
 
+// @media screen and (min-width: $s-tabletMin){
+//   .heroImage{
+//     background-position: 95% 15%;
+//   }
+// }
+
 @media screen and (min-width: $s-desktopMin) {
+
+  .arrow{
+    background-image: url("../Media/ScrollArrow.svg");
+    background-position: 50% 0;
+    background-size: 60% 60%;
+    background-color: $c-background; /* Used if the image is unavailable */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    height: inherit;
+    width: inherit;
+  }
+
+  .bgOne:before {
+    background: none;
+  }
+  .bgOne{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100vw;
+    img{
+      display: initial;
+      padding-bottom: 2em;
+    }
+  }
   .buttonWrap{
     // margin-top: 6em;
     // margin-bottom: 1em;
@@ -135,12 +169,12 @@
   }
 
   .heroImage{
-    background-position: 95% 55%,50% 0%;
+    background-position: 95% 45%,50% 0%;
     background-size: 40%, 100%;
     background-image: url('../Media/HeroIcon-desktop.svg'),
     url('../Media/BackgroundShape.svg'); /* The image used */
     background-color: $c-background; /* sUsed if the image is unavailable */
-    height: 600px;
+    height: calc(100vh - 28px);
     background-repeat: no-repeat; /* Do not repeat the image */
   }
 
@@ -173,14 +207,16 @@
     padding-top: 12em;
     margin-left: 2em;
     color: $c-darkBlue;
-    position: relative;
+    position: absolute;
+    bottom: 2em;
   }
 
   .tagline h1{
     font-size: 2rem;
     letter-spacing: 0.1em;
-    width: #{'max(55vw, 400px)'};
+    width: #{'max(50vw, 350px)'};
     max-width: none;
+    bottom: 5em;
   }
 
 

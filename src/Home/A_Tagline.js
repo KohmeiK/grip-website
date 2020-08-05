@@ -43,8 +43,11 @@ function Tagline(){
             </div>
         </div>
       </div>
+      <div className={`${styles.diagonalBox} ${styles.bgOne}`}>
+        <div className={styles.arrow}>
 
-      <div className={`${styles.diagonalBox} ${styles.bgOne}`}> </div>
+        </div>
+      </div>
     </>
   );
 }

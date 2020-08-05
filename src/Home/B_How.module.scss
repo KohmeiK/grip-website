@@ -1,0 +1,120 @@
+@import '../colorCodes.scss';
+ul{
+  padding: 0;
+}
+
+li{
+  list-style: none;
+}
+
+
+.topText{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  color: $c-darkBlue;
+  text-align: center;
+  h1{
+    font-weight: 800;
+    font-size: 1.2em;
+    letter-spacing: 0.0em;
+  }
+  p{
+    font-weight: 300;
+    font-size: 14px;
+    padding: 1em 2.5em;
+  }
+}
+
+//bgOne is "fake"
+.bgOne:before {
+  height:90px;
+  transform: skewY(-7deg);
+  background: $c-blue;
+}
+.bgOne{
+  height: 38px;
+}
+
+.bgTwo:before {
+  // height: 150px;
+  transform: skewY(3.5deg);
+  background: $c-blue;
+}
+.bgThree:before {
+  // height: 150px;
+  transform: skewY(3.5deg);
+  background: $c-lightBlue;
+}
+
+.bgFour:before {
+  transform: skewY(3.5deg);
+  background: $c-blackBlue;
+}
+.bgFour{
+  height: 25px;
+}
+
+.content {
+  max-width: 100;
+  margin: 0 auto;
+  padding: 0;
+  position: relative;
+}
+
+.diagonalBox {
+  position: relative;
+  margin-top: -1px;
+  /* padding: 3em 0; */
+
+}
+.diagonalBox::before{
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  transform-origin: 50% 0;
+  outline: 1px solid transparent;
+  backface-visibility: hidden;
+}
+
+.steps{
+  color: $c-darkBlue;
+  text-align: center;
+  h3{
+    font-weight: 300;
+    font-size: 1.3em;
+    letter-spacing: 0.0em;
+    margin: 0;
+    // padding: 1em;
+  }
+  img{
+    padding: 1em
+  }
+  p{
+    font-weight: 300;
+    font-size: 0.7em;
+    letter-spacing: 0.0em;
+    padding: 0em 2em;
+  }
+}
+
+.step{
+  padding: 2em;
+  padding-bottom: 0.5em;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+@media screen and (min-width: $s-desktopMin) {
+  .diagonalBox::before{
+    transform: skewY(0deg);
+  }
+  .steps{
+    display: flex;
+    flex-direction: row;
+  }
+}
