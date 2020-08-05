@@ -17,6 +17,7 @@ import ApplyContainer from './Apply/ApplyContainer'
 
 import MyJobs from './Company/MyJobs'
 
+import ForgotPassword from'./Signup/ForgotPassword'
 import Login from './Signup/Login'
 import Signup from "./Signup/Signup"
 
@@ -47,6 +48,7 @@ function App(){
 
           <Route path="/needAdmin"> <NeedAdmin /> </Route>
           <Route path="/needCompany"> <NeedCompany /> </Route>
+          <Route path="/forgotPassword"> <ForgotPassword /> </Route>
           <Route path="/signup"> <Signup /> </Route>
           <Route path="/login"> <Login /> </Route>
           <Route path="/"> <HomeContainer/> </Route>

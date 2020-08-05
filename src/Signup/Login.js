@@ -34,6 +34,7 @@ function Login() {
       handleSubmit(values)
     },
   })
+
   return (
     <div className="w-50 m-auto">
       <h3>Login {from.pathname !== '/' && "to view the page: "+from.pathname }</h3>
@@ -61,6 +62,8 @@ function Login() {
           />
         </div>
         <Button disabled={isLoading} type="submit">Submit</Button>
+        <br/>
+        <a href="" onClick={() => history.push("/forgotPassword")}>Forgot Password?</a>
       </form>
 
       <br />
