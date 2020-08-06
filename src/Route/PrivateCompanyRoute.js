@@ -1,8 +1,6 @@
 import React, {useContext} from "react"
-import {
-  Route,
-  Redirect,
-} from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
+
 import AuthContext from "../Firebase/AuthContext"
 
 // A wrapper for <Route> that redirects to the login

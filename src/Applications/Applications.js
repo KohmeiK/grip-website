@@ -2,53 +2,46 @@ import React, { useState, useContext, useEffect } from 'react'
 import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
-import JobCardForStudent from './JobCardForStudent'
-import { CardColumns, Form, InputGroup, FormControl } from 'react-bootstrap'
 
 import FirebaseContext from '../Firebase'
 import AuthContext from '../Firebase/AuthContext'
+
+import JobCardForStudent from './JobCardForStudent'
 
 //
 function Applications() {
     const firebase = useContext(FirebaseContext)
     const authContext = useContext(AuthContext)
     const [jobs, setJobs] = useState([]) //Data from DB
-    const [display, setDisplay] = useState("Not Set") //JSX for List
     const [loading, setLoading] = useState(true); //Still loading array
-    const handleClick = async (index) => { //To downolad resumes
-    }
+    
     const updateJobs = async (doc) => {
-        console.log('jobs1', jobs)
         let jobsBuildingArray = []
         let jobIDs = doc.data().jobsAppliedTo
         await Promise.all(jobIDs.map(async (jobID, index) => {
-            console.log(jobID, index, "Calling getJob(JobID, Index, refernce to empty array)")
             let jobRef = firebase.db.collection('jobs').doc(jobID)
             await getJob(jobRef, index, jobsBuildingArray)
         }))
 
         setJobs(jobsBuildingArray)
-        console.log(jobsBuildingArray, "builder is done")
-        console.log('when loading is set to false - ', jobs)
         setLoading(false)
     }
+
     const getJob = async (jobRef, index, outputArray) => {
         let doc = await jobRef.get()
         // jobs.push(doc.data())
         // setJobs(jobs.concat(doc.data()))
-        console.log('jobs2', jobs) //Nothing will show here since setJobs is aysnc
         outputArray[index] = doc.data()
         return("Ethan - You must return something to a promise (when you await soemthing)")
     }
 
     useEffect(() => {
         //Only on mount
-        console.log('jobs0', jobs)
         let studentRef = firebase.db.collection('students').doc(authContext.user.uid)
         studentRef.get().then(function (doc) {
-            if(doc.data().jobsAppliedTo == null){
+            if(doc.data().jobsAppliedTo === null){
               alert("You do not have a jobsAppliedTo array. Aborting updateJobs")
-            } else if(doc.data().jobsAppliedTo.length == 0){
+            } else if(doc.data().jobsAppliedTo.length === 0){
               alert("You have not applied to any jobs! Aborting updateJobs")
             }else{
               updateJobs(doc)
@@ -56,11 +49,10 @@ function Applications() {
         }).catch(function (error) {
             console.log(error)
         })
-    }, [])
+    }) // took out array according to warnings in inspect
 
     let localDisplay = "Loading..."
     if (!loading) {
-        console.log('jobs3', jobs)
         localDisplay = jobs.map((job, index) => { //Convert each element to JSX
             //convert all elements before reach render, this is only updates when show is changed
             return (

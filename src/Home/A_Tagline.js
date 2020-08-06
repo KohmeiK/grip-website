@@ -1,7 +1,6 @@
 import React from 'react'
 
 import logo from '../Media/Logo.svg'
-import background from '../Media/HeroIcon-mobile.svg'
 
 import styles from './A_Tagline.module.scss';
 

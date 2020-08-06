@@ -1,10 +1,11 @@
 import React, {useContext} from 'react'
 import { Nav, Navbar } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
+import { useLocation } from 'react-router-dom'
 
 import AuthContext from '../Firebase/AuthContext'
+
 import NavAuthSection from './NavAuthSection'
-import { useLocation } from 'react-router-dom'
 
 
 function NavBar(props){

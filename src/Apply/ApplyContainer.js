@@ -4,9 +4,10 @@ import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import {Form, InputGroup, FormControl} from 'react-bootstrap'
 
-import JobContainer from './JobContainer'
 import FirebaseContext from '../Firebase'
 import AuthContext from '../Firebase/AuthContext'
+
+import JobContainer from './JobContainer'
 
 function ApplyContainer(){
   const firebase = useContext(FirebaseContext)

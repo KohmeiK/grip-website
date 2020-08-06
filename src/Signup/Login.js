@@ -1,8 +1,9 @@
 import React, { useState, useContext } from 'react'
-import FirebaseContext from '../Firebase'
 import { useFormik } from 'formik';
 import { useHistory, useLocation } from "react-router-dom";
 import {Button} from "react-bootstrap"
+
+import FirebaseContext from '../Firebase'
 
 function Login() {
   let history = useHistory()

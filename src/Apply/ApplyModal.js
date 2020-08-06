@@ -6,7 +6,6 @@ import FirebaseContext from '../Firebase'
 
 function ApplyModal(props) {
   const firebase = useContext(FirebaseContext)
-  console.log(props)
 
   const handleConfirm = () => {
     alert(props.studentID + " is appying to " + props.jobID)
@@ -38,25 +37,12 @@ function ApplyModal(props) {
         <br />
           <b>Internship: {props.jobTitle} at {props.companyName}</b>
           <br />
-        {/* The follow resume will be uploaded:
-        <br />
-          <Container fluid>
-            <Row className="justify-content-md-center">
-              <Col style={{ borderStyle: "solid" }} md="auto">
-                <Resume />
-              </Col>
-            </Row>
-
-          </Container> */}
-          <br />
-          {/*<p>[Debug] Index:{props.index} Show:{props.show ? "isTrue" : "isFalse"} </p>*/}
 
           <div>
             <Formik
-              enableReinitialize={true}
+              enableReinitialize={true}x
               initialValues={{ file: '' }}
               onSubmit={(values) => {
-                console.log(props.studentID, '.pdf')
                 let resumeRef = firebase.storage.child(props.studentID + props.jobID + '.pdf')
                 resumeRef.put(values.file).then(
                   alert('File uploaded')

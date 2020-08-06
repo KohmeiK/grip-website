@@ -1,6 +1,7 @@
 import React, {useContext} from 'react'
-import { Formik, Field, Form, ErrorMessage } from 'formik';
 import {Button, Spinner} from "react-bootstrap"
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+
 import FirebaseContext from '../Firebase/'
 
 function AdminSettings(){

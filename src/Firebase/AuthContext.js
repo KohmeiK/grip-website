@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
+
 import FirebaseContext from "./index";
 
 //typescript stuff (use as doccumentaiton)
