@@ -30,20 +30,19 @@ function ForgotPassword() {
       <h3>Enter your email address</h3>
       <Formik
         initialValues={{ email: '' }}
-        onSubmit={async (values, { setSubmitting, resetForm }) => {
-          setTimeout(() => {
-            firebase.auth.sendPasswordResetEmail(values.email).then(function () {
-            setSubmitting(false)
-            resetForm()
-            setMessage('Password reset email sent to the address you provided')
-          }).catch(function (error) {
-            
-            resetForm()
-            alert(error)
-            setSubmitting(false)
-          })
-        }, 1000)
-          
+        onSubmit={(values, { setSubmitting, resetForm }) => {
+          setTimeout(async() => {
+            try{
+              await firebase.auth.sendPasswordResetEmail(values.email);
+              setSubmitting(false)
+              resetForm()
+              setMessage('Password reset email sent to the address you provided')
+            }catch(err){
+              setSubmitting(false)
+              alert(err);
+            }
+          }, 1000)
+
         }}
       >
         {({ isSubmitting }) => (
