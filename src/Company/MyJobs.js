@@ -2,7 +2,6 @@ import React, { useState, useContext, useEffect } from 'react'
 import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
-import { CardColumns, Form, InputGroup, FormControl } from 'react-bootstrap'
 import * as JSZip from 'jszip'
 import * as JSZipUtils from 'jszip-utils'
 import { saveAs } from 'save-as'
@@ -15,7 +14,6 @@ function MyJobs() {
   const authContext = useContext(AuthContext)
   const [downloaded, setDownloaded] = useState([])
   const [jobs, setJobs] = useState([]) //Data from DB
-  const [display, setDisplay] = useState("Not Set") //JSX for List
   const [loading, setLoading] = useState(true); //Still loading array
 
   const getDate = () => {
@@ -38,7 +36,7 @@ function MyJobs() {
   const getStudentName = async (applicants) => {
     let names = []
     await Promise.all(applicants.map(async (applicant, index) => {
-        firebase.db.collection('students').doc(applicant).get().then(function(doc){
+      firebase.db.collection('students').doc(applicant).get().then(function (doc) {
         names[index] = doc.data().displayName
       })
     }))
@@ -72,7 +70,7 @@ function MyJobs() {
     let promise = new Promise((res, rej) => {
       setTimeout(() => res("Now it's done!"), 2000)
     });
-    let result = await promise;
+    await promise;
 
     try {
       let zip = new JSZip();
@@ -93,7 +91,7 @@ function MyJobs() {
           }
           zip.file(filename, data, { binary: true });
           count++;
-          if (count == urls.length) {
+          if (count === urls.length) {
             zip.generateAsync({ type: 'blob' }).then(function (content) {
               saveAs(content, zipFilename)
               let downloadedBuilder = deepCopyArray(downloaded)
@@ -118,29 +116,33 @@ function MyJobs() {
     }
   }
 
-  useEffect(async () => {
+  useEffect(() => {
     //Only on mount
-    try {
-      let querySnapshot = await firebase.db.collection('jobs').where("companyID", "==", authContext.user.uid).get()
-      if (querySnapshot.docs.length === 0) {
-        setJobs("No Jobs");
-      } else {
-        let jobsBuilder = []
-        let downloadedBuilder = []
-        querySnapshot.forEach(function (doc) {
-          let job = doc.data()
-          job.applicantNum = job.applicants.length //So this way the number of applicant is included
-          job.jobID = doc.id //Similarly, include job's id
-          jobsBuilder.push(job) //Add all jobs to array
-          downloadedBuilder.push(false)
-        })
-        setJobs(jobsBuilder)
-        setDownloaded(downloadedBuilder)
+    async function loadJobs() { // async wihtin useEffect should be written like this according to warnings
+      try {
+        let querySnapshot = await firebase.db.collection('jobs').where("companyID", "==", authContext.user.uid).get()
+        if (querySnapshot.docs.length === 0) {
+          setJobs("No Jobs");
+        } else {
+          let jobsBuilder = []
+          let downloadedBuilder = []
+          querySnapshot.forEach(function (doc) {
+            let job = doc.data()
+            job.applicantNum = job.applicants.length //So this way the number of applicant is included
+            job.jobID = doc.id //Similarly, include job's id
+            jobsBuilder.push(job) //Add all jobs to array
+            downloadedBuilder.push(false)
+          })
+          setJobs(jobsBuilder)
+          setDownloaded(downloadedBuilder)
+        }
+        setLoading(false)
+      } catch (error) {
+        alert(error)
       }
-      setLoading(false)
-    } catch (error) {
-      alert(error)
     }
+
+    loadJobs()
   }, [])
 
   let localDisplay = "Loading..."

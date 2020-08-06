@@ -49,7 +49,7 @@ function Applications() {
         }).catch(function (error) {
             console.log(error)
         })
-    }) // took out array according to warnings in inspect
+    }, [])
 
     let localDisplay = "Loading..."
     if (!loading) {
