@@ -55,7 +55,7 @@ function MyJobs() {
     return urlsBuildingArray
   }
 
-  const handleSecondClick = (index) => { // set loading to false when the user clicks download the second time 
+  const handleSecondClick = (index) => { // set loading to false when the user clicks download the second time
     let downloadedBuilder = deepCopyArray(downloaded)
     downloadedBuilder[index] = false
     setDownloaded(downloadedBuilder)
@@ -77,7 +77,7 @@ function MyJobs() {
     try {
       let zip = new JSZip();
       let count = 0;
-      let zipFilename = jobTitle + ".zip";
+      let zipFilename = jobTitle + " Resumes.zip";
       let urls, names
       await Promise.all([updateUrls(resumeRefs), getStudentName(applicants)]).then((values) => { // to get both information at the same time
         urls = values[0]
