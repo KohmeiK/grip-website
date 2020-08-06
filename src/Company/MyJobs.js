@@ -27,6 +27,24 @@ function MyJobs() {
     return mm + dd + yyyy
   }
 
+  const deepCopyArray = (arr) => {
+    let arrayHolder = []
+    arr.forEach((element, index) => {
+      arrayHolder[index] = element
+    })
+    return arrayHolder
+  }
+
+  const getStudentName = async (applicants) => {
+    let names = []
+    await Promise.all(applicants.map(async (applicant, index) => {
+      await firebase.db.collection('students').doc(applicant).get().then(function(doc){
+        names[index] = doc.data().displayName
+      })
+    }))
+    return names
+  }
+
   const updateUrls = async (resumeRefs) => {
     let urlsBuildingArray = []
     await Promise.all(resumeRefs.map(async (resumeRef, index) => {
@@ -35,14 +53,6 @@ function MyJobs() {
       urlsBuildingArray[index] = url
     }))
     return urlsBuildingArray
-  }
-
-  const deepCopyArray = (arr) => {
-    let arrayHolder = []
-    arr.forEach((element, index) => {
-      arrayHolder[index] = element
-    })
-    return arrayHolder
   }
 
   const handleSecondClick = (index) => { // set loading to false when the user clicks download the second time 
@@ -69,10 +79,10 @@ function MyJobs() {
       let count = 0;
       let zipFilename = jobTitle + ".zip";
       let urls = await updateUrls(resumeRefs)
+      let names = await getStudentName(applicants)
 
       urls.forEach(function (url, indexForUrl) { // build a zip file containing all resumes
-        indexForUrl++
-        let filename = jobTitle + ' ' + indexForUrl + ".pdf";
+        let filename = names[indexForUrl] + ' - ' + jobTitle + ".pdf";
         // loading a file and add it in a zip file
         JSZipUtils.getBinaryContent(url, function (err, data) {
           if (err) {
@@ -91,8 +101,8 @@ function MyJobs() {
         });
       });
       let docRef = firebase.db.collection('jobs').doc(jobID)
-      docRef.get().then(function(doc) {
-        if (doc.data().downloaded === ""){ // not downloaded yet
+      docRef.get().then(function (doc) {
+        if (doc.data().downloaded === "") { // not downloaded yet
           let date = getDate()
           docRef.update({
             downloaded: date // add downloaded date

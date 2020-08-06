@@ -78,6 +78,7 @@ function InfoUpdate(){
       docRef.set({
           school: finalFormVals.school,
           classYear: finalFormVals.year,
+          displayName: finalFormVals.name
       })
       await authContext.user.updateProfile({displayName: finalFormVals.name,})
       await authContext.user.updateEmail(finalFormVals.email)
