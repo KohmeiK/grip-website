@@ -38,7 +38,7 @@ function MyJobs() {
   const getStudentName = async (applicants) => {
     let names = []
     await Promise.all(applicants.map(async (applicant, index) => {
-      await firebase.db.collection('students').doc(applicant).get().then(function(doc){
+        firebase.db.collection('students').doc(applicant).get().then(function(doc){
         names[index] = doc.data().displayName
       })
     }))
@@ -78,8 +78,11 @@ function MyJobs() {
       let zip = new JSZip();
       let count = 0;
       let zipFilename = jobTitle + ".zip";
-      let urls = await updateUrls(resumeRefs)
-      let names = await getStudentName(applicants)
+      let urls, names
+      await Promise.all([updateUrls(resumeRefs), getStudentName(applicants)]).then((values) => { // to get both information at the same time
+        urls = values[0]
+        names = values[1]
+      })
 
       urls.forEach(function (url, indexForUrl) { // build a zip file containing all resumes
         let filename = names[indexForUrl] + ' - ' + jobTitle + ".pdf";
