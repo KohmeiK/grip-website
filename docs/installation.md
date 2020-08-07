@@ -1,5 +1,7 @@
 ## **VERY OUTDATED - DO NOT TRUST!**
 
+## **Ethan:** Here is how you add to the docs: [doccumentation for the doccumentation](https://react-styleguidist.js.org/docs/documenting)
+
 ### How to install Github and Clone the Repo
 
 Download Github Desktop or use the command line if you have experience.
