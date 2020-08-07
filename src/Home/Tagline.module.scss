@@ -139,7 +139,22 @@
 
 @media screen and (min-width: $s-desktopMin) {
 
+  @keyframes bounceAnim {
+  	0%,20%,50%,80%,100% {
+  		transform: translateY(0)
+  	}
+  	40% {
+  		transform: translateY(-50px)
+  	}
+    60% {
+      transform: translateY(-25px);
+    }
+  }
+
   .arrow{
+    animation-name: bounceAnim;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
     background-image: url("../Media/ScrollArrow.svg");
     background-position: 50% 0;
     background-size: 60% 60%;
@@ -176,7 +191,7 @@
     url('../Media/BackgroundShape.svg'); /* The image used */
     background-color: $c-background; /* sUsed if the image is unavailable */
     height: 85vh; /* Fallback for browsers that do not support Custom Properties */
-    height: calc(var(--vh, 1vh) * 100 - 28px); //28 is the arrow called bgOne
+    height: calc(var(--vh, 1vh) * 100 - 30px); //28 is the arrow called bgOne
     background-repeat: no-repeat; /* Do not repeat the image */
   }
 

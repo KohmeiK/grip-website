@@ -164,6 +164,10 @@ li{
     height: #{"min(3vw, 30px)"};
   }
 
+  .topText > h1{
+    margin-top: 2em;
+  }
+
   .bgThree::before{
     background-color: initial;
   }
@@ -174,9 +178,6 @@ li{
     background-position: 0% 0%;
     background-size: cover;
     background-repeat: no-repeat; /* Do not repeat the image */
-  }
-  .textWrapper{
-    margin-top: 1em;
   }
   .bgOne::before{
     background: none;
