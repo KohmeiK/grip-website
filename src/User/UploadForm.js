@@ -2,8 +2,34 @@ import ProgressBar from 'react-bootstrap/ProgressBar'
 import React from 'react';
 import { Formik } from "formik";
 import * as yup from "yup"
+import {useDropzone} from 'react-dropzone'
 
 import FirebaseContext from "../Firebase/"
+
+function Dropzone(props) {
+  const {acceptedFiles, getRootProps, getInputProps} = useDropzone();
+  
+  const files = acceptedFiles.map(file => (
+    <li key={file.path}>
+      {file.path} - {file.size} bytes
+    </li>
+  ));
+
+
+  return (
+    <section className="container">
+      <div {...getRootProps({className: 'dropzone'})}>
+        <input {...getInputProps()} />
+        <p>Drag 'n' drop some files here, or click to select files</p>
+      </div>
+      <aside>
+        <h4>Files</h4>
+        <ul>{files}</ul>
+      </aside>
+    </section>
+  );
+}
+
 
 class UploadForm extends React.Component {
   constructor(props){
@@ -18,6 +44,7 @@ class UploadForm extends React.Component {
     const user = firebase.auth.currentUser
     return (
       <div className="container">
+        <Dropzone />
         <Formik
           initialValues={{ file: null }}
           onSubmit={(values, resetForm) => {
