@@ -18,11 +18,9 @@ function JobContainer(props){
         <Card.Img variant="top" src={imageURL} style={{height:"7em"}} />
         <Card.Body>
           <Card.Title>{props.companyName} - {props.name}</Card.Title>
-          <Card.Text>
-              Deadline: {props.dl}
-            <div style={{wordWrap: "breakWord"}}>
-              {props.info}
-            </div>
+          <Card.Text style={{wordWrap: "breakWord"}}>
+            Deadline: {props.dl}
+            {props.info}
           </Card.Text>
         </Card.Body>
         <Card.Footer>
