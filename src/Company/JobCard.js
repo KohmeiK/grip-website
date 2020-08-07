@@ -3,7 +3,9 @@ import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 import {Spinner} from "react-bootstrap"
 
-//JobCard for My Poseted Jobs page
+/**
+ * Description: JobCard for **My Posted Jobs** page that only companies can view
+ */
 function JobCard(props){
 
   const [clicked, setClicked] = useState(false)
@@ -37,7 +39,7 @@ function JobCard(props){
     }
     else{
       buttonHTML = <Button onClick={handleClick}> Download all resumes </Button>
-      
+
     }
   }else{
     buttonHTML =

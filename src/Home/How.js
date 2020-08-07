@@ -1,6 +1,6 @@
 import React from 'react'
 
-import styles from './B_How.module.scss';
+import styles from './How.module.scss';
 
 import how1m from '../Media/How1.svg';
 import how2m from '../Media/How2.svg';

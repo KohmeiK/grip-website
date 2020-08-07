@@ -2,7 +2,7 @@ import React from 'react'
 
 import logo from '../Media/Logo.svg'
 
-import styles from './A_Tagline.module.scss';
+import styles from './Tagline.module.scss';
 
 import { LinkContainer } from 'react-router-bootstrap'
 
