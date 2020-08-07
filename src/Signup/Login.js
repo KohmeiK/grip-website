@@ -63,8 +63,9 @@ function Login() {
           />
         </div>
         <Button disabled={isLoading} type="submit">Submit</Button>
-        <br/>
-        <a href="" onClick={() => history.push("/forgotPassword")}>Forgot Password?</a>
+        <br/> <br/>
+        <Button variant="secondary" size="sm" onClick={() => history.push("/forgotPassword")}>Forgot Password?</Button>
+
       </form>
 
       <br />

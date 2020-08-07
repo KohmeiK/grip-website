@@ -14,7 +14,7 @@ function Applications() {
     const authContext = useContext(AuthContext)
     const [jobs, setJobs] = useState([]) //Data from DB
     const [loading, setLoading] = useState(true); //Still loading array
-    
+
     const updateJobs = async (doc) => {
         let jobsBuildingArray = []
         let jobIDs = doc.data().jobsAppliedTo
@@ -49,6 +49,7 @@ function Applications() {
         }).catch(function (error) {
             console.log(error)
         })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     let localDisplay = "Loading..."
