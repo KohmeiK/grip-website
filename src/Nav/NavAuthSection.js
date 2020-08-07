@@ -7,6 +7,10 @@ import imgDIR from '../Media/user.png';
 import FirebaseContext from '../Firebase'
 import AuthContext from '../Firebase/AuthContext'
 
+/**
+Handles display of the log in button OR profile picutre, which
+has the dropdown optons of (My Info) (My Applications) (Logout)
+*/
 function NavAuthSection(){
   const firebase = useContext(FirebaseContext)
   const authContext = useContext(AuthContext)

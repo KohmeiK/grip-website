@@ -8,13 +8,21 @@ import AuthContext from '../Firebase/AuthContext'
 
 import JobCardForStudent from './JobCardForStudent'
 
-//
+/**
+ * More info here
+ */
 function Applications() {
     const firebase = useContext(FirebaseContext)
     const authContext = useContext(AuthContext)
     const [jobs, setJobs] = useState([]) //Data from DB
     const [loading, setLoading] = useState(true); //Still loading array
 
+  /**
+   * Insert text at cursor position.
+   *
+   * @param {string} text
+   * @public
+   */
     const updateJobs = async (doc) => {
         let jobsBuildingArray = []
         let jobIDs = doc.data().jobsAppliedTo

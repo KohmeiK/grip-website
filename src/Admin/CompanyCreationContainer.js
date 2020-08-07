@@ -4,8 +4,18 @@ import { Col, Row, Container, Spinner } from 'react-bootstrap'
 
 import FirebaseContext from '../Firebase'
 
+/**
+ * Company Creation Container description goes here
+ */
 function CompanyCreationContainer() {
   const firebase = useContext(FirebaseContext)
+
+    /**
+   * Insert text at cursor position.
+   *
+   * @param {string} text
+   * @public
+   */
   useEffect(() => {
     //This is called every time the component shows up on the screen
 

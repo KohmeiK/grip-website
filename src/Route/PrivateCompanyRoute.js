@@ -3,9 +3,9 @@ import { Route, Redirect } from "react-router-dom";
 
 import AuthContext from "../Firebase/AuthContext"
 
-// A wrapper for <Route> that redirects to the login
-// screen if you're not yet authenticated.
-function PrivateAdminRoute({ children, ...rest }) {
+/** A wrapper for <Route> that redirects to the needCompany
+screen if you're not an company. */
+function PrivateCompanyRoute({ children, ...rest }) {
   let authContext = useContext(AuthContext)
   // console.log(authContext)
   if(authContext.isLoadingAuthState){
@@ -33,4 +33,4 @@ function PrivateAdminRoute({ children, ...rest }) {
   }
 }
 
-export default PrivateAdminRoute
+export default PrivateCompanyRoute

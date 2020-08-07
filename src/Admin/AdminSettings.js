@@ -4,6 +4,14 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 
 import FirebaseContext from '../Firebase/'
 
+/**
+*  This is the main admin console where admins can update the
+* customClaims of any user in the system.
+*
+* @version 1.0
+* @author [Kohmei Kadoya](https://github.com/kohmei358)
+* @param {string} text
+*/
 function AdminSettings(){
   const firebase = useContext(FirebaseContext)
 

@@ -3,8 +3,8 @@ import { Route, Redirect } from "react-router-dom";
 
 import AuthContext from "../Firebase/AuthContext"
 
-// A wrapper for <Route> that redirects to the login
-// screen if you're not yet authenticated.
+/** A wrapper for <Route> that redirects to the needAdmin
+screen if you're not an Admin. */
 function PrivateAdminRoute({ children, ...rest }) {
   let authContext = useContext(AuthContext)
   console.log(authContext)

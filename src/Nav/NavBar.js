@@ -7,7 +7,11 @@ import AuthContext from '../Firebase/AuthContext'
 
 import NavAuthSection from './NavAuthSection'
 
-
+/**
+Navigation bar uses React-Bootsrap nav. Contains StudentNavLinks,
+Company Nav Links, and Admin Nav Links, which hide and show depending on
+the Auth Context. Nav Auth Section is the profile picutre and dropdown.
+*/
 function NavBar(props){
   const authContext = useContext(AuthContext)
   const location = useLocation();
