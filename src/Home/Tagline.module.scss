@@ -14,7 +14,7 @@
   align-items: stretch;
   list-style: none;
   justify-content: space-between;
-  color: $c-darkBlue;
+  color: $c-blackBlue;
   padding: 0;
 }
 
@@ -43,7 +43,7 @@
 .tagline{
   margin-top: 2em;
   padding: 1.5em;
-  color: $c-darkBlue;
+  color: $c-blackBlue;
   position: relative;
 }
 
@@ -56,6 +56,7 @@
 }
 
 .tagline p{
+  color:black;
   font-weight: 400;
   font-size: 1em;
   width: 60%;
@@ -223,7 +224,6 @@
   .tagline{
     margin-left: 5vw;
     padding-bottom: 0;
-    color: $c-darkBlue;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);

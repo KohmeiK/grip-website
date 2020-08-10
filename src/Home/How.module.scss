@@ -12,14 +12,15 @@ li{
   display: flex;
   align-items: center;
   flex-direction: column;
-  color: $c-darkBlue;
   text-align: center;
   h1{
+    color: $c-darkBlue;
     font-weight: 800;
     font-size: 1.2em;
     letter-spacing: 0.0em;
   }
   p{
+    color: black;
     font-weight: 300;
     font-size: 14px;
     padding: 1em 2.5em;
@@ -36,25 +37,35 @@ li{
   height: 38px;
 }
 
+//"How it works" and p after that
 .bgTwo:before {
   // height: 150px;
   transform: skewY(3.5deg);
   background: $c-blue;
 }
+
+//Step 2
 .bgThree:before {
   // height: 150px;
+  background-color:rgba(0,0,0,0.03);
   transform: skewY(3.5deg);
-  background: $c-lightBlue;
 }
 
-.bgFour:before {
-  transform: skewY(3.5deg);
-  background: $c-blackBlue;
-}
 .bgFour{
+  &:before{
+    transform: skewY(3.5deg);
+    background: $c-blackBlue;
+  }
   height: 25px;
 }
 
+.bgFive{
+  &:before{
+    transform: skewY(3.5deg);
+    background-image: url("../Media/How-Texture.png");
+    background-size: 300%;
+  }
+}
 .content {
   max-width: 100;
   margin: 0 auto;
@@ -81,9 +92,9 @@ li{
 }
 
 .steps{
-  color: $c-darkBlue;
   text-align: center;
   h3{
+    color: $c-darkBlue;
     font-weight: 300;
     font-size: 1.3em;
     letter-spacing: 0.0em;
@@ -94,6 +105,7 @@ li{
     padding: 1em
   }
   p{
+    color: black;
     font-weight: 300;
     font-size: 0.7em;
     letter-spacing: 0.0em;
@@ -132,6 +144,7 @@ li{
     }
     p{
       margin: 0 20vw;
+      width: 50vw;
     }
   }
   .steps{
@@ -148,7 +161,7 @@ li{
   }
 
   .step{
-    padding: 0;
+    padding: 0 1em;
   }
 
   //Step Icons
@@ -168,8 +181,12 @@ li{
     margin-top: 2em;
   }
 
-  .bgThree::before{
+  //step 2
+  .bgThree{
     background-color: initial;
+    &:before{
+      background-color: initial;
+    }
   }
   .desktopTexture{
     padding-bottom: 6em;
@@ -183,7 +200,7 @@ li{
     background: none;
   }
   .bgTwo::before{
-    background-color: rgba(0,0,0,0.03);
+    background-color:rgba(0,0,0,0.03);
   }
   .bgFour::before{
     background-color: $c-background;
@@ -192,6 +209,11 @@ li{
   .bgFour{
     margin-top: -40px;
     height: 1000px;
+  }
+  .bgFive{
+    &:before{
+      background-image: none;
+    }
   }
 
   .mainButton{
