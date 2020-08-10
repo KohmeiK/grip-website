@@ -1,7 +1,5 @@
 import React from 'react'
 
-import logo from '../Media/Logo.svg'
-
 import styles from './Tagline.module.scss';
 
 import { LinkContainer } from 'react-router-bootstrap'
@@ -25,7 +23,7 @@ function Tagline(){
   document.documentElement.style.setProperty('--vh', `${vh}px`);
   return(
     <>
-      <div className={styles.diagonalBox}>
+      <div className={`${styles.diagonalBox}`}>
         <div className={styles.content}>
             <div className={styles.heroImage}>
                 <div className={styles.tagline}>

@@ -7,6 +7,10 @@ import AuthContext from '../Firebase/AuthContext'
 
 import NavAuthSection from './NavAuthSection'
 
+import styles from './NavBar.module.scss';
+
+import logo from '../Media/Logo.svg'
+
 /**
 Navigation bar uses React-Bootsrap nav. Contains StudentNavLinks,
 Company Nav Links, and Admin Nav Links, which hide and show depending on
@@ -16,15 +20,18 @@ function NavBar(props){
   const authContext = useContext(AuthContext)
   return(
     <ul className={styles.nav}>
+        <LinkContainer to="/">
         <li className={styles.logo}>
             <img src={logo} alt="Logo"/>
             <p className={styles.asesText}>ASES</p>
             <p className={styles.abroadText}>Abroad</p>
         </li>
-        <li>
-            <LinkContainer to="/apply">
-              <div className={styles.signIn}>Sign in</div>
-            </LinkContainer>
+        </LinkContainer>
+        <li className={styles.navOptions}>
+            <StudentNavLinks isVisible={authContext.isAuthenticated}/>
+            <CompanyNavLinks isVisible={authContext.isCompany}/>
+            <AdminNavLinks isVisible={authContext.isAdmin}/>
+            <NavAuthSection />
         </li>
     </ul>
   );
@@ -33,7 +40,7 @@ function NavBar(props){
 function StudentNavLinks(props){
   return(props.isVisible ?
     <LinkContainer to="/apply">
-        <Nav.Link>Apply (Job Search)</Nav.Link>
+        <a>Apply (Job Search)</a>
     </LinkContainer>:
   null)
 }
@@ -41,7 +48,7 @@ function StudentNavLinks(props){
 function CompanyNavLinks(props){
   return(props.isVisible ?
     <LinkContainer to="/jobs">
-      <Nav.Link>My Posted Jobs</Nav.Link>
+      <a>My Posted Jobs</a>
     </LinkContainer>:
   null)
 }
@@ -49,10 +56,10 @@ function CompanyNavLinks(props){
 function AdminNavLinks(props){
   return(props.isVisible ?
     <><LinkContainer to="/create-company">
-      <Nav.Link>Create Company</Nav.Link>
+      <a>Create Company</a>
     </LinkContainer>
     <LinkContainer to="/admin">
-      <Nav.Link>Admin Settings</Nav.Link>
+      <a>Admin Settings</a>
     </LinkContainer></>:
   null)
 }
