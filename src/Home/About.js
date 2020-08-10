@@ -3,9 +3,8 @@ import styles from './About.module.scss';
 import React from 'react'
 
 /**
-* First component in home. The whole home contaier is static
-* So there is really nothing complicated.
-*
+* This is just a static section that for the About / Mission Statement section.
+* Couple werid diagonalBox things going on as usual
 */
 function About(){
   return(
