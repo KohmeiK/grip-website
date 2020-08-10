@@ -65,7 +65,6 @@ function How(){
       </ul>
       <button className={`${styles.mainButton} ${styles.desktop}`} type="button">APPLY</button>
     </div>
-    <div className={`${styles.diagonalBox} ${styles.bgFour}`}> </div>
     </>
   );
 }

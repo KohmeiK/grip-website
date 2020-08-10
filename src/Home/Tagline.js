@@ -28,20 +28,6 @@ function Tagline(){
       <div className={styles.diagonalBox}>
         <div className={styles.content}>
             <div className={styles.heroImage}>
-
-                <ul className={styles.nav}>
-                    <li className={styles.logo}>
-                        <img src={logo} alt="Logo"/>
-                        <p className={styles.asesText}>ASES</p>
-                        <p className={styles.abroadText}>Abroad</p>
-                    </li>
-                    <li>
-                        <LinkContainer to="/apply">
-                          <div className={styles.signIn}>Sign in</div>
-                        </LinkContainer>
-                    </li>
-                </ul>
-
                 <div className={styles.tagline}>
                     <h1>STANFORD'S GLOBALLY FOCUSED STUDENT ENTRIPRENEURSHIP</h1>
                     <p>Lorem ipsum dolor sit amet. cons adipiscing elit.</p>

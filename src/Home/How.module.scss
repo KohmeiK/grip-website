@@ -16,13 +16,14 @@ li{
   h1{
     color: $c-darkBlue;
     font-weight: 800;
-    font-size: 1.2em;
+    font-size: 19px;
     letter-spacing: 0.0em;
   }
   p{
     color: black;
     font-weight: 300;
-    font-size: 14px;
+    font-size: 15px;
+    line-height: 1.2em;
     padding: 1em 2.5em;
   }
 }
@@ -49,14 +50,6 @@ li{
   // height: 150px;
   background-color:rgba(0,0,0,0.03);
   transform: skewY(3.5deg);
-}
-
-.bgFour{
-  &:before{
-    transform: skewY(3.5deg);
-    background: $c-blackBlue;
-  }
-  height: 25px;
 }
 
 .bgFive{
@@ -96,7 +89,7 @@ li{
   h3{
     color: $c-darkBlue;
     font-weight: 300;
-    font-size: 1.3em;
+    font-size: 20px;
     letter-spacing: 0.0em;
     margin: 0;
     // padding: 1em;
@@ -107,9 +100,9 @@ li{
   p{
     color: black;
     font-weight: 300;
-    font-size: 0.7em;
+    font-size: 14px;
     letter-spacing: 0.0em;
-    padding: 0em 2em;
+    padding: 0em 1em;
   }
 }
 
@@ -201,14 +194,6 @@ li{
   }
   .bgTwo::before{
     background-color:rgba(0,0,0,0.03);
-  }
-  .bgFour::before{
-    background-color: $c-background;
-    transform: skewY(5deg);
-  }
-  .bgFour{
-    margin-top: -40px;
-    height: 1000px;
   }
   .bgFive{
     &:before{

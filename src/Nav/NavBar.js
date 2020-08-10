@@ -14,38 +14,19 @@ the Auth Context. Nav Auth Section is the profile picutre and dropdown.
 */
 function NavBar(props){
   const authContext = useContext(AuthContext)
-  const location = useLocation();
-  if(location.pathname === "/"){
-    return null;
-  }
   return(
-    <Navbar expand="lg" bg="dark" variant="dark">
-      <LinkContainer to="/">
-        <Navbar.Brand href="#home">
-          <img
-          src="https://ases.stanford.edu/images/logo.png"
-          width="45"
-          height="30"
-          className="d-inline-block align-top"
-          alt="Stanford Logo"
-          style={{paddingRight:"15px"}}
-          />
-          Stanford ASES
-        </Navbar.Brand>
-      </LinkContainer>
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="mr-auto">
-          <StudentNavLinks isVisible={authContext.isAuthenticated}/>
-          <CompanyNavLinks isVisible={authContext.isCompany}/>
-          <AdminNavLinks isVisible={authContext.isAdmin}/>
-        </Nav>
-      </Navbar.Collapse>
-      <Nav>
-        <NavAuthSection />
-      </Nav>
-    </Navbar>
-
+    <ul className={styles.nav}>
+        <li className={styles.logo}>
+            <img src={logo} alt="Logo"/>
+            <p className={styles.asesText}>ASES</p>
+            <p className={styles.abroadText}>Abroad</p>
+        </li>
+        <li>
+            <LinkContainer to="/apply">
+              <div className={styles.signIn}>Sign in</div>
+            </LinkContainer>
+        </li>
+    </ul>
   );
 }
 

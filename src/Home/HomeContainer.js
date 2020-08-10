@@ -2,6 +2,7 @@ import React from 'react'
 
 import Tagline from './Tagline.js'
 import How from './How.js'
+import About from './About.js'
 
 import styles from './HomeContainer.module.scss';
 
@@ -14,6 +15,7 @@ function HomeContainer(){
     <div className={styles.body}>
       <Tagline />
       <How />
+      <About />
     </div>
   );
 }
