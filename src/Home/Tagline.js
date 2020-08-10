@@ -13,7 +13,11 @@ window.addEventListener('resize', () => {
   let vh = window.innerHeight * 0.01;
   document.documentElement.style.setProperty('--vh', `${vh}px`);
 });
-
+/**
+* First component in home. The whole home contaier is static
+* So there is really nothing complicated.
+*
+*/
 function Tagline(){
 
   let vh = window.innerHeight * 0.01;
