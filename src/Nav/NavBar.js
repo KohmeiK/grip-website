@@ -10,7 +10,6 @@ import NavAuthSection from './NavAuthSection'
 import styles from './NavBar.module.scss';
 
 import logo from '../Media/Logo.svg'
-
 /**
 Navigation bar uses React-Bootsrap nav. Contains StudentNavLinks,
 Company Nav Links, and Admin Nav Links, which hide and show depending on
@@ -18,6 +17,14 @@ the Auth Context. Nav Auth Section is the profile picutre and dropdown.
 */
 function NavBar(props){
   const authContext = useContext(AuthContext)
+  let location = useLocation();
+  let isDarkText = null;
+  const width  = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+  if(shouldTextBeWhite(location.pathname, width)){
+    isDarkText = styles.brightText;
+  }else{
+    isDarkText = styles.darkText;
+  }
   return(
     <ul className={styles.nav}>
         <LinkContainer to="/">
@@ -27,14 +34,18 @@ function NavBar(props){
             <p className={styles.abroadText}>Abroad</p>
         </li>
         </LinkContainer>
-        <li className={styles.navOptions}>
+        <li className={`${styles.navOptions} ${isDarkText}`}>
             <StudentNavLinks isVisible={authContext.isAuthenticated}/>
-            <CompanyNavLinks isVisible={authContext.isCompany}/>
-            <AdminNavLinks isVisible={authContext.isAdmin}/>
+            <CompanyNavLinks isVisible={authContext.isCompany && authContext.isAuthenticated}/>
+            <AdminNavLinks isVisible={authContext.isAdmin && authContext.isAuthenticated}/>
             <NavAuthSection />
         </li>
     </ul>
   );
+}
+
+function shouldTextBeWhite(location, width){
+  return(location == "/" && width > 650)
 }
 
 function StudentNavLinks(props){
