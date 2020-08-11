@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Button } from 'react-bootstrap'
 import { useHistory } from "react-router-dom";
 import { useFormik } from 'formik';
@@ -36,7 +36,7 @@ function Signup() {
             })
 
             user.sendEmailVerification()
-            alert('Signup Successful,' + user.displayName + ', please verify your email')
+            alert('Signup Successful, ' + user.displayName + ', please verify your email')
             history.push("/upload")
 
         } catch (err) {
@@ -52,10 +52,10 @@ function Signup() {
             email: '',
             pwd: '',
             pwdConfirm: '',
-            school: '',
             classYear: '',
         },
         onSubmit: (values, { resetForm }) => {
+            values.school = getSchool(values.email)
             resetForm()
             handleSubmit(values)
         },
@@ -70,10 +70,31 @@ function Signup() {
                 .min(6, 'Must be 6 characters or more')
                 .required('Required'),
             pwdConfirm: Yup.string()
-                .oneOf([Yup.ref('pwd'), null], 'Passwords must match')
+                .oneOf([Yup.ref('pwd'), null], 'Passwords must match'),
+            classYear: Yup.string()
+                .required('Required'),
         }),
 
     })
+
+    const getSchool = (email) => {
+        let withoutEdu = email.substring(0, email.length - 4) // drop .edu
+        let at = withoutEdu.indexOf('@')
+        let lastDot = withoutEdu.lastIndexOf('.')
+        let school = withoutEdu.substring(Math.max(at, lastDot) + 1) // look for the substring b/n the last dot or @, which will be the school name
+        return school
+    }
+
+    let arr = []
+    let thisYear = new Date().getFullYear()
+    for (let i = 0; i <= 10; i++) {
+        arr[i] = i + thisYear
+    }
+    let dropDown = arr.map(item => // create a dropdown list for class year selection (from this year to 10 years later)
+        <option value={item}>{item}</option>
+    )
+
+
     return (
         <div className="w-50 m-auto">
             <h3>Sign Up</h3>
@@ -135,17 +156,6 @@ function Signup() {
                     ) : null}
                 </div>
                 <div className="form-group">
-                    <label htmlFor="school">School:</label>
-                    <input
-                        id="school"
-                        name="school"
-                        type="text"
-                        className="form-control"
-                        onChange={formik.handleChange}
-                        value={formik.values.school}
-                    />
-                </div>
-                <div className="form-group">
                     <label htmlFor="classYear">Class Year:</label>
                     <select
                         id="classYear"
@@ -153,12 +163,12 @@ function Signup() {
                         className="form-control"
                         onChange={formik.handleChange}
                         value={formik.values.classYear}>
-                        <option value='2020' label='2020' />
-                        <option value='2021' label='2021' />
-                        <option value='2022' label='2022' />
-                        <option value='2023' label='2023' />
-                        <option value='2024' label='2024' />
+                        <option value="" disabled selected>Select a year</option>
+                        {dropDown}
                     </select>
+                    {formik.touched.classYear && formik.errors.classYear ? (
+                        <div>{formik.errors.classYear}</div>
+                    ) : null}
                 </div>
                 <Button type="submit">Submit</Button>
             </form>
