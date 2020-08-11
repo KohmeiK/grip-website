@@ -29,7 +29,7 @@ function UploadForm() {
 }
 
 
-class UploadForm2 extends React.Component {
+class UploadForm2 extends React.Component { // old way of writing uploadForm
   constructor(props) {
     super(props)
     this.state = { progressBar: 0, uploading: false }

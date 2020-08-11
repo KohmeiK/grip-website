@@ -1,7 +1,8 @@
-import React, {useContext } from 'react'
-import {Button} from 'react-bootstrap'
+import React, { useContext } from 'react'
+import { Button } from 'react-bootstrap'
 import { useHistory } from "react-router-dom";
-import {useFormik} from 'formik';
+import { useFormik } from 'formik';
+import * as Yup from "yup"
 
 import FirebaseContext from '../Firebase'
 
@@ -9,40 +10,40 @@ function Signup() {
     const firebase = useContext(FirebaseContext)
     let history = useHistory()
 
-    const handleSubmit = async(values) => {
-      try{
+    const handleSubmit = async (values) => {
+        try {
 
-        //Wait to do anything until account is made
-        const res = await firebase.auth.createUserWithEmailAndPassword(values.email, values.pwd)
+            //Wait to do anything until account is made
+            const res = await firebase.auth.createUserWithEmailAndPassword(values.email, values.pwd)
 
-        //make changes to user before saving, wait until changes made
-        await res.user.updateProfile({displayName: values.name})
+            //make changes to user before saving, wait until changes made
+            await res.user.updateProfile({ displayName: values.name })
 
-        //update user value for context
-        // authContext.setUser(res.user);
+            //update user value for context
+            // authContext.setUser(res.user);
 
-        //I can access authContext.user immedealty here
-        //setUser is async so we need to deal with that
+            //I can access authContext.user immedealty here
+            //setUser is async so we need to deal with that
 
-        const user = res.user
+            const user = res.user
 
-        // write in database
-        firebase.db.collection("students").doc(user.uid).set({
-            school: values.school,
-            classYear: values.classYear,
-            jobsAppliedTo: [], 
-            displayName: values.name
-        })
+            // write in database
+            firebase.db.collection("students").doc(user.uid).set({
+                school: values.school,
+                classYear: values.classYear,
+                jobsAppliedTo: [],
+                displayName: values.name
+            })
 
-        user.sendEmailVerification()
-        alert('Signup Successful,' + user.displayName + ', please verify your email')
-        history.push("/upload")
+            user.sendEmailVerification()
+            alert('Signup Successful,' + user.displayName + ', please verify your email')
+            history.push("/upload")
 
-      } catch(err){
-          //Catch all errors here!
-          console.log(err)
-          alert(err)
-      }
+        } catch (err) {
+            //Catch all errors here!
+            console.log(err)
+            alert(err)
+        }
     }
 
     const formik = useFormik({
@@ -54,14 +55,24 @@ function Signup() {
             school: '',
             classYear: '',
         },
-        onSubmit: (values, {resetForm})  => {
-            if (values.pwd === values.pwdConfirm) {
-                resetForm()
-                handleSubmit(values)
-            } else {
-                alert("Passwords don't match")
-            }
+        onSubmit: (values, { resetForm }) => {
+            resetForm()
+            handleSubmit(values)
         },
+        validationSchema: Yup.object({
+            name: Yup.string()
+                .required('Required'),
+            email: Yup.string()
+                .email('Invalid email address')
+                .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.+-]+\.edu$/, 'Please sign up with a .edu email')
+                .required('Required'),
+            pwd: Yup.string()
+                .min(6, 'Must be 6 characters or more')
+                .required('Required'),
+            pwdConfirm: Yup.string()
+                .oneOf([Yup.ref('pwd'), null], 'Passwords must match')
+        }),
+
     })
     return (
         <div className="w-50 m-auto">
@@ -77,9 +88,12 @@ function Signup() {
                         onChange={formik.handleChange}
                         value={formik.values.name}
                     />
+                    {formik.touched.name && formik.errors.name ? (
+                        <div>{formik.errors.name}</div>
+                    ) : null}
                 </div>
                 <div className="form-group">
-                    <label htmlFor="emal">Email:</label>
+                    <label htmlFor="email">Email:</label>
                     <input
                         id="email"
                         name="email"
@@ -88,6 +102,9 @@ function Signup() {
                         onChange={formik.handleChange}
                         value={formik.values.email}
                     />
+                    {formik.touched.email && formik.errors.email ? (
+                        <div>{formik.errors.email}</div>
+                    ) : null}
                 </div>
                 <div className="form-group">
                     <label htmlFor="pwd">Password:</label>
@@ -99,6 +116,9 @@ function Signup() {
                         onChange={formik.handleChange}
                         value={formik.values.pwd}
                     />
+                    {formik.touched.pwd && formik.errors.pwd ? (
+                        <div>{formik.errors.pwd}</div>
+                    ) : null}
                 </div>
                 <div className="form-group">
                     <label htmlFor="pwdConfirm">Re-enter Password:</label>
@@ -110,6 +130,9 @@ function Signup() {
                         onChange={formik.handleChange}
                         value={formik.values.pwdConfirm}
                     />
+                    {formik.touched.pwdConfirm && formik.errors.pwdConfirm ? (
+                        <div>{formik.errors.pwdConfirm}</div>
+                    ) : null}
                 </div>
                 <div className="form-group">
                     <label htmlFor="school">School:</label>
@@ -141,7 +164,7 @@ function Signup() {
             </form>
 
             <h4> Already have an account?</h4>
-            <Button variant="secondary" onClick={()=>history.push("/login")}>Sign In</Button>
+            <Button variant="secondary" onClick={() => history.push("/login")}>Sign In</Button>
 
 
         </div>
