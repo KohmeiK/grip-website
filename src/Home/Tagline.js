@@ -1,7 +1,5 @@
 import React from 'react'
 
-import logo from '../Media/Logo.svg'
-
 import styles from './Tagline.module.scss';
 
 import { LinkContainer } from 'react-router-bootstrap'
@@ -13,7 +11,11 @@ window.addEventListener('resize', () => {
   let vh = window.innerHeight * 0.01;
   document.documentElement.style.setProperty('--vh', `${vh}px`);
 });
-
+/**
+* First component in home. The whole home contaier is static
+* So there is really nothing complicated.
+*
+*/
 function Tagline(){
 
   let vh = window.innerHeight * 0.01;
@@ -21,23 +23,9 @@ function Tagline(){
   document.documentElement.style.setProperty('--vh', `${vh}px`);
   return(
     <>
-      <div className={styles.diagonalBox}>
+      <div className={`${styles.diagonalBox}`}>
         <div className={styles.content}>
             <div className={styles.heroImage}>
-
-                <ul className={styles.nav}>
-                    <li className={styles.logo}>
-                        <img src={logo} alt="Logo"/>
-                        <p className={styles.asesText}>ASES</p>
-                        <p className={styles.abroadText}>Abroad</p>
-                    </li>
-                    <li>
-                        <LinkContainer to="/apply">
-                          <div className={styles.signIn}>Sign in</div>
-                        </LinkContainer>
-                    </li>
-                </ul>
-
                 <div className={styles.tagline}>
                     <h1>STANFORD'S GLOBALLY FOCUSED STUDENT ENTRIPRENEURSHIP</h1>
                     <p>Lorem ipsum dolor sit amet. cons adipiscing elit.</p>

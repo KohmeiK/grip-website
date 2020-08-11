@@ -24,11 +24,11 @@ function How(){
           </div>
         </div>
       </div>
-      <ul className={styles.steps}>
-
+      <ul className={` ${styles.bgFive} ${styles.diagonalBox}`}>
+        <div className={ `${styles.steps} ${styles.content} `}>
         <li>
-          <div className={`${styles.diagonalBox}`}>
-            <div className={`${styles.content} ${styles.step}`}>
+          <div className={``}>
+            <div className={`${styles.step}`}>
               <img className={styles.desktop} src={how1d} alt="Step1"/>
               <h3 className={styles.desktop}>Sign up</h3>
               <h3 className={styles.mobile}>Step 1: Sign up</h3>
@@ -39,8 +39,8 @@ function How(){
         </li>
         <img className={styles.desktop} src={arrow} alt="Right Arrow"/>
         <li>
-          <div className={`${styles.diagonalBox} ${styles.bgThree}`}>
-            <div className={`${styles.content} ${styles.step}`}>
+          <div className={`${styles.bgThree} ${styles.diagonalBox}`}>
+            <div className={` ${styles.step} ${styles.content}`}>
               <img className={styles.desktop} src={how2d} alt="Step2"/>
               <h3 className={styles.desktop}>Upload resume</h3>
               <h3 className={styles.mobile}>Step 2: Upload resume</h3>
@@ -51,8 +51,8 @@ function How(){
         </li>
         <img className={styles.desktop} src={arrow} alt="Right Arrow"/>
         <li>
-          <div className={`${styles.diagonalBox}`}>
-            <div className={`${styles.content} ${styles.step}`}>
+          <div className={``}>
+            <div className={` ${styles.step}`}>
               <img className={styles.desktop} src={how3d} alt="Step3"/>
               <h3 className={styles.desktop}>Apply</h3>
               <h3 className={styles.mobile}>Step 3: Apply</h3>
@@ -61,10 +61,10 @@ function How(){
             </div>
           </div>
         </li>
+        </div>
       </ul>
       <button className={`${styles.mainButton} ${styles.desktop}`} type="button">APPLY</button>
     </div>
-    <div className={`${styles.diagonalBox} ${styles.bgFour}`}> </div>
     </>
   );
 }

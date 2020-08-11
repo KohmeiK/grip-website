@@ -1,0 +1,73 @@
+@import '../colorCodes.scss';
+
+.nav{
+  z-index: 10;
+  height: 85px;
+  display: flex;
+  align-items: stretch;
+  list-style: none;
+  justify-content: space-between;
+  color: $c-blackBlue;
+  background-color: transparent;
+  padding: 0;
+  margin: 0;
+  font-family: 'Raleway', sans-serif;
+}
+
+.logo{
+  padding: 1.1em;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo img{
+  width: 40px;
+  height: 40px;
+}
+
+.asesText{
+  display: none;
+}
+.abroadText{
+  font-weight: 800;
+  margin: 0;
+  padding: 0;
+}
+
+.navOptions{
+  a{
+    padding: 0 30px;
+    color: $c-blackBlue;
+  }
+  display: flex;
+  align-items: center;
+}
+
+.brightText > a{
+  color: white;
+  &:hover{
+    color:#eee;
+  }
+}
+
+@media screen and (min-width: $s-desktopMin) {
+
+
+  .logo{
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .asesText{
+    display: initial;
+    font-weight: 600;
+    padding: 0.8em;
+    margin: 0;
+  }
+  .abroadText{
+    font-weight: 400;
+    padding: 0;
+  }
+}

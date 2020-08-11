@@ -7,6 +7,9 @@ import AuthContext from '../Firebase/AuthContext'
 
 import NavAuthSection from './NavAuthSection'
 
+import styles from './NavBar.module.scss';
+
+import logo from '../Media/Logo.svg'
 /**
 Navigation bar uses React-Bootsrap nav. Contains StudentNavLinks,
 Company Nav Links, and Admin Nav Links, which hide and show depending on
@@ -14,45 +17,41 @@ the Auth Context. Nav Auth Section is the profile picutre and dropdown.
 */
 function NavBar(props){
   const authContext = useContext(AuthContext)
-  const location = useLocation();
-  if(location.pathname === "/"){
-    return null;
+  let location = useLocation();
+  let isDarkText = null;
+  const width  = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+  if(shouldTextBeWhite(location.pathname, width)){
+    isDarkText = styles.brightText;
+  }else{
+    isDarkText = styles.darkText;
   }
   return(
-    <Navbar expand="lg" bg="dark" variant="dark">
-      <LinkContainer to="/">
-        <Navbar.Brand href="#home">
-          <img
-          src="https://ases.stanford.edu/images/logo.png"
-          width="45"
-          height="30"
-          className="d-inline-block align-top"
-          alt="Stanford Logo"
-          style={{paddingRight:"15px"}}
-          />
-          Stanford ASES
-        </Navbar.Brand>
-      </LinkContainer>
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="mr-auto">
-          <StudentNavLinks isVisible={authContext.isAuthenticated}/>
-          <CompanyNavLinks isVisible={authContext.isCompany}/>
-          <AdminNavLinks isVisible={authContext.isAdmin}/>
-        </Nav>
-      </Navbar.Collapse>
-      <Nav>
-        <NavAuthSection />
-      </Nav>
-    </Navbar>
-
+    <ul className={styles.nav}>
+        <LinkContainer to="/">
+        <li className={styles.logo}>
+            <img src={logo} alt="Logo"/>
+            <p className={styles.asesText}>ASES</p>
+            <p className={styles.abroadText}>Abroad</p>
+        </li>
+        </LinkContainer>
+        <li className={`${styles.navOptions} ${isDarkText}`}>
+            <StudentNavLinks isVisible={authContext.isAuthenticated}/>
+            <CompanyNavLinks isVisible={authContext.isCompany && authContext.isAuthenticated}/>
+            <AdminNavLinks isVisible={authContext.isAdmin && authContext.isAuthenticated}/>
+            <NavAuthSection />
+        </li>
+    </ul>
   );
+}
+
+function shouldTextBeWhite(location, width){
+  return(location == "/" && width > 650)
 }
 
 function StudentNavLinks(props){
   return(props.isVisible ?
     <LinkContainer to="/apply">
-        <Nav.Link>Apply (Job Search)</Nav.Link>
+        <a>Apply (Job Search)</a>
     </LinkContainer>:
   null)
 }
@@ -60,7 +59,7 @@ function StudentNavLinks(props){
 function CompanyNavLinks(props){
   return(props.isVisible ?
     <LinkContainer to="/jobs">
-      <Nav.Link>My Posted Jobs</Nav.Link>
+      <a>My Posted Jobs</a>
     </LinkContainer>:
   null)
 }
@@ -68,10 +67,10 @@ function CompanyNavLinks(props){
 function AdminNavLinks(props){
   return(props.isVisible ?
     <><LinkContainer to="/create-company">
-      <Nav.Link>Create Company</Nav.Link>
+      <a>Create Company</a>
     </LinkContainer>
     <LinkContainer to="/admin">
-      <Nav.Link>Admin Settings</Nav.Link>
+      <a>Admin Settings</a>
     </LinkContainer></>:
   null)
 }

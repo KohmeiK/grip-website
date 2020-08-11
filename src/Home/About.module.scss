@@ -1,0 +1,77 @@
+@import '../colorCodes.scss';
+
+.aboutText{
+  width: 80vw;
+  margin: 5em auto;
+  h4{
+    font-weight: 800;
+    color: $c-darkBlue;
+    padding-bottom: 0.5em;
+  }
+  p{
+    color: black;
+    font-weight: 300;
+    font-size: 14px;
+    letter-spacing: 0.0em;
+    line-height: 1.9em;
+  }
+}
+
+@media screen and (min-width: $s-desktopMin) {
+
+  .diagonalBox {
+    position: relative;
+    margin-top: -1px;
+    &:before{
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      transform-origin: 50% 0;
+      outline: 1px solid transparent;
+      backface-visibility: hidden;
+    }
+  }
+  .content {
+    max-width: 100;
+    margin: 0 auto;
+    padding: 0;
+    position: relative;
+  }
+
+  .aboutText{
+    width: 40vw;
+    margin: 0em 3em 0 auto; //main left right space
+    padding-top: 20vw; //main top space (yes, vw is intentional to keep earth in frame)
+    h4{
+      font-weight: 800;
+      font-size: 30px;
+      color: $c-darkBlue;
+      padding-bottom: 0.5em;
+    }
+    p{
+      color: black;
+      font-weight: 300;
+      font-size: 14px;
+      letter-spacing: 0.0em;
+      line-height: 1.9em;
+      padding-bottom: 20em; //Main bottom space
+    }
+  }
+
+  .aboutWrapper{
+    z-index: 10;
+    margin-top: -20px;
+    &:before{
+      background-image: url('../Media/BigEarth.svg');
+      background-size: 110%;
+      background-position: 600% 50%;
+      background-color: $c-background; /* Used if the image is unavailable */
+      background-repeat: no-repeat; /* Do not repeat the image */
+      transform: skewY(5deg);
+    }
+  }
+
+}
