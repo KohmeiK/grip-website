@@ -1,0 +1,93 @@
+@import '../colorCodes.scss';
+
+.diagonalBox {
+  position: relative;
+  margin-top: -1px;
+  &:before{
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    transform-origin: 50% 0;
+    outline: 1px solid transparent;
+    backface-visibility: hidden;
+  }
+}
+.content {
+  max-width: 100;
+  margin: 0 auto;
+  padding: 0;
+  position: relative;
+}
+
+.bgOne:before {
+  transform: skewY(-5deg);
+  padding-bottom: 6em;
+  background-image: url("../Media/How-Texture.png");
+  background-color: $c-lightBlue;
+  background-position: 0% 0%;
+  background-size: 400%;
+}
+.bgOne{
+  padding-bottom: 3em;
+  margin-bottom: 2em;
+}
+
+.quoteWrapper{
+  padding: 2em 0;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  img{
+    width: 130px;
+  }
+  p{
+    text-align: center;
+    padding: 0 2em;
+    color: black;
+    &:before{
+      content: url("../Media/quoteIcon.svg");
+    }
+  }
+  h3{
+    color: $c-darkBlue;
+    &:before{
+      content: "- "
+    }
+  }
+}
+
+.mainButton{
+  z-index: -10;
+  display: block;
+  color: white;
+  background: $c-pink;
+  font-size: 1.1em;
+  font-weight: 800;
+  border: none;
+  border-radius: 2em;
+  padding: 0.25em 1.4em;
+  margin: 0 auto;
+}
+
+@media screen and (min-width: $s-desktopMin) {
+  .quotes{
+    display: flex;
+    justify-content: center;
+    li{
+      max-width: 30vw;
+    }
+  }
+
+  .bgOne:before{
+    z-index: 10;
+    background-size: 100%;
+  }
+  .content{
+    margin-top: -200px;
+    padding-top: 5em;
+    z-index: 11;
+  }
+}
