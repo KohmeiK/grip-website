@@ -11,6 +11,16 @@ module.exports = {
           description: 'This section explains how to set up your developmemt enviroment'
         },
         {
+          name: 'UI Design Guide',
+          content: 'docs/styleguide.md',
+          description: 'This section is a UI style guide for when you want to add more pages to the site while keeping it themactically consistent'
+        },
+        {
+          name: 'Misc',
+          content: 'docs/misc.md',
+          description: 'Other useful info that I had no where else to put'
+        },
+        {
           name: 'Live Site',
           external: true,
           href: 'http://kolledgeholdings.com'
