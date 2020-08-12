@@ -1,6 +1,9 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { Button } from 'react-bootstrap'
+import { Button, Spinner } from 'react-bootstrap'
+import { Formik, Field, Form } from 'formik';
 import { useHistory } from "react-router-dom";
+
+import * as Yup from "yup"
 
 import FirebaseContext from '../Firebase/'
 
@@ -72,64 +75,82 @@ function EmailHandler() {
             // the new password.
             let newPassword = 'abcdefg' // FIX THIS LATER
             setLocalDisplay(
-                // <div>
-                //     <h3>Please enter the new password for {accountEmail}</h3>
-                //     <Formik
-                //         initialValues={{ pwd: '' }}
-                //         onSubmit={(values, { setSubmitting, resetForm }) => {
-                //             setTimeout(async () => {
-                //                 try {
-                //                     await firebase.auth.sendPasswordResetEmail(values.email);
-                //                     setSubmitting(false)
-                //                     resetForm()
-                //                     setMessage('Password reset email sent to the address you provided')
-                //                 } catch (err) {
-                //                     setSubmitting(false)
-                //                     alert(err);
-                //                 }
-                //             }, 1000)
-                //         }}
-                //     >
-                //         {({ isSubmitting }) => (
-                //             <Form>
-                //                 <Field name="email" type="email" />
-                //                 <ErrorMessage name="email" />
-                //                 <br />
-                //                 <Button disabled={isSubmitting} type="submit">
-                //                     {isSubmitting && <Spinner
-                //                         as="span"
-                //                         animation="border"
-                //                         size="sm"
-                //                         role="status"
-                //                         aria-hidden="true"
-                //                     />}
-                //                     Submit
-                //                 </Button>
-                //                 <h5>{message}</h5>
-                //             </Form>
-                //         )}
-                //     </Formik>
-                // </div>
+                <div>
+                    <h3>Please enter the new password for {accountEmail}</h3>
+                    <Formik
+                        initialValues={{ pwd: '', pwdConfirm: '' }}
+                        onSubmit={(values) => {
+                            // Save the new password.
+                            let newPassword = values.pwd
+                            auth.confirmPasswordReset(actionCode, newPassword).then(function (resp) {
+                                // Password reset has been confirmed and new password updated.
+
+                                // TODO: Display a link back to the app, or sign-in the user directly
+                                // if the page belongs to the same domain as the app:
+                                // auth.signInWithEmailAndPassword(accountEmail, newPassword);
+                                setLocalDisplay(
+                                    <div>
+                                        <h3>Password Reset. You can now log in with the new password.</h3>
+                                        <Button onClick={() => history.push('/login')}>Go to login</Button>
+                                    </div>
+                                )
+
+                                // TODO: If a continue URL is available, display a button which on
+                                // click redirects the user back to the app via continueUrl with
+                                // additional state determined from that URL's parameters.
+                            }).catch(function (error) {
+                                // Error occurred during confirmation. The code might have expired or the
+                                // password is too weak.
+                                alert(error)
+                            });
+                        }}
+                        validationSchema={Yup.object({
+                            pwd: Yup.string()
+                                .min(6, 'Must be 6 characters or more')
+                                .required('Required'),
+                            pwdConfirm: Yup.string()
+                                .oneOf([Yup.ref('pwd'), null], 'Passwords must match'),
+                        })}
+                    >
+                        {(formik, isSubmitting) => (
+                            <Form>
+                                <label htmlFor="pwd">New password: </label>
+                                <br/>
+                                <Field name="pwd" type="password" />
+                                {formik.touched.pwd && formik.errors.pwd ? (
+                                    <div>{formik.errors.pwd}</div>
+                                ) : null}
+                                <br />
+                                <label htmlFor="pwdConfirm">Confirm password: </label>
+                                <br/>
+                                <Field name="pwdConfirm" type="password" />
+                                {formik.touched.pwdConfirm && formik.errors.pwdConfirm ? (
+                                    <div>{formik.errors.pwdConfirm}</div>
+                                ) : null}
+                                <br/>
+                                <Button disabled={isSubmitting} type="submit">
+                                    {isSubmitting && <Spinner
+                                        as="span"
+                                        animation="border"
+                                        size="sm"
+                                        role="status"
+                                        aria-hidden="true"
+                                    />}
+                                    Submit
+                                </Button>
+                            </Form>
+                        )}
+                    </Formik>
+                </div>
             )
 
-            // Save the new password.
-            auth.confirmPasswordReset(actionCode, newPassword).then(function (resp) {
-                // Password reset has been confirmed and new password updated.
 
-                // TODO: Display a link back to the app, or sign-in the user directly
-                // if the page belongs to the same domain as the app:
-                // auth.signInWithEmailAndPassword(accountEmail, newPassword);
-
-                // TODO: If a continue URL is available, display a button which on
-                // click redirects the user back to the app via continueUrl with
-                // additional state determined from that URL's parameters.
-            }).catch(function (error) {
-                // Error occurred during confirmation. The code might have expired or the
-                // password is too weak.
-            });
         }).catch(function (error) {
             // Invalid or expired action code. Ask user to try to reset the password
             // again.
+            setLocalDisplay(
+                <h3>{error.message}</h3>
+            )
         });
     }
 
@@ -179,12 +200,14 @@ function EmailHandler() {
         //         <h3>{error.message}</h3>
         //     )
         // }
-        
+
         auth.applyActionCode(actionCode).then(function (resp) {
             // Email address has been verified.
 
             // TODO: Display a confirmation message to the user.
             // You could also provide the user with a link back to the app.
+
+            // history.push('/firstUpload')
             setLocalDisplay(
                 <div>
                     <h3>Email verified. Click on the button below to continue</h3>
