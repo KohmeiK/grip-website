@@ -1,4 +1,4 @@
-import React, {useContext} from "react"
+import React, { useContext } from "react"
 import { Route, Redirect } from "react-router-dom";
 
 import AuthContext from "../Firebase/AuthContext"
@@ -7,26 +7,36 @@ import AuthContext from "../Firebase/AuthContext"
 screen if you're not logged in. */
 function PrivateRoute({ children, ...rest }) {
   let authContext = useContext(AuthContext)
-  // console.log(authContext)
-  if(authContext.isLoadingAuthState){
-    return(
+  if (authContext.isLoadingAuthState) {
+    return (
       <h1>Redirecting...</h1>
     )
-  }else{
+  } else {
     return (
       <Route
         {...rest}
-        render={({ location }) =>
-          authContext.isAuthenticated ? (
-            children
-          ) : (
-            <Redirect
+        render={({ location }) => {
+          if (authContext.isAuthenticated) {
+            if (authContext.isVerified) {
+              return children
+            } else {
+              return (<Redirect
+                to={{
+                  pathname: "/VerifyEmail",
+                  state: { from: location }
+                }}
+              />)
+            }
+          } else {
+            return (<Redirect
               to={{
                 pathname: "/login",
                 state: { from: location }
               }}
-            />
-          )
+            />)
+
+          }
+        }
         }
       />
     );

@@ -112,7 +112,7 @@ exports.createNewCompany = functions.https.onCall(async (data, context) => {
     console.log("creating new user", data.formValsmname)
     const user = await admin.auth().createUser({
       email: data.formVals.email,
-      emailVerified: false,
+      emailVerified: true,
       password: data.formVals.pwd,
       displayName: data.formVals.name,
     })
@@ -163,6 +163,20 @@ exports.addNewJob = functions.https.onCall(async (data, context) => {
         console.log("Send html error:",`Company ID ${data.formVals.companyID} not found`)
         throw new functions.https.HttpsError("invalid-argument", `Company ID ${data.formVals.companyID} not found`)
     }
+  }catch(err){
+    console.log("Send html error:",err.message)
+    throw new functions.https.HttpsError("invalid-argument", err.message)
+  }
+})
+
+exports.verifyEmail = functions.https.onCall(async (data, context) => {
+  console.log("Running verify email")
+  console.log(data.email,"email")
+  try{
+    const user = await admin.auth().getUserByEmail(data.email)
+    await admin.auth().updateUser(user.uid, {emailVerified: true})
+    console.log({message: `Verified ${data.email}'s email`}, "return")
+    return({message: `Verified ${data.email}'s email!`})
   }catch(err){
     console.log("Send html error:",err.message)
     throw new functions.https.HttpsError("invalid-argument", err.message)

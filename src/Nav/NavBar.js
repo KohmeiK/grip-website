@@ -17,7 +17,7 @@ the Auth Context. Nav Auth Section is the profile picutre and dropdown.
 */
 function NavBar(props){
   const authContext = useContext(AuthContext)
-  console.log(authContext.isVerified, "emailVerfied?")
+  // console.log(authContext.isVerified, "emailVerfied?")
   let location = useLocation();
   let isDarkText = null;
   const { height, width } = useWindowDimensions();

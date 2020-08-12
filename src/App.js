@@ -20,6 +20,7 @@ import MyJobs from './Company/MyJobs'
 import ForgotPassword from'./Signup/ForgotPassword'
 import Login from './Signup/Login'
 import Signup from "./Signup/Signup"
+import VerifyEmail from './Signup/VerifyEmail'
 
 import CompanyCreationContainer from './Admin/CompanyCreationContainer'
 import AdminSettingsContainer from './Admin/AdminSettingsContainer'
@@ -51,6 +52,7 @@ function App(){
           <Route path="/forgotPassword"> <ForgotPassword /> </Route>
           <Route path="/signup"> <Signup /> </Route>
           <Route path="/login"> <Login /> </Route>
+          <Route path="/verifyEmail"> <VerifyEmail /> </Route>
           <Route path="/"> <HomeContainer/> </Route>
         </Switch>
       </Router>
