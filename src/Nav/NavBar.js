@@ -4,8 +4,8 @@ import { LinkContainer } from 'react-router-bootstrap'
 import { useLocation } from 'react-router-dom'
 
 import AuthContext from '../Firebase/AuthContext'
-
 import NavAuthSection from './NavAuthSection'
+import useWindowDimensions from '../useWindowDimensions.js'
 
 import styles from './NavBar.module.scss';
 
@@ -17,9 +17,10 @@ the Auth Context. Nav Auth Section is the profile picutre and dropdown.
 */
 function NavBar(props){
   const authContext = useContext(AuthContext)
+  console.log(authContext.isVerified, "emailVerfied?")
   let location = useLocation();
   let isDarkText = null;
-  const width  = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+  const { height, width } = useWindowDimensions();
   if(shouldTextBeWhite(location.pathname, width)){
     isDarkText = styles.brightText;
   }else{

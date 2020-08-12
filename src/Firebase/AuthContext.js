@@ -18,6 +18,7 @@ export const AuthProvider = ({ children }) => {
   const [loadingAuthState, setLoadingAuthState] = useState(true);
   const [isAdmin, setAdmin] = useState(null)
   const [isCompany, setCompany] = useState(null)
+  const [isVerified, setVerified] = useState(null)
 
   const updateAdminState = async(pUser) => {
     const idTok = await pUser.getIdTokenResult()
@@ -35,10 +36,13 @@ export const AuthProvider = ({ children }) => {
 
       if(user){
         setUser(user);
+        setVerified(user.emailVerified)
         updateAdminState(user);
       }else{
         setUser(null)
         setAdmin(false)
+        setCompany(false)
+        setVerified(false)
         setLoadingAuthState(false)
       }
 
@@ -55,6 +59,7 @@ export const AuthProvider = ({ children }) => {
         isLoadingAuthState: loadingAuthState,
         isAdmin: isAdmin,
         isCompany: isCompany,
+        isVerified: isVerified,
       }}
     >
 
