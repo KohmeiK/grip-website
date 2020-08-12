@@ -245,8 +245,8 @@ function AdminSettings() {
         onSubmit={async (values, { setSubmitting }) => {
           try {
             console.log("RequestSent")
-            const verifyEmail = firebase.functions.httpsCallable('toVerifyEmail')
-            const result = await verifyEmail({ email: values.email })
+            const hello1234 = firebase.functions.httpsCallable('hello1234')
+            const result = await hello1234({ email: values.email })
             console.log(result.data.message, "result.data.message")
             alert(result.data.message)
             setSubmitting(false)

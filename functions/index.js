@@ -169,8 +169,8 @@ exports.addNewJob = functions.https.onCall(async (data, context) => {
   }
 })
 
-exports.toVerifyEmail = functions.https.onCall(async (data, context) => {
-  console.log("Running verify email")
+exports.hello1234 = functions.https.onCall(async (data, context) => {
+  console.log("Running verify email (hello1234)")
   console.log(data.email,"email")
   try{
     const user = await admin.auth().getUserByEmail(data.email)

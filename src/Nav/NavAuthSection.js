@@ -10,6 +10,7 @@ import styles from './NavAuthSection.module.scss'
 
 import iconGear from '../Media/iconGear.svg';
 import iconDoor from '../Media/iconDoor.svg';
+import iconUser from '../Media/iconUser.svg';
 
 /**
 Handles display of the log in button OR profile picutre, which
@@ -31,9 +32,12 @@ function NavAuthSection(props){
   }
 
   let noCompanyOptions =
-  (<LinkContainer to="/applications">
-    <Dropdown.Item>My Applications</Dropdown.Item>
-  </LinkContainer>)
+  (<>
+    <LinkContainer to="/applications">
+    <li> <img src={iconUser}/> <p>My Applications</p> </li>
+    </LinkContainer>
+    <hr className={styles.divider} />
+  </>)
   if(!authContext.isLoadingAuthState && !authContext.isAdmin && authContext.isCompany){
     noCompanyOptions = " "
   }
@@ -74,9 +78,9 @@ function NavAuthSection(props){
         <ul className={`${!showDropdown && styles.hidden} ${styles.dropdown}`}>
           {noCompanyOptions}
           <LinkContainer to="/setting">
-            <li>Settings</li>
+            <li> <img src={iconGear}/> <p>Settings</p> </li>
           </LinkContainer>
-          <li onClick={handleAuthChange}>Log Out</li>
+          <li onClick={handleAuthChange}> <img src={iconDoor}/> <p>Log Out</p> </li>
         </ul>
       </li>
       </>
