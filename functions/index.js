@@ -169,7 +169,7 @@ exports.addNewJob = functions.https.onCall(async (data, context) => {
   }
 })
 
-exports.verifyEmail = functions.https.onCall(async (data, context) => {
+exports.toVerifyEmail = functions.https.onCall(async (data, context) => {
   console.log("Running verify email")
   console.log(data.email,"email")
   try{

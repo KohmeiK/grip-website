@@ -64,7 +64,7 @@ function Signup() {
                 .required('Required'),
             email: Yup.string()
                 .email('Invalid email address')
-                .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.+-]+\.edu$/, 'Please sign up with a .edu email')
+                // .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.+-]+\.edu$/, 'Please sign up with a .edu email')
                 .required('Required'),
             pwd: Yup.string()
                 .min(6, 'Must be 6 characters or more')
