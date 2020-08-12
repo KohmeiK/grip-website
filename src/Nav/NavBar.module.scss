@@ -15,6 +15,7 @@
 }
 
 .logo{
+  cursor: pointer;
   padding-left: 1.1em;
   margin: 0;
   display: flex;
@@ -77,7 +78,7 @@
 }
 
 //Depening on the background nav items become white
-.brightText > a{
+.brightText > li{
   color: white;
   &:hover{
     color:#eee;
@@ -127,34 +128,66 @@
 }
 
 nav ul {
-  margin: 0;
   padding: 0;
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%,-23vh);
   list-style: none;
-  text-align: center;
-  width: 100%;
+  text-align: left;
+  width: 255px;
+  margin: 0 auto;
 }
 
 nav .hidden {
   display: none;
 }
-nav ul a {
+
+nav li {
   -moz-transition-duration: 0.5s;
   -o-transition-duration: 0.5s;
   -webkit-transition-duration: 0.5s;
   transition-duration: 0.5s;
   text-decoration: none;
   color: white;
-  font-size: 3em;
-  line-height: 1.5;
+  font-weight: 200;
+  font-size: 28px;
+  line-height: 0;
+  padding: 0;
+  margin: 1em 0;
   width: 100%;
-  display: block;
+  display: flex;
+  align-items: center;
+  &:hover{
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  img{
+    height: 30px;
+    padding: 0;
+  }
+  a{
+    padding-left: 0.5em;
+  }
 }
-nav ul a:hover {
-  background-color: rgba(0, 0, 0, 0.5);
+
+.profileName{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  div{
+    color: white;
+    font-weight: 300;
+    font-size: 20px;
+    padding-bottom: 1em;
+  }
+}
+
+.divider{
+  display: block;
+  margin: 0 auto;
+  z-index: 40;
+  width: 35vw;
+  border-top: 1px solid white;
 }
 
 .menuSection.on{
@@ -171,6 +204,22 @@ nav ul a:hover {
 
 
 @media screen and (min-width: $s-desktopMin) {
+  .nav{
+    display: flex;
+    align-items: center;
+  }
+  li li{
+    display: flex;
+    flex-direction: column;
+    img{
+      display: none;
+    }
+    a{
+      cursor: pointer;
+      text-align: center;
+      padding: 0 1em;
+    }
+  }
 
 
   .logo{

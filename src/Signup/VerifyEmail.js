@@ -23,9 +23,9 @@ function VerifyEmail() {
 
     return (
         <div>
-            <h3>You've successfully signed up for an account.</h3>
+            <h3>Your account has been created. However, you need to verify your email to see this page.</h3>
             <br />
-            <p>A verefication email has been sent to the email address you provided, please click on the link before continuing.</p>
+            <p>A verification email has been sent to the email address you provided, please click on the link before continuing.</p>
             <br />
             <p>If you haven't received the email after a few minutes, please click on the button below:</p>
             <Button

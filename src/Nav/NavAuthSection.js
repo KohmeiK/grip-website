@@ -6,11 +6,14 @@ import { LinkContainer } from 'react-router-bootstrap'
 import FirebaseContext from '../Firebase'
 import AuthContext from '../Firebase/AuthContext'
 
+import iconGear from '../Media/iconGear.svg';
+import iconDoor from '../Media/iconDoor.svg';
+
 /**
 Handles display of the log in button OR profile picutre, which
 has the dropdown optons of (My Info) (My Applications) (Logout)
 */
-function NavAuthSection(){
+function NavAuthSection(props){
   const firebase = useContext(FirebaseContext)
   const authContext = useContext(AuthContext)
   let history = useHistory()
@@ -24,9 +27,32 @@ function NavAuthSection(){
     }
   }
 
+  let noCompanyOptions =
+  (<LinkContainer to="/applications">
+    <Dropdown.Item>My Applications</Dropdown.Item>
+  </LinkContainer>)
+  if(!authContext.isLoadingAuthState && !authContext.isAdmin && authContext.isCompany){
+    noCompanyOptions = " "
+  }
+
   if(authContext.isLoadingAuthState){
     return(
       "Loading..."
+    )
+  }else if(props.isMobile){
+    return(
+      <>
+      <LinkContainer to="/setting">
+        <li>
+          <img src={iconGear} />
+          <a>Settings</a>
+        </li>
+      </LinkContainer>
+      <li onClick={handleAuthChange}>
+        <img src={iconDoor} />
+        <a>Log Out</a>
+      </li>
+      </>
     )
   }else if(authContext.isAuthenticated && authContext.user){
     return(
@@ -43,14 +69,9 @@ function NavAuthSection(){
         </Dropdown.Toggle>
 
         <Dropdown.Menu>
+          {noCompanyOptions}
           <LinkContainer to="/setting">
             <Dropdown.Item>Settings</Dropdown.Item>
-          </LinkContainer>
-          <LinkContainer to="/upload">
-            <Dropdown.Item>Upload Resume</Dropdown.Item>
-          </LinkContainer>
-          <LinkContainer to="/applications">
-            <Dropdown.Item>Your Applications</Dropdown.Item>
           </LinkContainer>
           <Dropdown.Item onClick={handleAuthChange}>Log Out</Dropdown.Item>
         </Dropdown.Menu>
@@ -60,7 +81,7 @@ function NavAuthSection(){
   }else{
     return(
       <LinkContainer to="/login">
-        <a>Log In </a>
+        <li><a>Log In</a></li>
       </LinkContainer>
     )
   }
