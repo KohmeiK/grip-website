@@ -29,7 +29,6 @@ function NavBar(props){
   const handleNavToggle = ()=>{
     setNavOpenStyle(!isNavOpenStyle);
   }
-  console.log(isNavOpenStyle, "open")
   if(width > 650){
     //Desktop both cases
     return(
