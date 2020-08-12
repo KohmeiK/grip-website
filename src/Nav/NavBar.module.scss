@@ -176,16 +176,18 @@ nav ul a:hover {
   .logo{
     flex-direction: row;
     align-items: center;
+    justify-content: center;
   }
 
   .asesText{
     display: initial;
     font-weight: 600;
-    padding: 0.8em;
-    margin: 0;
+    padding: 0;
+    margin: 0.8em;
   }
   .abroadText{
     font-weight: 400;
     padding: 0;
+    margin: 0.8em -0.3em;
   }
 }
