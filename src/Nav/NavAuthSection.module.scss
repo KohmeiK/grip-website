@@ -7,11 +7,18 @@
     width: 40px;
     padding: 0;
     margin: auto;
+    &:hover{
+      filter: brightness(85%);
+    }
+    &:active{
+      filter: brightness(50%);
+    }
   }
+
   .dropdown{
     z-index: 100;
     border-radius: 7px 0px 7px 7px;
-    background: $c-background;
+    background: rgba(245, 245, 245, 0.9);
     color: $c-blackBlue;
     position: absolute;
     top: 85px;
@@ -19,7 +26,14 @@
     box-shadow: -5px 10px 8px rgba(0,0,0,0.15);
     li{
       &:hover{
-        background: #D5D5DB;
+        border-radius: 7px;
+        //This gets "layered on"
+        background: rgba(0, 0, 0, 0.15);
+      }
+      &:active{
+        border-radius: 7px;
+        //This gets "layered on"
+        background: rgba(0, 0, 0, 0.55);
       }
       cursor: pointer;
       display: flex;
@@ -46,12 +60,15 @@
     }
   }
   .expandDiv{
-    background: $c-background;
-    // opacity: 0.9;
+    background: rgba(245, 245, 245, 0.9);
     height: 85px;
     width: 85px;
   }
   .hidden{
+    -webkit-transition: all 1s ease-in-out;
+    -moz-transition: all 1s ease-in-out;
+    -o-transition: all 1s ease-in-out;
+    transition: all 1s ease-in-out;
     display: none;
   }
   .noBG{
