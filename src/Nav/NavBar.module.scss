@@ -204,6 +204,10 @@ nav li {
 
 
 @media screen and (min-width: $s-desktopMin) {
+  .navOptions{
+    display: flex;
+    align-items: center;
+  }
   .nav{
     display: flex;
     align-items: center;

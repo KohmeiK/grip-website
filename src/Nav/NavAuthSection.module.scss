@@ -1,0 +1,24 @@
+@import '../colorCodes.scss';
+
+@media screen and (min-width: $s-desktopMin) {
+  .profileIcon{
+    cursor: pointer;
+    height: 40px;
+    width: 40px;
+    padding: 0;
+    margin-right: 20px;
+    background: white;
+  }
+  .hidden{
+    display: none;
+  }
+  .dropdown{
+    position: absolute;
+    top: 100px;
+    right: 20px;
+  }
+  .expandDiv{
+    height: 85px;
+    width: 85px;
+  }
+}
