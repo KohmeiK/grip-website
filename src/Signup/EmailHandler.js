@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { Button } from 'react-bootstrap'
 import { useHistory } from "react-router-dom";
 
@@ -19,15 +19,6 @@ function EmailHandler() {
     const [localDisplay, setLocalDisplay] = useState(null)
     const history = useHistory()
 
-    // Get the action to complete.
-    var mode = getParameterByName('mode');
-    // Get the one-time code from the query parameter.
-    var actionCode = getParameterByName('oobCode');
-    // (Optional) Get the continue URL from the query parameter if available.
-    var continueUrl = getParameterByName('continueUrl');
-    // (Optional) Get the language code if available.
-    var lang = getParameterByName('lang') || 'en';
-
     // Configure the Firebase SDK.
     // This is the minimum configuration required for the API to be used.
     // var config = {
@@ -38,23 +29,36 @@ function EmailHandler() {
     var firebase = useContext(FirebaseContext)
     var auth = firebase.auth;
 
-    // Handle the user management action.
-    switch (mode) {
-        case 'resetPassword':
-            // Display reset password handler and UI.
-            handleResetPassword(auth, actionCode, continueUrl, lang);
-            break;
-        case 'recoverEmail':
-            // Display email recovery handler and UI.
-            handleRecoverEmail(auth, actionCode, lang);
-            break;
-        case 'verifyEmail':
-            // Display email verification handler and UI.
-            handleVerifyEmail(auth, actionCode, continueUrl, lang);
-            break;
-        default:
-        // Error: invalid mode.
-    }
+    useEffect(() => {
+        // Get the action to complete.
+        var mode = getParameterByName('mode');
+        // Get the one-time code from the query parameter.
+        var actionCode = getParameterByName('oobCode');
+        // (Optional) Get the continue URL from the query parameter if available.
+        var continueUrl = getParameterByName('continueUrl');
+        // (Optional) Get the language code if available.
+        var lang = getParameterByName('lang') || 'en';
+
+        // Handle the user management action.
+        switch (mode) {
+            case 'resetPassword':
+                // Display reset password handler and UI.
+                handleResetPassword(auth, actionCode, continueUrl, lang);
+                break;
+            case 'recoverEmail':
+                // Display email recovery handler and UI.
+                handleRecoverEmail(auth, actionCode, lang);
+                break;
+            case 'verifyEmail':
+                // Display email verification handler and UI.
+                handleVerifyEmail(auth, actionCode, continueUrl, lang);
+                break;
+            default:
+            // Error: invalid mode.
+        }
+    }, [])
+
+
 
     function handleResetPassword(auth, actionCode, continueUrl, lang) {
         // Localize the UI to the selected language as determined by the lang
@@ -67,6 +71,46 @@ function EmailHandler() {
             // TODO: Show the reset screen with the user's email and ask the user for
             // the new password.
             let newPassword = 'abcdefg' // FIX THIS LATER
+            setLocalDisplay(
+                // <div>
+                //     <h3>Please enter the new password for {accountEmail}</h3>
+                //     <Formik
+                //         initialValues={{ pwd: '' }}
+                //         onSubmit={(values, { setSubmitting, resetForm }) => {
+                //             setTimeout(async () => {
+                //                 try {
+                //                     await firebase.auth.sendPasswordResetEmail(values.email);
+                //                     setSubmitting(false)
+                //                     resetForm()
+                //                     setMessage('Password reset email sent to the address you provided')
+                //                 } catch (err) {
+                //                     setSubmitting(false)
+                //                     alert(err);
+                //                 }
+                //             }, 1000)
+                //         }}
+                //     >
+                //         {({ isSubmitting }) => (
+                //             <Form>
+                //                 <Field name="email" type="email" />
+                //                 <ErrorMessage name="email" />
+                //                 <br />
+                //                 <Button disabled={isSubmitting} type="submit">
+                //                     {isSubmitting && <Spinner
+                //                         as="span"
+                //                         animation="border"
+                //                         size="sm"
+                //                         role="status"
+                //                         aria-hidden="true"
+                //                     />}
+                //                     Submit
+                //                 </Button>
+                //                 <h5>{message}</h5>
+                //             </Form>
+                //         )}
+                //     </Formik>
+                // </div>
+            )
 
             // Save the new password.
             auth.confirmPasswordReset(actionCode, newPassword).then(function (resp) {
@@ -121,16 +165,31 @@ function EmailHandler() {
         // Localize the UI to the selected language as determined by the lang
         // parameter.
         // Try to apply the email verification code.
+
+        // try{
+        //     await auth.applyActionCode(actionCode)
+        //     setLocalDisplay(
+        //         <div>
+        //             <h3>Email verified. Click on the button below to continue</h3>
+        //             <Button onClick={() => history.push('/firstUpload')}>Continue</Button>
+        //         </div>
+        //     )
+        // } catch (error){
+        //     setLocalDisplay(
+        //         <h3>{error.message}</h3>
+        //     )
+        // }
+        
         auth.applyActionCode(actionCode).then(function (resp) {
             // Email address has been verified.
-            console.log('success')
 
             // TODO: Display a confirmation message to the user.
             // You could also provide the user with a link back to the app.
             setLocalDisplay(
                 <div>
                     <h3>Email verified. Click on the button below to continue</h3>
-                    <Button onClick={() => history.push('/firstUpload')}>Continue</Button>
+                    <a href="./firstUpload">Continue</a>
+                    {/* <Button onClick={() => history.push('/firstUpload')}>Continue</Button> */}
                 </div>
             )
 
