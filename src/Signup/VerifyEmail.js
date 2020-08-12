@@ -29,7 +29,7 @@ function VerifyEmail() {
             <br />
             <p>If you haven't received the email after a few minutes, please click on the button below:</p>
             <Button
-                disabled={authContext.isLoadingAuthState | isSending}
+                disabled={authContext.isLoadingAuthState | isSending | authContext.isVerified}
                 onClick={handleVerEmail}
                 variant="success"
             >
@@ -40,7 +40,7 @@ function VerifyEmail() {
                     role="status"
                     aria-hidden="true"
                 />}
-                Resend Verification Email
+                {authContext.isVerified ? "Email Already Verified" : "Re-send Verification Email"}
             </Button>
         </div>
     )

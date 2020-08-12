@@ -21,6 +21,7 @@ import ForgotPassword from'./Signup/ForgotPassword'
 import Login from './Signup/Login'
 import Signup from "./Signup/Signup"
 import VerifyEmail from './Signup/VerifyEmail'
+import FirstUpload from './Signup/FirstUpload'
 
 import CompanyCreationContainer from './Admin/CompanyCreationContainer'
 import AdminSettingsContainer from './Admin/AdminSettingsContainer'
@@ -39,6 +40,7 @@ function App(){
         <Switch>
           <PrivateRoute path="/setting"> <SettingsContainer/> </PrivateRoute>
           <PrivateRoute path="/apply"> <ApplyContainer /> </PrivateRoute>
+          <PrivateRoute path="/firstUpload"> <FirstUpload /> </PrivateRoute>
           <PrivateRoute path="/upload"> <UploadFrom /> </PrivateRoute>
           <PrivateRoute path="/applications"> <Applications /> </PrivateRoute>
 

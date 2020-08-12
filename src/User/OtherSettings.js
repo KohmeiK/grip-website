@@ -60,7 +60,7 @@ function OtherSettings(){
           role="status"
           aria-hidden="true"
           />}
-          {authContext.user.emailVerified ? "Email Already Verified" : "Re-send Verification E-mail"}
+          {authContext.user.emailVerified ? "Email Already Verified" : "Re-send Verification Email"}
         </Button>
       </>
     )

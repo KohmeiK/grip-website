@@ -41,6 +41,7 @@ function Dropzone(props) {
     const firebase = useContext(FirebaseContext)
     const setUploading = (newValue) => props.setUploading(newValue)
     const setProgress = (newValue) => props.setProgress(newValue)
+    const setSubmitted = (newValue) => props.setSubmitted(newValue)
     const [ignored, forceUpdate] = useReducer(x => x + 1, 0);
 
     const style = useMemo(() => ({
@@ -94,6 +95,7 @@ function Dropzone(props) {
             smallFile = false
             setUploading(false)
             setProgress(0) // reset things so the user can submit again
+            setSubmitted(true) // only for FirstUpload, so the user can continue
             alert('Upload Successful')
         })
     }
