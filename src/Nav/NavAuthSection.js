@@ -11,6 +11,9 @@ import styles from './NavAuthSection.module.scss'
 import iconGear from '../Media/iconGear.svg';
 import iconDoor from '../Media/iconDoor.svg';
 import iconUser from '../Media/iconUser.svg';
+import iconGearDark from '../Media/iconGearDark.svg';
+import iconDoorDark from '../Media/iconDoorDark.svg';
+import iconUserDark from '../Media/iconUserDark.svg';
 
 /**
 Handles display of the log in button OR profile picutre, which
@@ -34,7 +37,7 @@ function NavAuthSection(props){
   let noCompanyOptions =
   (<>
     <LinkContainer to="/applications">
-    <li> <img src={iconUser}/> <p>My Applications</p> </li>
+    <li> <img src={iconUserDark}/> <p>My Applications</p> </li>
     </LinkContainer>
     <hr className={styles.divider} />
   </>)
@@ -64,7 +67,7 @@ function NavAuthSection(props){
   }else if(authContext.isAuthenticated && authContext.user){
     return(
       <>
-      <li className={styles.expandDiv}>
+      <li className={`${!showDropdown && styles.noBG} ${styles.expandDiv}`}>
         <div className={styles.profileIcon} onClick={()=>setDropdown(!showDropdown)}>
           <svg id="Profile Icon" data-name="Component 38 – 1" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 51 51">
             <g id="_366-mj-7703-fon-jj" data-name="366-mj-7703-fon-jj" fill="#cb6a79">
@@ -78,9 +81,9 @@ function NavAuthSection(props){
         <ul className={`${!showDropdown && styles.hidden} ${styles.dropdown}`}>
           {noCompanyOptions}
           <LinkContainer to="/setting">
-            <li> <img src={iconGear}/> <p>Settings</p> </li>
+            <li> <img src={iconGearDark}/> <p>Settings</p> </li>
           </LinkContainer>
-          <li onClick={handleAuthChange}> <img src={iconDoor}/> <p>Log Out</p> </li>
+          <li onClick={handleAuthChange}> <img src={iconDoorDark}/> <p>Log Out</p> </li>
         </ul>
       </li>
       </>
