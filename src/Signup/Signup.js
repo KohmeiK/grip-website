@@ -36,7 +36,6 @@ function Signup() {
             })
 
             user.sendEmailVerification()
-            alert('Signup Successful, ' + user.displayName + ', please verify your email')
             history.push("/verifyEmail")
 
         } catch (err) {
