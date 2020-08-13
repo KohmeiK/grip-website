@@ -208,13 +208,15 @@ function EmailHandler() {
             // You could also provide the user with a link back to the app.
 
             // history.push('/firstUpload')
-            setLocalDisplay(
-                <div>
-                    <h3>Email verified. Click on the button below to continue</h3>
-                    <a href="./firstUpload">Continue</a>
-                    {/* <Button onClick={() => history.push('/firstUpload')}>Continue</Button> */}
-                </div>
-            )
+            auth.currentUser.reload().then(history.push('/firstUpload'))
+            
+            // setLocalDisplay(
+            //     <div>
+            //         <h3>Email verified. Click on the button below to continue</h3>
+            //         <a href="./firstUpload">Continue</a>
+            //         {/* <Button onClick={() => history.push('/firstUpload')}>Continue</Button> */}
+            //     </div>
+            // )
 
             // TODO: If a continue URL is available, display a button which on
             // click redirects the user back to the app via continueUrl with
