@@ -226,18 +226,16 @@ function EmailHandler() {
                 clearInterval(intervalId);
             }
             intervalId = setInterval(() => {
-                firebase.auth
-                  .currentUser
-                  .reload()
-                  .then(ok => {
-                    if (firebase.auth.currentUser.emailVerified) {
-                        console.log('email verfied!')
-                        authContext.forceUserUpdate(firebase.auth.currentUser)
-                        clearInterval(intervalId);
-                        history.push("/firstUpload")
-                    }
-                  })
-              }, 1000)
+                auth.currentUser
+                    .reload()
+                    .then(ok => {
+                        if (auth.currentUser.emailVerified) {
+                            authContext.forceUserUpdate(auth.currentUser)
+                            clearInterval(intervalId);
+                            history.push("/firstUpload")
+                        }
+                    })
+            }, 1000)
 
             // setLocalDisplay(
             //     <div>

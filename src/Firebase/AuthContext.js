@@ -15,17 +15,16 @@ const AuthContext = React.createContext({});
 export const AuthProvider = ({ children }) => {
   const firebase = useContext(FirebaseContext)
   const [user, setUser] = useState(null);
-  const [updateCoutner, setUpdateCounter] = useState(0);
+  const [updateCounter, setUpdateCounter] = useState(0);
   const [loadingAuthState, setLoadingAuthState] = useState(true);
   const [isAdmin, setAdmin] = useState(null)
   const [isCompany, setCompany] = useState(null)
   const [isVerified, setVerified] = useState(null)
 
   const forceUserUpdate = (newUser) => {
-    console.log("forceUserUpdate called")
     setLoadingAuthState(true);
     setUser(newUser);
-    setUpdateCounter(updateCoutner+1);
+    setUpdateCounter(updateCounter+1);
   }
 
   const updateAdminState = async(pUser) => {
@@ -40,9 +39,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     //Run only on mount
-    console.log("useEffect")
     firebase.auth.onAuthStateChanged((user) => {
-      console.log("onAuthChange")
       if(user){
         setUser(user);
         setVerified(user.emailVerified)
@@ -57,7 +54,7 @@ export const AuthProvider = ({ children }) => {
 
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [updateCoutner]);
+  }, [updateCounter]);
 
   return (
     <AuthContext.Provider
