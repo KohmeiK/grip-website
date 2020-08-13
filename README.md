@@ -2,6 +2,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 # Most Recent Stable version at: https://kolledgeholdings.com.
 
+## A lot more doccumentation available. Run: `npm run docs`
+
 ## Folder Structure:
 - **Admin** ->        Pages that only admin accounts can acsess
 - **Applications** -> Your Applications - show a list of companies a student has applied to
