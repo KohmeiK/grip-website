@@ -115,19 +115,19 @@ function EmailHandler() {
                         {(formik, isSubmitting) => (
                             <Form>
                                 <label htmlFor="pwd">New password: </label>
-                                <br/>
+                                <br />
                                 <Field name="pwd" type="password" />
                                 {formik.touched.pwd && formik.errors.pwd ? (
                                     <div>{formik.errors.pwd}</div>
                                 ) : null}
                                 <br />
                                 <label htmlFor="pwdConfirm">Confirm password: </label>
-                                <br/>
+                                <br />
                                 <Field name="pwdConfirm" type="password" />
                                 {formik.touched.pwdConfirm && formik.errors.pwdConfirm ? (
                                     <div>{formik.errors.pwdConfirm}</div>
                                 ) : null}
-                                <br/>
+                                <br />
                                 <Button disabled={isSubmitting} type="submit">
                                     {isSubmitting && <Spinner
                                         as="span"
@@ -182,7 +182,7 @@ function EmailHandler() {
         });
     }
 
-    function handleVerifyEmail(auth, actionCode, continueUrl, lang) {
+    async function handleVerifyEmail(auth, actionCode, continueUrl, lang) {
         // Localize the UI to the selected language as determined by the lang
         // parameter.
         // Try to apply the email verification code.
@@ -208,8 +208,29 @@ function EmailHandler() {
             // You could also provide the user with a link back to the app.
 
             // history.push('/firstUpload')
-            auth.currentUser.reload().then(history.push('/firstUpload'))
-            
+
+            // let user = await auth.currentUser;
+            // await user.reload();
+            // user = await auth.currentUser;
+            // while(!user.isEmailVerified){
+            //     console.log('not verified')
+            // }
+            // history.push('/firstUpload')
+
+            const checkForVerifiedInterval = setInterval(() => {
+                firebase.auth
+                  .currentUser
+                  .reload()
+                  .then(ok => {
+                    if (firebase.auth.currentUser.emailVerified) {
+                        console.log('it worked!')
+                    //   history.push("/firstUpload")
+                    //   window.Materialize.toast("Email verified.", 3000)
+                    //   clearInterval({checkForVerifiedInterval})
+                    }
+                  })
+              }, 1000)
+
             // setLocalDisplay(
             //     <div>
             //         <h3>Email verified. Click on the button below to continue</h3>
