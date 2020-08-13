@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 import * as Yup from "yup"
 
 import FirebaseContext from '../Firebase/'
+import AuthContext from '../Firebase/AuthContext'
 
 function EmailHandler() {
     // TODO: Implement getParameterByName()
@@ -30,7 +31,10 @@ function EmailHandler() {
     // }
     // var app = firebase.initializeApp(config);
     var firebase = useContext(FirebaseContext)
+    const authContext = useContext(AuthContext)
     var auth = firebase.auth;
+
+    var intervalId;
 
     useEffect(() => {
         // Get the action to complete.
@@ -217,16 +221,20 @@ function EmailHandler() {
             // }
             // history.push('/firstUpload')
 
-            const checkForVerifiedInterval = setInterval(() => {
+            //Just to avoid more than 1 inverval
+            if (intervalId) {
+                clearInterval(intervalId);
+            }
+            intervalId = setInterval(() => {
                 firebase.auth
                   .currentUser
                   .reload()
                   .then(ok => {
                     if (firebase.auth.currentUser.emailVerified) {
-                        console.log('it worked!')
-                    //   history.push("/firstUpload")
-                    //   window.Materialize.toast("Email verified.", 3000)
-                    //   clearInterval({checkForVerifiedInterval})
+                        console.log('email verfied!')
+                        authContext.forceUserUpdate(firebase.auth.currentUser)
+                        clearInterval(intervalId);
+                        history.push("/firstUpload")
                     }
                   })
               }, 1000)
