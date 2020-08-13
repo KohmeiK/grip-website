@@ -10,8 +10,9 @@ import {
 import { Nav } from 'react-bootstrap'
 
 import InfoUpdate from './InfoUpdate'
-import OtherSettings from './OtherSettings'
 import UploadForm from './UploadForm'
+import ChangeEmail from './ChangeEmail'
+import ChangePassword from './ChangePassword'
 
 function EditInfo() {
     let match = useRouteMatch()
@@ -31,20 +32,18 @@ function EditInfo() {
                         <Switch>
                             <Route path={`${match.url}/basic`}>
                                 <InfoUpdate />
-                                <OtherSettings />
                             </Route>
                             <Route path={`${match.url}/email`}>
-                                <InfoUpdate /> {/* to implement */}
+                                <ChangeEmail />
                             </Route>
                             <Route path={`${match.url}/password`}>
-                                <InfoUpdate /> {/* to implement */}
+                                <ChangePassword /> 
                             </Route>
                             <Route path={`${match.url}/resume`}>
                                 <UploadForm />
                             </Route>
                             <Route path={match.path}> {/* if there isn't a children route indicated, go to basic */}
                                 <InfoUpdate />
-                                <OtherSettings />
                             </Route>
                         </Switch>
                     </Col>

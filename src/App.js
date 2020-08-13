@@ -9,7 +9,6 @@ import NavBar from './Nav/NavBar.js'
 import HomeContainer from './Home/HomeContainer.js'
 
 import UploadFrom from './User/UploadForm.js'
-import SettingsContainer from './User/SettingsContainer.js'
 import EditInfo from './User/EditInfo'
 
 import Applications from './Applications/Applications'
@@ -40,7 +39,6 @@ function App(){
       <Router>
         <NavBar/>
         <Switch>
-          <PrivateRoute path="/setting"> <SettingsContainer/> </PrivateRoute>
           <PrivateRoute path="/apply"> <ApplyContainer /> </PrivateRoute>
           <PrivateRoute path="/firstUpload"> <FirstUpload /> </PrivateRoute>
           <PrivateRoute path="/upload"> <UploadFrom /> </PrivateRoute>
