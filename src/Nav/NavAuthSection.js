@@ -52,7 +52,7 @@ function NavAuthSection(props){
   }else if(props.isMobile){
     return(
       <>
-      <LinkContainer to="/setting">
+      <LinkContainer to="/editInfo/basic">
         <li>
           <img src={iconGear} />
           <a>Settings</a>
@@ -80,7 +80,7 @@ function NavAuthSection(props){
 
         <ul className={`${!showDropdown && styles.hidden} ${styles.dropdown}`}>
           {noCompanyOptions}
-          <LinkContainer to="/setting">
+          <LinkContainer to="/editInfo/basic">
             <li> <img src={iconGearDark}/> <p>Settings</p> </li>
           </LinkContainer>
           <li onClick={handleAuthChange}> <img src={iconDoorDark}/> <p>Log Out</p> </li>

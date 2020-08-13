@@ -11,6 +11,7 @@ import Dropzone from './Dropzone'
 function UploadForm() {
   const [progress, setProgress] = useState(0) // for progress bar
   const [uploading, setUploading] = useState(false)
+  const [submitted, setSubmitted] = useState(false) // ignore this, this is just so firstUpload would work
   const authContext = useContext(AuthContext)
   const uid = authContext.user.uid
 
@@ -23,6 +24,7 @@ function UploadForm() {
         setProgress={setProgress}
         uploading={uploading}
         setUploading={setUploading}
+        setSubmitted={setSubmitted}
       />
     </div>
   )

@@ -10,6 +10,7 @@ import HomeContainer from './Home/HomeContainer.js'
 
 import UploadFrom from './User/UploadForm.js'
 import SettingsContainer from './User/SettingsContainer.js'
+import EditInfo from './User/EditInfo'
 
 import Applications from './Applications/Applications'
 
@@ -44,6 +45,7 @@ function App(){
           <PrivateRoute path="/firstUpload"> <FirstUpload /> </PrivateRoute>
           <PrivateRoute path="/upload"> <UploadFrom /> </PrivateRoute>
           <PrivateRoute path="/applications"> <Applications /> </PrivateRoute>
+          <PrivateRoute path="/editInfo"> <EditInfo /> </PrivateRoute>
 
           <PrivateCompanyRoute path="/jobs"> <MyJobs/> </PrivateCompanyRoute>
 
