@@ -33,6 +33,7 @@
     "eject": "react-scripts eject",
     "serve": "firebase serve",
     "docs": "styleguidist server",
+    "buildDocs": "styleguidist build",
     "deploy": "react-scripts build && firebase deploy"
   },
   "eslintConfig": {
