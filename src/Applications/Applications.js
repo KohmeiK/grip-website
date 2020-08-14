@@ -47,10 +47,10 @@ function Applications() {
         //Only on mount
         let studentRef = firebase.db.collection('students').doc(authContext.user.uid)
         studentRef.get().then(function (doc) {
-            if(doc.data().jobsAppliedTo === null){
-              alert("You do not have a jobsAppliedTo array. Aborting updateJobs")
+            if(doc.data().jobsAppliedTo == null){
+              alert("You do not have a jobsAppliedTo array.")
             } else if(doc.data().jobsAppliedTo.length === 0){
-              alert("You have not applied to any jobs! Aborting updateJobs")
+              alert("You have not applied to any jobs!")
             }else{
               updateJobs(doc)
             }
