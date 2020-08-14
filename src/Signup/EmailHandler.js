@@ -168,7 +168,7 @@ function EmailHandler() {
                         })
                 }, 1000)
             } else {
-                history.push("/login")
+                history.push("/firstUpload")
             }
 
             setLocalDisplay(<h3>Redirecting...</h3>)
