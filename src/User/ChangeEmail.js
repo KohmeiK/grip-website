@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react"
 import { Formik, Field, Form } from 'formik';
 import * as Yup from "yup"
 import { Button, Modal, Spinner } from 'react-bootstrap'
+import { useHistory, Redirect } from 'react-router-dom'
 
 import AuthContext from '../Firebase/AuthContext'
 import FirebaseContext from '../Firebase'
@@ -16,6 +17,7 @@ function ChangeEmail() {
     const [show, setShow] = useState(false);
     const [password, setPassword] = useState("");
     const [isUpdating, setIsUpdating] = useState(false)
+    const history = useHistory()
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -28,6 +30,12 @@ function ChangeEmail() {
         console.log(initEmail)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [authContext])
+
+    if (!authContext.isLoadingAuthState){
+        if (!authContext.isAuthenticated){
+            history.push('/login')
+        }
+    }
 
     const handleSubmit = (evt) => {
         evt.preventDefault();

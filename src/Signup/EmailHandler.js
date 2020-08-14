@@ -48,6 +48,10 @@ function EmailHandler() {
                 // Display email verification handler and UI.
                 handleVerifyEmail(auth, actionCode, continueUrl, lang);
                 break;
+            case 'recoverEmail':
+                // Display email recovery handler and UI.
+                handleRecoverEmail(auth, actionCode, lang);
+                break;
             default:
                 // Error: invalid mode.
                 setLocalDisplay(<h3>404 not found</h3>)
@@ -176,6 +180,39 @@ function EmailHandler() {
                 <h3>{error.message}</h3>
             )
         });
+    }
+
+    function handleRecoverEmail(auth, actionCode, lang) {
+        // Localize the UI to the selected language as determined by the lang
+        // parameter.
+        var restoredEmail = null;
+        // Confirm the action code is valid.
+        auth.checkActionCode(actionCode).then(function (info) {
+            // Get the restored email address.
+            restoredEmail = info['data']['email'];
+
+            // Revert to the old email.
+            return auth.applyActionCode(actionCode);
+        }).then(function () {
+            // Account email reverted to restoredEmail
+
+            setLocalDisplay(<h3>Email recovered. An password reset email has also been sent; reset your password if you'd like.</h3>)
+
+            // You might also want to give the user the option to reset their password
+            // in case the account was compromised:
+            auth.sendPasswordResetEmail(restoredEmail).then(function () {
+                // Password reset confirmation sent. Ask user to check their email.
+            }).catch(function (error) {
+                alert(error)
+            });
+        }).catch(function (error) {
+            // Invalid code.
+            setLocalDisplay(
+                <h3>{error.message}</h3>
+            )
+        });
+
+        // });
     }
 
     return (

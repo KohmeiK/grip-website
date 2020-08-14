@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react'
 import { Button, Spinner } from 'react-bootstrap'
+import { useHistory } from 'react-router-dom'
 
 import AuthContext from '../Firebase/AuthContext'
-
 import FirebaseContext from '../Firebase/'
 
 function VerifyEmail() {
@@ -10,6 +10,7 @@ function VerifyEmail() {
     const firebase = useContext(FirebaseContext)
     const [isSending, setSending] = useState(false)
     const [isSent, setSent] = useState(false)
+    const history = useHistory()
     const handleVerEmail = async() => {
         setSending(true)
         try{
@@ -20,7 +21,7 @@ function VerifyEmail() {
           alert(err)
         }
       }
-
+    
     return (
         <div>
             <h3>Your account has been created. However, you need to verify your email to see this page.</h3>
@@ -42,6 +43,11 @@ function VerifyEmail() {
                 />}
                 {authContext.isVerified ? "Email Already Verified" : "Re-send Verification Email"}
             </Button>
+            <br/>
+            <br/>
+
+            <h5>Made a typo and want to change your email address? Click here:</h5>
+            <Button variant="Secondary" onClick={() => history.push('/ChangeEmail')}>Change Email</Button>
         </div>
     )
 }
