@@ -75,10 +75,10 @@ function InfoUpdate() {
     } catch (err) {
       alert(err)
     }
+    handleClose()
+    setIsUpdating(false)
   }
 
-  handleClose()
-  setIsUpdating(false)
 
   let arr = []
   let thisYear = new Date().getFullYear()
