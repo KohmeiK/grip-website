@@ -20,7 +20,11 @@ function VerifyEmail() {
         }catch(err){
           alert(err)
         }
-      }
+    }
+
+    if (!authContext.isLoadingAuthState && !authContext.isAuthenticated){
+        history.push('/login')
+    }
     
     return (
         <div>

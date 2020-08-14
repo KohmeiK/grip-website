@@ -45,7 +45,6 @@ function App(){
           <PrivateRoute path="/upload"> <UploadFrom /> </PrivateRoute>
           <PrivateRoute path="/applications"> <Applications /> </PrivateRoute>
           <PrivateRoute path="/editInfo"> <EditInfo /> </PrivateRoute>
-          <PrivateRoute path="/verifyEmail"> <VerifyEmail /> </PrivateRoute>
 
           <PrivateCompanyRoute path="/jobs"> <MyJobs/> </PrivateCompanyRoute>
 
@@ -59,6 +58,7 @@ function App(){
           <Route path="/login"> <Login /> </Route>
           <Route path="/emailHandler"> <EmailHandler /> </Route>
           <Route path="/changeEmail"> <ChangeEmail /> </Route>
+          <Route path="/verifyEmail"> <VerifyEmail /> </Route>
           <Route path="/"> <HomeContainer/> </Route>
         </Switch>
       </Router>
