@@ -34,6 +34,8 @@ import PrivateRoute from './Route/PrivateRoute'
 import PrivateAdminRoute from './Route/PrivateAdminRoute'
 import PrivateCompanyRoute from './Route/PrivateCompanyRoute'
 
+import Test from './Admin/test'
+
 
 function App(){
     return(
@@ -59,6 +61,7 @@ function App(){
           <Route path="/emailHandler"> <EmailHandler /> </Route>
           <Route path="/changeEmail"> <ChangeEmail /> </Route>
           <Route path="/verifyEmail"> <VerifyEmail /> </Route>
+          <Route path="/test"> <Test /> </Route>
           <Route path="/"> <HomeContainer/> </Route>
         </Switch>
       </Router>
