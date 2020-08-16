@@ -22,6 +22,7 @@ function CompanyCreationContainer() {
     const handleClick = async () => {
         // setLocalDisplay(snarkdown(textValue))
         console.log(marked(textValue))
+        // return null
         try {
             // write in database
             await firebase.db.collection("jobs").doc('12345').set({
@@ -46,6 +47,11 @@ function CompanyCreationContainer() {
         })
     }
 
+    const testURL = () => {
+        firebase.storage.child('Screen Shot 2020-07-01 at 6.46.42 PM.png').getDownloadURL().then(function(url){
+            console.log(url)
+        })
+    }
 
     return (
         <div>
@@ -70,6 +76,10 @@ function CompanyCreationContainer() {
 
             <h6>DB render: </h6>
             <p dangerouslySetInnerHTML={{ __html: localDisplay }} />
+
+            <br/> <br/> <br/> <br/>
+
+            <Button onClick={testURL}>test url</Button>
         </div>
 
     );
