@@ -34,7 +34,7 @@ import PrivateRoute from './Route/PrivateRoute'
 import PrivateAdminRoute from './Route/PrivateAdminRoute'
 import PrivateCompanyRoute from './Route/PrivateCompanyRoute'
 
-import Test from './Admin/test'
+import Test from './Admin/Test2'
 
 
 function App(){

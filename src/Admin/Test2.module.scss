@@ -1,0 +1,15 @@
+@import '../colorCodes.scss';
+
+.mainWrapper{
+  ul li{
+    display: list-item;
+    list-style-position: outside;
+    list-style-type: disc;
+    margin: initial;
+    margin-left: 40px;
+    padding: initial;
+  }
+  ol li{
+      list-style-type: decimal;
+    }
+}

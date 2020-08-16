@@ -1,6 +1,8 @@
+import lol from './Test2.module.scss';
+
 import React, { useEffect, useState, useContext } from "react"
 import { Button } from 'react-bootstrap'
-// below are the four library to npm install 
+// below are the four library to npm install
 import SimpleMDE from "react-simplemde-editor";
 import snarkdown from 'snarkdown';
 import ReactMarkdown from 'react-markdown'
@@ -12,7 +14,7 @@ import FirebaseContext from '../Firebase'
 /**
  * Company Creation Container description goes here
  */
-function CompanyCreationContainer() {
+function Test() {
     const firebase = useContext(FirebaseContext)
     const [textValue, setTextValue] = useState('Placeholder')
     const [localDisplay, setLocalDisplay] = useState()
@@ -54,7 +56,7 @@ function CompanyCreationContainer() {
     }
 
     return (
-        <div>
+        <div className={`${lol.mainWrapper}`}>
 
             {/* <h3 id="header">Header</h3>
             <ul class="list-inline">
@@ -74,7 +76,7 @@ function CompanyCreationContainer() {
             <h6>ReactMarkdown:</h6>
             <ReactMarkdown source={textValue} /> */}
 
-            <h6>DB render: </h6>
+            <h6 className={`${lol.randomClass}`}>DB render: </h6>
             <p dangerouslySetInnerHTML={{ __html: localDisplay }} />
 
             <br/> <br/> <br/> <br/>
@@ -87,4 +89,4 @@ function CompanyCreationContainer() {
 
 }
 
-export default CompanyCreationContainer
+export default Test
