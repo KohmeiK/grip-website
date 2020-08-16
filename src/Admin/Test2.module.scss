@@ -1,13 +1,16 @@
 @import '../colorCodes.scss';
 
 .mainWrapper{
-  ul li{
+  ul{
+    margin: 1em 0;
+    padding: 0 0 0 40px;
+    li{
     display: list-item;
     list-style-position: outside;
     list-style-type: disc;
     margin: initial;
-    margin-left: 40px;
     padding: initial;
+    }
   }
   ol li{
       list-style-type: decimal;
