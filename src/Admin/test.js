@@ -19,42 +19,59 @@ function CompanyCreationContainer() {
     const handleChange = value => {
         setTextValue(value);
     };
-    const handleClick = async() => {
-        setLocalDisplay(snarkdown(textValue))
-        alert(textValue)
-        // try {
-        //     // write in database
-        //     await firebase.db.collection("jobs").add({
-        //         mde: textValue
-        //     })
-        //     console.log('done')
+    const handleClick = async () => {
+        // setLocalDisplay(snarkdown(textValue))
+        console.log(marked(textValue))
+        try {
+            // write in database
+            await firebase.db.collection("jobs").doc('12345').set({
+                mde: textValue
+            })
+            console.log('done')
 
-        // } catch (err) {
-        //     //Catch all errors here!
-        //     console.log(err)
-        //     alert(err)
-        // }
+        } catch (err) {
+            //Catch all errors here!
+            console.log(err)
+            alert(err)
+        }
     }
-    
+
+    const handleClick2 = async () => {
+        let jobRef = firebase.db.collection('jobs').doc('12345')
+        jobRef.get().then(async function (doc) {
+            await setLocalDisplay(marked(doc.data().mde))
+            console.log('done rednering')
+        }).catch(function (error) {
+            console.log(error)
+        })
+    }
+
 
     return (
         <div>
-            
+
+            {/* <h3 id="header">Header</h3>
+            <ul class="list-inline">
+                <li>list1</li>
+                <li>list2</li>
+                <li>list3</li>
+            </ul> */}
+            <Button onClick={handleClick}>write in db</Button>
+            <br/>
+            <Button onClick={handleClick2}>render from db</Button>
             <SimpleMDE value={textValue} onChange={handleChange} />
-            {/* <Button onClick={handleClick}>Click Me</Button>
-            <br/>
-            <br/>
-            <br/> */}
             <h6>marked:</h6>
-            <p dangerouslySetInnerHTML={{__html: marked(textValue)}}/>
-            <h6>snarkdown:</h6>
-            <p dangerouslySetInnerHTML={{__html: snarkdown(textValue)}}/>
+            <p dangerouslySetInnerHTML={{ __html: marked(textValue) }} />
+            {/* <h6>snarkdown:</h6>
+            <p dangerouslySetInnerHTML={{ __html: snarkdown(textValue) }} />
 
             <h6>ReactMarkdown:</h6>
-            <ReactMarkdown source={textValue} />
-            {/* {localDisplay} */}
+            <ReactMarkdown source={textValue} /> */}
+
+            <h6>DB render: </h6>
+            <p dangerouslySetInnerHTML={{ __html: localDisplay }} />
         </div>
-        
+
     );
 
 

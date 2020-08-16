@@ -1,0 +1,11 @@
+li {
+    list-style: disc !important;
+    padding-left:1em !important;
+    margin-left:1em;
+}
+
+ul {
+    list-style-type: disc !important;
+    padding-left:1em !important;
+    margin-left:1em;
+}
