@@ -159,7 +159,7 @@ exports.addNewJob = functions.https.onCall(async (data, context) => {
         companyID: data.formVals.companyID,
         companyName: compDoc.data().name,
         newApplicants: 0,
-        allApplicatns: 0, 
+        allApplicants: 0, 
         companyInfo: compDoc.data().info, 
         companyLogoURL: compDoc.data().logoURL, 
       })
