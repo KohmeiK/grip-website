@@ -32,7 +32,9 @@ function Signup() {
                 school: values.school,
                 classYear: values.classYear,
                 jobsAppliedTo: [],
-                displayName: values.name
+                displayName: values.name, 
+                lastUploadTime: null, 
+                defResumeName: ''
             })
 
             user.sendEmailVerification()
