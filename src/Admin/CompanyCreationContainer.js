@@ -55,7 +55,17 @@ function CompanyCreationContainer() {
           <Col>
             <div style={{ marginLeft: "1em", borderRadius: "25px", background: "white", height: "40em" }}>
               <div style={{ margin: "2em", marginTop: "0em", background: "white", height: "40em" }}>
-                Margin Intentionally Left Blank
+                <h5>Comapny Creation Reminder: </h5>
+                1. Comapny Info uses markdown language. <br/>
+                   - You can access different formattings at the toolbar, including 
+                bold/header/list. <br />
+                   - For all lines except those for headers and lists, type two spaces at the end to make a line break.<br/>
+                   - Upon completion, click the eye icon in the tool bar to preview how it will be displayed. (Make sure you do this before submitting!)<br/>
+                   - If you accidentally expand the typearea, simiply press esc key. <br/>
+                <br/>
+                2. To retrieve company logo url, upload the image on the right; the textbox will be filled automatically. <br/>
+                <br/>
+                3. It takes some time after you click submit; you will be alerted when the process is completed. 
             </div>
             </div>
           </Col>
@@ -83,10 +93,13 @@ function CompanyCreationContainer() {
                   return errors;
                 }}
                 onSubmit={(values, { setSubmitting, resetForm }) => {
-                  // resetForm()
-                  // alert(JSON.stringify(values, null, 2))
-                  console.log(values.info)
-                  // handleSubmit(values, setSubmitting, resetForm)
+                  values.info = textValue
+                  values.url = logoURL
+                  alert(JSON.stringify(values, null, 2))
+                  resetForm()
+                  setTextValue('')
+                  setLogoURL('') // a part of resetForm
+                  handleSubmit(values, setSubmitting, resetForm)
                 }}
 
               >
@@ -235,7 +248,7 @@ function CompanyCreationContainer() {
                 <form onSubmit={handleSubmit}>
                   <div className="form-group">
                     <label htmlFor="file">Company Logo Upload</label>
-                    <input id="file" name="file" type="file" onChange={(event) => {
+                    <input id="file" name="file" type="file" accept="image/*" onChange={(event) => {
                       setFieldValue("file", event.currentTarget.files[0]);
                     }} className="form-control" />
                     <ErrorMessage name="file" component="div" />

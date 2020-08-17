@@ -119,10 +119,11 @@ exports.createNewCompany = functions.https.onCall(async (data, context) => {
     console.log(user)
     await admin.auth().setCustomUserClaims(user.uid, {company: true})
     await admin.firestore().collection("companies").doc(user.uid).set({
-      name: user.displayName,
+      name: data.formVals.name,
       info: data.formVals.info,
       jobs: [],
-      hasTempPass: true
+      hasTempPass: true, 
+      logoURL: data.formVals.url
     })
 
     console.log({message: `Made a new company with uid of: ${user.uid}`}, "return")
