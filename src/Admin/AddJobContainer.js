@@ -55,7 +55,17 @@ function AddJobContainer() {
           <Col>
             <div style={{ marginLeft: "1em", borderRadius: "25px", background: "white", height: "40em" }}>
               <div style={{ margin: "2em", marginTop: "0em", background: "white", height: "40em" }}>
-                Margin left blank intentionally
+              <h5>Adding a Job Reminder: </h5>
+                1. Job Info uses markdown language. <br/>
+                   - You can access different formattings at the toolbar, including 
+                bold/header/list. <br />
+                   - For all lines except those for headers and lists, type two spaces at the end to make a line break.<br/>
+                   - Upon completion, click the eye icon in the tool bar to preview how it will be displayed. (Make sure you do this before submitting!)<br/>
+                   - If you accidentally expand the typearea, simiply press esc key. <br/>
+                <br/>
+                2. Required skills and preferred skills can be left blank. <br/>
+                <br/>
+                3. It takes some time after you click submit; you will be alerted when the process is completed. 
             </div>
             </div>
           </Col>
@@ -97,7 +107,6 @@ function AddJobContainer() {
                   try {
                     values.info = textValue
                     alert(JSON.stringify(values, null, 2))
-                    return null
                     console.log("RequestSent")
                     console.log(values, "values")
                     const addNewJob = firebase.functions.httpsCallable('addNewJob')
@@ -221,7 +230,7 @@ function AddJobContainer() {
                             <input
                               {...field}
                               id="yes"
-                              value={true}
+                              value='true'
                               name="reqCoverLetter"
                               type="radio"
                             />
@@ -231,7 +240,7 @@ function AddJobContainer() {
                             <input
                               {...field}
                               id="no"
-                              value={false}
+                              value='false'
                               name="reqCoverLetter"
                               type="radio"
                             />

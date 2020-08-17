@@ -142,7 +142,7 @@ exports.addNewJob = functions.https.onCall(async (data, context) => {
   console.log(data.formVals.dl,"deadline")
   try{
 
-    const compRef =  await admin.firestore().collection("companies").doc(data.formVals.companyID)
+    const compRef = await admin.firestore().collection("companies").doc(data.formVals.companyID)
     const compDoc = await compRef.get()
 
     if (compDoc.exists) { // found intended company
@@ -150,10 +150,18 @@ exports.addNewJob = functions.https.onCall(async (data, context) => {
         title: data.formVals.title,
         info: data.formVals.info,
         deadline: data.formVals.dl,
+        duration: data.formVals.duration, 
+        reqSkills: data.formVals.reqSkills, 
+        preSkills: data.formVals.preSkills, 
+        location: data.formVals.location, 
+        reqCoverLetter: (data.formVals.reqCoverLetter === 'true'), // convert string to boolean
+        regionForSearch: data.formVals.regionForSearch, 
         companyID: data.formVals.companyID,
         companyName: compDoc.data().name,
-        applicants: [],
-        downloaded: ""
+        newApplicants: 0,
+        allApplicatns: 0, 
+        companyInfo: compDoc.data().info, 
+        companyLogoURL: compDoc.data().logoURL, 
       })
       await compRef.update({jobs: admin.firestore.FieldValue.arrayUnion(jobRef.id)}) // add the job id to the company doc
       console.log({message: `Job successfully added`}, "return")
