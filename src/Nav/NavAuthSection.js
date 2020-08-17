@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react"
+import React, {useContext, useState, useRef, useEffect} from "react"
 import { Button, ButtonGroup, DropdownButton, Dropdown } from 'react-bootstrap'
 import {useHistory} from "react-router-dom";
 import { LinkContainer } from 'react-router-bootstrap'
@@ -25,19 +25,19 @@ function NavAuthSection(props){
   const authContext = useContext(AuthContext)
   let history = useHistory()
 
-  const handleAuthChange = ()=>{
-    if(authContext.isAuthenticated){
+  const wrapperRef = useRef(null);
+  useOutsideAlerter(wrapperRef, setDropdown);
+
+  const logOut = ()=>{
+      setDropdown(false)
       firebase.auth.signOut()
       history.push('/')
-    }else{
-      history.push('/login')
-    }
   }
 
   let noCompanyOptions =
   (<>
     <LinkContainer to="/applications">
-    <li> <img src={iconUserDark}/> <p>My Applications</p> </li>
+    <li onClick={()=>setDropdown(false)}> <img src={iconUserDark}/> <p>My Applications</p> </li>
     </LinkContainer>
     <hr className={styles.divider} />
   </>)
@@ -58,7 +58,7 @@ function NavAuthSection(props){
           <a>Settings</a>
         </li>
       </LinkContainer>
-      <li onClick={handleAuthChange}>
+      <li onClick={logOut}>
         <img src={iconDoor} />
         <a>Log Out</a>
       </li>
@@ -66,7 +66,7 @@ function NavAuthSection(props){
     )
   }else if(authContext.isAuthenticated && authContext.user){
     return(
-      <>
+      <div ref={wrapperRef}>
       <li className={`${!showDropdown && styles.noBG} ${styles.expandDiv}`}>
         <div className={styles.profileIcon} onClick={()=>setDropdown(!showDropdown)}>
           <svg id="Profile Icon" data-name="Component 38 – 1" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 51 51">
@@ -81,12 +81,12 @@ function NavAuthSection(props){
         <ul className={`${!showDropdown && styles.hidden} ${styles.dropdown}`}>
           {noCompanyOptions}
           <LinkContainer to="/editInfo/basic">
-            <li> <img src={iconGearDark}/> <p>Settings</p> </li>
+            <li onClick={()=>setDropdown(false)}> <img src={iconGearDark}/> <p>Settings</p> </li>
           </LinkContainer>
-          <li onClick={handleAuthChange}> <img src={iconDoorDark}/> <p>Log Out</p> </li>
+          <li onClick={logOut}> <img src={iconDoorDark}/> <p>Log Out</p> </li>
         </ul>
       </li>
-      </>
+      </div>
     )
   }else{
     return(
@@ -103,17 +103,25 @@ function NavAuthSection(props){
 
 export default NavAuthSection
 
-// The forwardRef is important!!
-// Dropdown needs access to the DOM node in order to position the Menu
-const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
-  <a
-    href=""
-    ref={ref}
-    onClick={(e) => {
-      e.preventDefault();
-      onClick(e);
-    }}
-  >
-    {children}
-  </a>
-));
+/**
+ * Hook that alerts clicks outside of the passed ref
+ */
+function useOutsideAlerter(ref, setDropdown) {
+    useEffect(() => {
+        /**
+         * If clicked on outside of element
+         */
+        function handleClickOutside(event) {
+            if (ref.current && !ref.current.contains(event.target)) {
+                setDropdown(false);
+            }
+        }
+
+        // Bind the event listener
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            // Unbind the event listener on clean up
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [ref]);
+}
