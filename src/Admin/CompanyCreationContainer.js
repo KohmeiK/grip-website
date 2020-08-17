@@ -196,11 +196,10 @@ function CompanyCreationContainer() {
                     Job Info <br />
                     <Field type="text" name="jobInfo" as="textarea" style={{ width: "100%" }} />
                     <ErrorMessage name="jobInfo" component="div" />
-                    <br />
+                    {/* <br/> */}
                     Job Deadline: <br />
                     <Field type="text" name="jobDl" style={{ width: "100%" }} />
                     <ErrorMessage name="jobDl" component="div" />
-
 
                     <button className="my-2 btn btn-primary bg-wb" type="submit" disabled={isSubmitting}>
                       {isSubmitting && <Spinner

@@ -27,6 +27,7 @@ import EmailHandler from './Signup/EmailHandler'
 
 import CompanyCreationContainer from './Admin/CompanyCreationContainer'
 import AdminSettingsContainer from './Admin/AdminSettingsContainer'
+import AddJobContainer from './Admin/AddJobContainer'
 
 import NeedAdmin from './Route/NeedAdmin'
 import NeedCompany from './Route/NeedCompany'
@@ -51,6 +52,7 @@ function App(){
           <PrivateCompanyRoute path="/jobs"> <MyJobs/> </PrivateCompanyRoute>
 
           <PrivateAdminRoute path="/create-company"> <CompanyCreationContainer /> </PrivateAdminRoute>
+          <PrivateAdminRoute path="/add-job"> <AddJobContainer /> </PrivateAdminRoute>
           <PrivateAdminRoute path="/admin"> <AdminSettingsContainer /> </PrivateAdminRoute>
 
           <Route path="/needAdmin"> <NeedAdmin /> </Route>

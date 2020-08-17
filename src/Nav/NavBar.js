@@ -180,6 +180,9 @@ function AdminNavLinks(props){
     <><LinkContainer to="/create-company">
       <li><img src={iconUser} /><a>Create Company</a></li>
     </LinkContainer>
+    <LinkContainer to="/add-job">
+      <li><img src={iconUser} /><a>Add Job</a></li>
+    </LinkContainer>
     <LinkContainer to="/admin">
       <li><img src={iconUser} /><a>Admin Settings</a></li>
     </LinkContainer></>:

@@ -137,9 +137,9 @@ exports.createNewCompany = functions.https.onCall(async (data, context) => {
 exports.addNewJob = functions.https.onCall(async (data, context) => {
   console.log("Running new Job")
   console.log(data.formVals.companyID,"uid for company")
-  console.log(data.formVals.jobTitle,"Job title")
-  console.log(data.formVals.jobInfo,"Job info")
-  console.log(data.formVals.jobDl,"Job deadline")
+  console.log(data.formVals.title,"title")
+  console.log(data.formVals.info,"info")
+  console.log(data.formVals.dl,"deadline")
   try{
 
     const compRef =  await admin.firestore().collection("companies").doc(data.formVals.companyID)
@@ -147,9 +147,9 @@ exports.addNewJob = functions.https.onCall(async (data, context) => {
 
     if (compDoc.exists) { // found intended company
       const jobRef = await admin.firestore().collection("jobs").add({
-        title: data.formVals.jobTitle,
-        info: data.formVals.jobInfo,
-        deadline: data.formVals.jobDl,
+        title: data.formVals.title,
+        info: data.formVals.info,
+        deadline: data.formVals.dl,
         companyID: data.formVals.companyID,
         companyName: compDoc.data().name,
         applicants: [],
