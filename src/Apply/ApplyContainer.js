@@ -57,7 +57,13 @@ function ApplyContainer(){
             name={job.title}
             info={job.info}
             dl={job.deadline}
+            duration={job.duration}
+            reqSkills={job.reqSkills}
+            preSkills={job.preSkills}
+            location={job.location}
+            companyInfo={job.companyInfo}
             companyName={job.companyName}
+            companyLogoURL={job.companyLogoURL}
             handleClose={handleClose}
             handleShow={handleShow}
             show={show && (index === indexToShow) ? true : false}

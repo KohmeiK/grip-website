@@ -28,25 +28,6 @@ function AddJobContainer() {
 
   }, []);
 
-  const handleSubmit = async (values, setSubmitting, resetForm) => {
-    try {
-      console.log("RequestSent")
-      console.log(values, "values")
-      const createNewCompany = firebase.functions.httpsCallable('createNewCompany')
-      const result = await createNewCompany({ formVals: values })
-      console.log(result.data.message, "result.data.message")
-      setSubmitting(false)
-      resetForm()
-      alert("Keep of a copy of the Company ID!         " + result.data.message)
-      return (null);
-
-    } catch (error) {
-      console.log(error, "Error")
-      setSubmitting(false)
-      alert(error.message)
-      return ("error");
-    }
-  }
 
   return (
     <div style={{ background: "#ba916e" }} >

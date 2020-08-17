@@ -24,7 +24,7 @@ function Test() {
     const handleClick = async () => {
         // setLocalDisplay(snarkdown(textValue))
         console.log(marked(textValue))
-        // return null
+        return null
         try {
             // write in database
             await firebase.db.collection("jobs").doc('12345').set({
@@ -64,9 +64,9 @@ function Test() {
                 <li>list2</li>
                 <li>list3</li>
             </ul> */}
-            <Button onClick={handleClick}>write in db</Button>
+            <Button onClick={handleClick}>console log marked(text)</Button>
             <br/>
-            <Button onClick={handleClick2}>render from db</Button>
+            {/* <Button onClick={handleClick2}>render from db</Button> */}
             <SimpleMDE value={textValue} onChange={handleChange} />
             <h6>marked:</h6>
             <p dangerouslySetInnerHTML={{ __html: marked(textValue) }} />

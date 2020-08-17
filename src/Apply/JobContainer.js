@@ -1,20 +1,90 @@
-import React from "react"
-import Card from 'react-bootstrap/Card'
-import Button from 'react-bootstrap/Button'
+import React, { useState, useEffect } from "react"
+import { Card, Button, Collapse, Badge, Row, Col } from 'react-bootstrap'
+
+import * as marked from 'marked'
 
 import ApplyModal from "./ApplyModal.js"
 
 //Job card for Apply page
-function JobContainer(props){
+function JobContainer(props) {
 
-  const imageURL = "https://picsum.photos/" + (800 + props.index) +"/100"
+  const imageURL = "https://picsum.photos/" + (800 + props.index) + "/100"
   //just to randomize image
 
   const handleClick = () => props.handleShow(props.index)
 
-  return(
+  const [open, setOpen] = useState(false)
+  const [reqSkills, setReqSkills] = useState()
+  const [preSkills, setPreSkills] = useState()
+  const [info, setInfo] = useState()
+  const [companyInfo, setCompanyInfo] = useState()
+
+
+  useEffect(() => {
+    if (props.reqSkills && props.preSkills) {
+      let reqSkillsBuilder, preSkillsBuilder
+      reqSkillsBuilder = props.reqSkills.map(skill => {
+        return <Badge className="mr-1" variant="secondary">{skill}</Badge>
+      })
+      preSkillsBuilder = props.preSkills.map(skill => {
+        return <Badge className="mr-1" variant="secondary">{skill}</Badge>
+      })
+      setReqSkills(reqSkillsBuilder)
+      setPreSkills(preSkillsBuilder)
+    }
+    if (props.info){
+      setInfo(<p dangerouslySetInnerHTML={{ __html: marked(props.info) }} />)
+    }
+    if (props.companyInfo){
+      setCompanyInfo(<p dangerouslySetInnerHTML={{ __html: marked(props.companyInfo) }} />)
+    }
+  }, [])
+
+
+
+  return (
     <>
       <Card>
+        <Card.Header>
+          <Row>
+            <Col sm={3}>
+              <img src={props.companyLogoURL} width="150"></img>
+            </Col>
+            <Col sm={9}>
+              <Card.Title>{props.name}</Card.Title>
+              <Card.Text style={{ wordWrap: "breakWord" }}>
+                {props.companyName} <br />
+                {props.location} <br />
+                Duration: {props.duration} <br />
+                Required Skills: <br />
+                {reqSkills} <br />
+                Preferred Skills: <br />
+                {preSkills}
+                {/* {props.info} */}
+              </Card.Text>
+              <Button onClick={() => setOpen(!open)}
+                aria-controls="details"
+                aria-expanded={open}>
+                Expand
+          </Button>
+            </Col>
+          </Row>
+
+        </Card.Header>
+        <Collapse in={open}>
+          <Card.Body>
+            <h6>About {props.companyName}: </h6>
+            {companyInfo} <br />
+            <h6>About the Job:</h6>
+            {info}
+          </Card.Body>
+        </Collapse>
+
+        <Card.Footer>
+          <Button onClick={handleClick}> Apply! </Button>
+        </Card.Footer>
+      </Card>
+      {/* <Card>
         <Card.Img variant="top" src={imageURL} style={{height:"7em"}} />
         <Card.Body>
           <Card.Title>{props.companyName} - {props.name}</Card.Title>
@@ -26,7 +96,7 @@ function JobContainer(props){
         <Card.Footer>
           <Button onClick={handleClick}> Apply! </Button>
         </Card.Footer>
-      </Card>
+      </Card> */}
       {/*Normally Hidden*/}
       <ApplyModal
         studentName={props.studentName}
@@ -35,7 +105,7 @@ function JobContainer(props){
         jobID={props.jobID}
         companyName={props.companyName}
         key={props.index}
-        index= {props.index}
+        index={props.index}
         handleClose={props.handleClose}
         handleShow={props.handleShow}
         show={props.show}
