@@ -13,6 +13,7 @@ function AddJobContainer() {
   const firebase = useContext(FirebaseContext)
   const [logoURL, setLogoURL] = useState('')
   const [textValue, setTextValue] = useState('')
+  const [companyList, setCompanyList] = useState(<option value="none">Loading...</option>)
   const handleChange = value => {
     setTextValue(value);
   };
@@ -25,7 +26,10 @@ function AddJobContainer() {
  */
   useEffect(() => {
     //This is called every time the component shows up on the screen
-
+    firebase.db.collection("companies").get().then((querySnapshot) => {
+      let arrayBuilder = querySnapshot.docs.map((doc) => <option value={doc.id}> {`${doc.data().name} => ${doc.id}`} </option>)
+      setCompanyList(arrayBuilder);
+    });
   }, []);
 
 
@@ -110,10 +114,12 @@ function AddJobContainer() {
                 {({ values, isSubmitting }) => (
                   <Form>
                     <h4>Add a Job to a Company</h4>
-                    Company ID: <br />
-                    <Field type="text" name="companyID" style={{ width: "100%" }} />
+                    Company Select: <br />
+                    <Field as="select" name="companyID">
+                      <option value="" disabled selected>--- Please Select ---</option>
+                      {companyList}
+                    </Field> <br />
                     <ErrorMessage name="companyID" component="div" />
-                    <br />
                     Job Title: <br />
                     <Field type="text" name="title" style={{ width: "100%" }} />
                     <ErrorMessage name="title" component="div" />
