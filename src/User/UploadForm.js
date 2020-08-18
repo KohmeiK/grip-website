@@ -11,7 +11,7 @@ import Dropzone from './Dropzone'
 function UploadForm() {
   const [progress, setProgress] = useState(0) // for progress bar
   const [uploading, setUploading] = useState(false)
-  const [newUpload, setNewUpload] = useState(false) // ignore this, it's only for UploadForm
+  const [newUpload, setNewUpload] = useState(false) 
   const [submitted, setSubmitted] = useState(false) // ignore this, this is just so firstUpload would work
   const [defResumeName, setDefResumeName] = useState('')
   const [timeSinceUpload, setTimeSinceUpload] = useState(null)
@@ -52,11 +52,10 @@ function UploadForm() {
       if (doc.data().defResumeName){
         setDefResumeName(doc.data().defResumeName)
       } else {
-        setDefResumeName("You haven't uploaded any resume!")
         return
       }
       let lastUploadTime = doc.data().lastUploadTime
-      setTimeSinceUpload('; uploaded ' + timeSince(lastUploadTime) + ' ago')
+      setTimeSinceUpload(' — uploaded ' + timeSince(lastUploadTime) + ' ago')
     })
   }, [newUpload])
 
@@ -64,7 +63,9 @@ function UploadForm() {
     <div>
       <h3>Upload your resume here</h3>
       <h5>Currently uploaded resume:</h5>
-      <i>{defResumeName}</i>{timeSinceUpload}
+      {defResumeName
+                    ? <div><i>{defResumeName}</i>{timeSinceUpload}</div>
+                    : <i>You haven't uploaded any resume yet!</i>}
       <br/>
       <br/>
       <Dropzone

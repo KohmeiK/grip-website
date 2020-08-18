@@ -54,7 +54,7 @@ function ApplyContainer(){
           <JobContainer
             key={index}
             index={index}
-            name={job.title}
+            title={job.title}
             info={job.info}
             dl={job.deadline}
             duration={job.duration}

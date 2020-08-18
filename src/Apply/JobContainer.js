@@ -53,7 +53,7 @@ function JobContainer(props) {
               <img src={props.companyLogoURL} width="150"></img>
             </Col>
             <Col sm={9}>
-              <Card.Title>{props.name}</Card.Title>
+              <Card.Title>{props.title}</Card.Title>
               <Card.Text style={{ wordWrap: "breakWord" }}>
                 {props.companyName} <br />
                 {props.location} <br />
@@ -65,7 +65,6 @@ function JobContainer(props) {
                 {/* {props.info} */}
               </Card.Text>
               <Button onClick={() => setOpen(!open)}
-                aria-controls="details"
                 aria-expanded={open}>
                 Expand
           </Button>
@@ -101,13 +100,16 @@ function JobContainer(props) {
       </Card> */}
       {/*Normally Hidden*/}
       <ApplyModal
-        studentName={props.studentName}
-        studentID={props.studentID}
-        jobTitle={props.name}
-        jobID={props.jobID}
-        companyName={props.companyName}
         key={props.index}
         index={props.index}
+        studentName={props.studentName}
+        studentID={props.studentID}
+        title={props.title}
+        jobID={props.jobID}
+        dl={props.dl}
+        location={props.location}
+        companyName={props.companyName}
+        companyLogoURL={props.companyLogoURL}
         handleClose={props.handleClose}
         handleShow={props.handleShow}
         show={props.show}
