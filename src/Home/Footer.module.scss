@@ -1,0 +1,133 @@
+@import '../colorCodes.scss';
+
+.diagonalBox {
+  position: relative;
+  margin-top: -1px;
+  &:before{
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    transform-origin: 50% 0;
+    outline: 1px solid transparent;
+    backface-visibility: hidden;
+  }
+}
+.content {
+  max-width: 100;
+  margin: 0 auto;
+  padding: 0;
+  position: relative;
+}
+
+.bgOne {
+  // height: 60px;
+  margin-bottom: 2em;
+  &:before{
+    background: $c-darkBlue;
+    transform: skewY(-5deg);
+  }
+}
+
+.toTopBtn{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  button{
+    margin: 1em 0;
+    border-radius: 10px;
+    border: none;
+    color: white;
+    background: $c-blackBlue;
+    font-weight: 500;
+    font-size: 12px;
+    word-spacing: 1px;
+    p{
+      margin: -7px 5px 0 5px;
+      padding: 0;
+    }
+  }
+}
+
+.bgTwo {
+  z-index: -1;
+  margin-top: -60px;
+  padding-top: 60px;
+  // height: 200px;
+  &:before{
+    background: $c-blackBlue;
+  }
+}
+
+.links{
+  padding: 1em 0;
+  display: flex;
+  justify-content: space-around;
+  img{
+    height: 12vw;
+  }
+}
+
+.text{
+  padding: 1em 0;
+  margin-left: 1.8em;
+  p{
+    font-size: 13px;
+    margin: 0;
+    padding: 0.1em;
+  }
+}
+
+.desktop{
+  display: none;
+}
+
+@media screen and (min-width: $s-desktopMin) {
+
+.mobile{
+  display: none;
+}
+.desktop{
+  display: initial;
+}
+
+.bgOne {
+  &:before{
+    transform: skewY(0);
+  }
+}
+
+.desktopFlex{
+  margin-top: -20px;
+  padding-bottom: 10px;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.links{
+  padding: 0;
+  height: 30px;
+  img{
+    height: 30px;
+    margin: 0 1em;
+  }
+}
+
+.text{
+  display: flex;
+  padding: 0;
+  margin: 0;
+  p{
+    margin: 0 1.5em;
+  }
+}
+
+.toTopBtn button{
+  margin: 0.4em 0;
+}
+
+}

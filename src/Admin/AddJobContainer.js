@@ -30,7 +30,7 @@ function AddJobContainer() {
 
 
   return (
-    <div style={{ background: "#ba916e" }} >
+    <div style={{ background: "#ba916e", marginTop:"85px"}} >
       <Container fluid style={{ paddingTop: "2em" }}>
         <Row>
           <Col>
@@ -38,7 +38,7 @@ function AddJobContainer() {
               <div style={{ margin: "2em", marginTop: "0em", background: "white", height: "40em" }}>
               <h5>Adding a Job Reminder: </h5>
                 1. Job Info uses markdown language. <br/>
-                   - You can access different formattings at the toolbar, including 
+                   - You can access different formattings at the toolbar, including
                 bold/header/list. <br />
                    - For all lines except those for headers and lists, type two spaces at the end to make a line break.<br/>
                    - Upon completion, click the eye icon in the tool bar to preview how it will be displayed. (Make sure you do this before submitting!)<br/>
@@ -46,7 +46,7 @@ function AddJobContainer() {
                 <br/>
                 2. Required skills and preferred skills can be left blank. <br/>
                 <br/>
-                3. It takes some time after you click submit; you will be alerted when the process is completed. 
+                3. It takes some time after you click submit; you will be alerted when the process is completed.
             </div>
             </div>
           </Col>
@@ -54,7 +54,7 @@ function AddJobContainer() {
             {/* add a job to a company */}
             <div>
               <Formik
-                initialValues={{ companyID: '', title: '', info: '', dl: '', duration: '', reqSkills: [], 
+                initialValues={{ companyID: '', title: '', info: '', dl: '', duration: '', reqSkills: [],
                                   preSkills: [], location: '', reqCoverLetter: '', regionForSearch: '' }}
                 validate={values => {
                   const errors = {};

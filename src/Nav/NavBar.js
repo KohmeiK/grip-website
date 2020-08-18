@@ -43,6 +43,7 @@ function NavBar(props){
   if(width > 650){
     //Desktop both logged in and out
     return(
+      <div className={styles.navWrap}>
       <ul className={styles.nav}>
           <LinkContainer to="/">
           <li className={styles.logo}>
@@ -65,11 +66,12 @@ function NavBar(props){
           </ul>
           </li>
       </ul>
+      </div>
     );
   }else if(!authContext.isLoadingAuthState && authContext.isAuthenticated){
     //Mobile, logged in
     return(
-      <>
+      <div className={styles.navWrap}>
         <LinkContainer to="/">
         <div onClick={closeMobileNav}className={`${styles.logoAlt } ${isNavOpenStyle ?  styles.on : " "}`}>
             <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 62 62">
@@ -109,11 +111,12 @@ function NavBar(props){
         		</ul>
         	</nav>
         </div>
-      </>
+      </div>
     );
   }else{
     //Mobile NOT logged in
     return(
+      <div className={styles.navWrap}>
       <ul className={styles.nav}>
           <LinkContainer to="/">
           <li className={styles.logo}>
@@ -133,6 +136,7 @@ function NavBar(props){
             </li>
           </LinkContainer>
       </ul>
+      </div>
     );
   }
 
