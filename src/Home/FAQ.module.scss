@@ -1,0 +1,103 @@
+@import '../colorCodes.scss';
+
+.diagonalBox {
+  position: relative;
+  margin-top: -1px;
+  &:before{
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    transform-origin: 50% 0;
+    outline: 1px solid transparent;
+    backface-visibility: hidden;
+  }
+}
+.content {
+  max-width: 100;
+  margin: 0 auto;
+  padding: 0;
+  position: relative;
+}
+
+.bgOne {
+  height: 40px;
+  margin-bottom: 2em;
+  &:before{
+    background: $c-blackBlue;
+    transform: skewY(-5deg);
+  }
+}
+
+.FAQWrapper{
+  z-index: -1;
+  position: relative;
+  margin-top: -100px;
+}
+
+.FAQText{
+  padding-top: 100px;
+  color: $c-darkBlue;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  h2{
+    padding: 1em 0;
+    text-align: center;
+    max-width: 700px;
+    width: 86vw;
+  }
+  h5{
+    color: $c-blackBlue;
+    margin: 0 7vw;
+    padding-bottom: 2em;
+    font-weight: 400;
+    font-size: 15px;
+    max-width: 700px;
+    // letter-spacing: 0.1em;
+  }
+  p{
+    margin: 0 7vw;
+    padding-bottom: 3em;
+    color: black;
+    font-weight: 300;
+    font-size: 13px;
+    // letter-spacing: 0.1em;
+    line-height: 15px;
+    max-width: 700px;
+  }
+}
+
+.desktop{
+  display: none;
+}
+
+@media screen and (min-width: $s-desktopMin) {
+
+.mobile{
+  display: none;
+}
+.desktop{
+  display: initial;
+}
+
+.FAQWrapper{
+  background-image: url('../Media/GradBackground.svg'), url('../Media/FAQBlueTri.svg');
+  background-size: cover, 600px;
+  background-repeat: no-repeat;
+  background-position: center center, top right;
+
+}
+.FAQText h2{
+  text-align: left;
+}
+.FAQText hr{
+    width: unquote("min(850px, 90vw)");
+    border-top: 1px solid $c-pink;
+    opacity: 0.3;
+    margin-bottom: 2.5em;
+}
+
+}

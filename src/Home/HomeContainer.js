@@ -4,6 +4,7 @@ import Tagline from './Tagline.js'
 import How from './How.js'
 import About from './About.js'
 import Testimonials from './Testimonials.js'
+import FAQ from './FAQ.js'
 
 import styles from './HomeContainer.module.scss';
 
@@ -18,6 +19,7 @@ function HomeContainer(){
       <How />
       <About />
       <Testimonials />
+      <FAQ />
     </div>
   );
 }

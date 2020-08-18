@@ -5,6 +5,8 @@ import * as marked from 'marked'
 
 import ApplyModal from "./ApplyModal.js"
 
+import styles from './JobContainer.module.scss';
+
 //Job card for Apply page
 function JobContainer(props) {
 
@@ -72,7 +74,7 @@ function JobContainer(props) {
 
         </Card.Header>
         <Collapse in={open}>
-          <Card.Body>
+          <Card.Body className={styles.markDown}>
             <h6>About {props.companyName}: </h6>
             {companyInfo} <br />
             <h6>About the Job:</h6>

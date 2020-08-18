@@ -39,9 +39,11 @@
     margin: 0 auto;
     padding: 0;
     position: relative;
+    background: transparent;
   }
 
   .aboutText{
+    background: transparent;
     width: 40vw;
     margin: 0em 3em 0 auto; //main left right space
     padding-top: 20vw; //main top space (yes, vw is intentional to keep earth in frame)
@@ -63,13 +65,19 @@
 
   .aboutWrapper{
     z-index: 10;
-    margin-top: -20px;
+    margin-top: -40px;
     &:before{
       background-image: url('../Media/BigEarth.svg');
-      background-size: 110%;
-      background-position: 600% 50%;
       background-color: $c-background; /* Used if the image is unavailable */
       background-repeat: no-repeat; /* Do not repeat the image */
+      //Above was fallback, here is the real background:
+      background-image: url('../Media/BigEarth.svg') 600% 50% no-repeat, linear-gradient(#fff, #e9e9e9);
+      background: url('../Media/BigEarth.svg') 600% 50% no-repeat, -moz-linear-gradient(right, #fff, #e9e9e9); // FF 3.6+
+      background: url('../Media/BigEarth.svg') 600% 50% no-repeat, -webkit-gradient(linear, 0 0, 0 100%, from(#fff), to(#e9e9e9)); // Safari 4+, Chrome 2+
+      background: url('../Media/BigEarth.svg') 600% 50% no-repeat, -webkit-linear-gradient(right, #fff, #e9e9e9); // Safari 5.1+, Chrome 10+
+      background: url('../Media/BigEarth.svg') 600% 50% no-repeat, -o-linear-gradient(right, #fff, #e9e9e9); // Opera 11.10
+      background: url('../Media/BigEarth.svg') 600% 50% no-repeat, linear-gradient(to right, #fff, #e9e9e9); // Standard, IE10
+      background-size: 110%;
       transform: skewY(5deg);
     }
   }
