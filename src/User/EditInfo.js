@@ -17,7 +17,7 @@ import ChangePassword from './ChangePassword'
 function EditInfo() {
     let match = useRouteMatch()
     return (
-        <div style={{ background: "#e0e0e0" }} >
+        <div style={{ background: "#e0e0e0", paddingTop: "85px" }} >
             <Container fluid style={{ paddingTop: "2em" }}>
                 <Row>
                     <Col>
@@ -37,7 +37,7 @@ function EditInfo() {
                                 <ChangeEmail />
                             </Route>
                             <Route path={`${match.url}/password`}>
-                                <ChangePassword /> 
+                                <ChangePassword />
                             </Route>
                             <Route path={`${match.url}/resume`}>
                                 <UploadForm />

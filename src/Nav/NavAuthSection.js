@@ -25,8 +25,8 @@ function NavAuthSection(props){
   const authContext = useContext(AuthContext)
   let history = useHistory()
 
-  // const wrapperRef = useRef(null);
-  // useOutsideAlerter(wrapperRef, setDropdown);
+  const wrapperRef = useRef(null);
+  useOutsideAlerter(wrapperRef, setDropdown);
 
   const logOut = ()=>{
       setDropdown(false)
@@ -66,7 +66,7 @@ function NavAuthSection(props){
     )
   }else if(authContext.isAuthenticated && authContext.user){
     return(
-      <div>
+      <div ref={wrapperRef}>
       <li className={`${!showDropdown && styles.noBG} ${styles.expandDiv}`}>
         <div className={styles.profileIcon} onClick={()=>setDropdown(!showDropdown)}>
           <svg id="Profile Icon" data-name="Component 38 – 1" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 51 51">
@@ -103,25 +103,25 @@ function NavAuthSection(props){
 
 export default NavAuthSection
 
-// /**
-//  * Hook that alerts clicks outside of the passed ref
-//  */
-// function useOutsideAlerter(ref, setDropdown) {
-//     useEffect(() => {
-//         /**
-//          * If clicked on outside of element
-//          */
-//         function handleClickOutside(event) {
-//             if (ref.current && !ref.current.contains(event.target)) {
-//                 setDropdown(false);
-//             }
-//         }
-//
-//         // Bind the event listener
-//         document.addEventListener("mousedown", handleClickOutside);
-//         return () => {
-//             // Unbind the event listener on clean up
-//             document.removeEventListener("mousedown", handleClickOutside);
-//         };
-//     }, [ref]);
-// }
+/**
+ * Hook that alerts clicks outside of the passed ref
+ */
+function useOutsideAlerter(ref, setDropdown) {
+    useEffect(() => {
+        /**
+         * If clicked on outside of element
+         */
+        function handleClickOutside(event) {
+            if (ref.current && !ref.current.contains(event.target)) {
+                setDropdown(false);
+            }
+        }
+
+        // Bind the event listener
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            // Unbind the event listener on clean up
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [ref]);
+}
