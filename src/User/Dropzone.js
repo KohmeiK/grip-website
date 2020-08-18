@@ -41,6 +41,7 @@ function Dropzone(props) {
     const firebase = useContext(FirebaseContext)
     const setUploading = (newValue) => props.setUploading(newValue)
     const setProgress = (newValue) => props.setProgress(newValue)
+    const setNewUpload = (newValue) => props.setNewUpload(newValue)
     const setSubmitted = (newValue) => props.setSubmitted(newValue)
     const [ignored, forceUpdate] = useReducer(x => x + 1, 0);
 
@@ -78,10 +79,17 @@ function Dropzone(props) {
         acceptedFiles.length = 0 // clear selected files
         forceUpdate()
 
+        setUploading(true)
+
+        firebase.db.collection("students").doc(props.uid).update({ // write it student's db
+            lastUploadTime: new Date().getTime(), 
+            defResumeName: resume.name
+        })
+        
         let storageRef = firebase.storage
         let resumeRef = storageRef.child(props.uid + '.pdf')
         let uploadTask = resumeRef.put(resume)
-        setUploading(true)
+        
         uploadTask.on('state_changed', function (snapshot) {
             if (smallFile) { // automatically fills up the progress bar
                 setProgress(100)
@@ -95,6 +103,7 @@ function Dropzone(props) {
             smallFile = false
             setUploading(false)
             setProgress(0) // reset things so the user can submit again
+            setNewUpload(!props.newUpload) // only for UploadForm, so the new resume is displayed
             setSubmitted(true) // only for FirstUpload, so the user can continue
             alert('Upload Successful')
         })

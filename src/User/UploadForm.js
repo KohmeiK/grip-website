@@ -1,5 +1,5 @@
 import ProgressBar from 'react-bootstrap/ProgressBar'
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { Formik } from "formik";
 import * as yup from "yup"
 
@@ -11,19 +11,70 @@ import Dropzone from './Dropzone'
 function UploadForm() {
   const [progress, setProgress] = useState(0) // for progress bar
   const [uploading, setUploading] = useState(false)
+  const [newUpload, setNewUpload] = useState(false) // ignore this, it's only for UploadForm
   const [submitted, setSubmitted] = useState(false) // ignore this, this is just so firstUpload would work
+  const [defResumeName, setDefResumeName] = useState('')
+  const [timeSinceUpload, setTimeSinceUpload] = useState(null)
   const authContext = useContext(AuthContext)
+  const firebase = useContext(FirebaseContext)
   const uid = authContext.user.uid
+
+  function timeSince(date) {
+
+    var seconds = Math.floor((new Date() - date) / 1000);
+  
+    var interval = seconds / 31536000;
+  
+    if (interval > 1) {
+      return Math.floor(interval) + " years";
+    }
+    interval = seconds / 2592000;
+    if (interval > 1) {
+      return Math.floor(interval) + " months";
+    }
+    interval = seconds / 86400;
+    if (interval > 1) {
+      return Math.floor(interval) + " days";
+    }
+    interval = seconds / 3600;
+    if (interval > 1) {
+      return Math.floor(interval) + " hours";
+    }
+    interval = seconds / 60;
+    if (interval > 1) {
+      return Math.floor(interval) + " minutes";
+    }
+    return Math.floor(seconds) + " seconds";
+  }
+
+  useEffect(() => {
+    firebase.db.collection('students').doc(uid).get().then(function(doc){
+      if (doc.data().defResumeName){
+        setDefResumeName(doc.data().defResumeName)
+      } else {
+        setDefResumeName("You haven't uploaded any resume!")
+        return
+      }
+      let lastUploadTime = doc.data().lastUploadTime
+      setTimeSinceUpload('; uploaded ' + timeSince(lastUploadTime) + ' ago')
+    })
+  }, [newUpload])
 
   return (
     <div>
       <h3>Upload your resume here</h3>
+      <h5>Currently uploaded resume:</h5>
+      <i>{defResumeName}</i>{timeSinceUpload}
+      <br/>
+      <br/>
       <Dropzone
         uid={uid}
         progress={progress}
         setProgress={setProgress}
         uploading={uploading}
         setUploading={setUploading}
+        newUpload={newUpload}
+        setNewUpload={setNewUpload}
         setSubmitted={setSubmitted}
       />
     </div>

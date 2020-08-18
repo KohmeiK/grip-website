@@ -11,6 +11,7 @@ function FirstUpload() {
     const [progress, setProgress] = useState(0) // for progress bar
     const [uploading, setUploading] = useState(false)
     const [submitted, setSubmitted] = useState(false) // to determine whether the user can continue
+    const [newUpload, setNewUpload] = useState(false) // ignore this, it's only for UploadForm
     const authContext = useContext(AuthContext)
     const uid = authContext.user.uid
     const history = useHistory()
@@ -26,6 +27,8 @@ function FirstUpload() {
                 uploading={uploading}
                 setUploading={setUploading}
                 setSubmitted={setSubmitted}
+                newUpload={newUpload}
+                setNewUpload={setNewUpload}
             />
             <Button disabled={!submitted} onClick={() => history.push('/apply')}>Continue</Button>
             <Button variant="Secondary" onClick={() => history.push('/apply')}>Skip for now</Button>
