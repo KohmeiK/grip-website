@@ -1,6 +1,8 @@
 import React from 'react'
 
 import styles from './Tagline.module.scss';
+import { useHistory } from "react-router-dom";
+
 
 import { LinkContainer } from 'react-router-bootstrap'
 
@@ -11,16 +13,18 @@ window.addEventListener('resize', () => {
   let vh = window.innerHeight * 0.01;
   document.documentElement.style.setProperty('--vh', `${vh}px`);
 });
+
 /**
 * First component in home. The whole home contaier is static
 * So there is really nothing complicated.
 *
 */
 function Tagline(){
-
+  let history = useHistory();
   let vh = window.innerHeight * 0.01;
   // Then we set the value in the --vh custom property to the root of the document
   document.documentElement.style.setProperty('--vh', `${vh}px`);
+
   return(
     <>
       <div className={`${styles.diagonalBox}`}>
@@ -29,13 +33,13 @@ function Tagline(){
                 <div className={styles.tagline}>
                     <h1>STANFORD'S GLOBALLY FOCUSED STUDENT ENTRIPRENEURSHIP</h1>
                     <p>Lorem ipsum dolor sit amet. cons adipiscing elit.</p>
+                    <LinkContainer to="/apply">
                     <div className={styles.buttonWrap}>
-                      <LinkContainer to="/apply">
                       <button className={styles.mainButton} type="button">
                         APPLY
                         </button>
-                        </LinkContainer>
                     </div>
+                    </LinkContainer>
                 </div>
 
             </div>

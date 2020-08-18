@@ -40,7 +40,9 @@ function Testimonials(){
           />
         </li>
       </ul>
+      <LinkContainer to="/apply">
       <button className={`${styles.mainButton} ${styles.desktop}`} type="button">APPLY</button>
+      </LinkContainer>
       </div>
     </div>
     </>

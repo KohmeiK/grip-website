@@ -40,6 +40,8 @@ li{
 
 //"How it works" and p after that
 .bgTwo:before {
+  position: relative;
+  z-index: -1;
   // height: 150px;
   transform: skewY(3.5deg);
   background: $c-blue;
@@ -211,5 +213,12 @@ li{
     border-radius: 2em;
     padding: 0.25em 1.4em;
     margin: 0 auto;
+
+    &:hover{
+      background: $c-pinkHov;
+    }
+    &:active{
+      background: $c-darkBlue;
+    }
   }
 }

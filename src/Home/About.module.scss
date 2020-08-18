@@ -45,13 +45,15 @@
   .aboutText{
     background: transparent;
     width: 40vw;
-    margin: 0em 3em 0 auto; //main left right space
-    padding-top: 20vw; //main top space (yes, vw is intentional to keep earth in frame)
+    margin: auto 3em auto auto; //main left right space
+    padding-top: 20vw;
+    padding-bottom: unquote("max(300px, 30vw)");
     h4{
       font-weight: 800;
       font-size: 30px;
       color: $c-darkBlue;
-      padding-bottom: 0.5em;
+      // padding-bottom: 0.5em;
+      // padding-top: 2em;
     }
     p{
       color: black;
@@ -59,7 +61,7 @@
       font-size: 14px;
       letter-spacing: 0.0em;
       line-height: 1.9em;
-      padding-bottom: 20em; //Main bottom space
+      // padding-bottom: 20em; //Main bottom space
     }
   }
 

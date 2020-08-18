@@ -27,7 +27,14 @@ function PrivateRoute({ children, ...rest }) {
                 }}
               />)
             }
-          } else {
+          } else if(location.pathname == "/apply"){
+            return (<Redirect
+              to={{
+                pathname: "/signup",
+                state: { from: location }
+              }}
+            />)
+          }else{
             return (<Redirect
               to={{
                 pathname: "/login",

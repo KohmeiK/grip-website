@@ -70,6 +70,12 @@
   border-radius: 2em;
   padding: 0.25em 1.4em;
   margin: 0 auto;
+  &:hover{
+    background: $c-pinkHov;
+  }
+  &:active{
+    background: $c-darkBlue;
+  }
 }
 
 @media screen and (min-width: $s-desktopMin) {

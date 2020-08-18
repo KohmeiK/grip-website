@@ -1,4 +1,5 @@
 import React from 'react'
+import { LinkContainer } from 'react-router-bootstrap'
 
 import styles from './How.module.scss';
 
@@ -15,15 +16,16 @@ function How(){
   return(
     <>
       <div className={`${styles.diagonalBox} ${styles.desktopTexture}`}>
-      <div className={styles.textWrapper}>
-        <div className={`${styles.diagonalBox} ${styles.bgOne}`}> </div>
-        <div className={`${styles.diagonalBox} ${styles.bgTwo}`}>
-          <div className={`${styles.content} ${styles.topText}`}>
-            <h1>How it Works</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <div className={styles.content}>
+        <div className={`${styles.textWrapper}`} >
+          <div className={`${styles.diagonalBox} ${styles.bgOne}`}> </div>
+          <div className={`${styles.diagonalBox} ${styles.bgTwo}`}>
+            <div className={`${styles.content} ${styles.topText}`}>
+              <h1>How it Works</h1>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            </div>
           </div>
         </div>
-      </div>
       <ul className={` ${styles.bgFive} ${styles.diagonalBox}`}>
         <div className={ `${styles.steps} ${styles.content} `}>
         <li>
@@ -63,7 +65,10 @@ function How(){
         </li>
         </div>
       </ul>
-      <button className={`${styles.mainButton} ${styles.desktop}`} type="button">APPLY</button>
+      <LinkContainer to="apply">
+        <button className={`${styles.mainButton} ${styles.desktop}`} type="button">APPLY</button>
+      </LinkContainer>
+    </div>
     </div>
     </>
   );

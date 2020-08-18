@@ -40,10 +40,16 @@
     border-radius: 10px;
     border: none;
     color: white;
-    background: $c-blackBlue;
+    background: rgba(0,0,0,0.34);
     font-weight: 500;
     font-size: 12px;
     word-spacing: 1px;
+    &:hover{
+      background: rgba(0,0,0,0.64);
+    }
+    &:active{
+      background: $c-pinkHov
+    }
     p{
       margin: -7px 5px 0 5px;
       padding: 0;
