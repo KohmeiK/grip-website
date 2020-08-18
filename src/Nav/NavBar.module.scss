@@ -214,6 +214,10 @@ nav li {
     left: 0;
 }
 
+.navWrap.on{
+  height: 100vh;
+}
+
 
 @media screen and (min-width: $s-desktopMin) {
   .navOptions{

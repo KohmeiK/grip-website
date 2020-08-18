@@ -44,7 +44,7 @@ function Footer(){
         <div className={styles.text}>
           <p onClick={handleClick}>Terms of Use</p>
           <p onClick={handleClick}>Privacy Policy</p>
-          <p>© 2020 ASES Global, all rights reserved.</p>
+          <h5>© 2020 ASES Global, all rights reserved.</h5>
         </div>
       </div>
     </div>
