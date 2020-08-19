@@ -55,6 +55,7 @@ function ApplyContainer(){
             key={index}
             index={index}
             title={job.title}
+            jobID={job.jobID}
             info={job.info}
             dl={job.deadline}
             duration={job.duration}
@@ -64,12 +65,12 @@ function ApplyContainer(){
             companyInfo={job.companyInfo}
             companyName={job.companyName}
             companyLogoURL={job.companyLogoURL}
+            reqCoverLetter={job.reqCoverLetter}
             handleClose={handleClose}
             handleShow={handleShow}
             show={show && (index === indexToShow) ? true : false}
             studentName={authContext.user.displayName}
             studentID={authContext.user.uid}
-            jobID={job.jobID}
            />
         </div>
       );

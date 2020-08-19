@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react"
-import { Modal, Button, Collapse, Spinner } from 'react-bootstrap'
+import { Modal, Button, Collapse, Spinner, Card } from 'react-bootstrap'
 import { Formik, Field, Form } from 'formik';
 import { v4 as uuidv4 } from 'uuid'
 
@@ -16,10 +16,6 @@ function ApplyModal(props) {
   const [timeSinceUpload, setTimeSinceUpload] = useState(null)
   const [fileUploaded, setFileUploaded] = useState(false)
   const [newResumeName, setNewResumeName] = useState()
-
-  const generateResumeName = async() => {
-    return uuidv4() + '.pdf'
-  }
 
   const getDate = () => {
     var today = new Date();
@@ -101,6 +97,8 @@ function ApplyModal(props) {
 
   }
 
+  
+
   useEffect(() => {
     let uid = authContext.user.uid
     firebase.db.collection('students').doc(uid).get().then(function (doc) {
@@ -127,6 +125,8 @@ function ApplyModal(props) {
           <b>Internship: {props.title} at {props.companyName}</b>
           <br />
 
+          <Card>
+            <Card.Body>
           <form>
             <input type="radio" id="new"
               aria-expanded={openNew} onChange={() => {
@@ -141,9 +141,9 @@ function ApplyModal(props) {
                   enableReinitialize={true} x
                   initialValues={{ file: '' }}
                   onSubmit={async(values, { setSubmitting }) => {
-                    let newResumeNameBuilder = await generateResumeName()
+                    let newResumeNameBuilder = uuidv4() + '.pdf'
                     setNewResumeName(newResumeNameBuilder)
-                    let resumeRef = firebase.storage.child(newResumeName)
+                    let resumeRef = firebase.storage.child(newResumeNameBuilder)
                     resumeRef.put(values.file).then(() => {
                       setFileUploaded(true)
                       setSubmitting(false)
@@ -193,6 +193,8 @@ function ApplyModal(props) {
               </div>
             </Collapse>
           </form>
+          </Card.Body>
+          </Card>
 
         </Modal.Body>
         <Modal.Footer>
