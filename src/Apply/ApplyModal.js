@@ -27,9 +27,9 @@ function ApplyModal(props) {
   function timeSince(date) {
 
     var seconds = Math.floor((new Date() - date) / 1000);
-  
+
     var interval = seconds / 31536000;
-  
+
     if (interval > 1) {
       return Math.floor(interval) + " years";
     }
@@ -57,7 +57,7 @@ function ApplyModal(props) {
     //Write to DB Here
     //Can be made a cloud function later
     let resumeName
-    if (newSelected){ // user has uploaded a new resume
+    if (newSelected) { // user has uploaded a new resume
       resumeName = props.studentID + props.jobID + '.pdf'
     } else {
       resumeName = props.studentID + '.pdf'
@@ -69,33 +69,35 @@ function ApplyModal(props) {
       title: props.title,
       dl: props.dl,
       location: props.location,
-      resumeName: resumeName, 
+      resumeName: resumeName,
       applyDate: getDate(),
       downloaded: '',
       companyName: props.companyName,
       companyLogoURL: props.companyLogoURL
-    }).then(function (doc) { // 8/18
-
+    }).then(function (doc) {
+      // append aplication's document id to studnet's jobsAppliedTo field
+      let studentRef = firebase.db.collection('students').doc(props.studentID)
+      studentRef.update({ applications: firebase.raw.firestore.FieldValue.arrayUnion(doc.id) })
+      
+      let jobRef = firebase.db.collection('jobs').doc(props.jobID)
+      jobRef.update({
+        allApplicants: firebase.raw.firestore.FieldValue.increment(1),
+        newApplicants: firebase.raw.firestore.FieldValue.increment(1)
+      })
+    }).then(function(){
+      alert("You've applied to this job successfully!")
+      props.handleClose() //Close Modal
+    }).catch(error => {
+      alert(error)
+      props.handleClose()
     })
-
-    let studentRef = firebase.db.collection('students').doc(props.studentID)
-    studentRef.get().then(function (doc) { // append job's document id to studnet's jobsAppliedTo field
-      studentRef.update({ jobsAppliedTo: firebase.raw.firestore.FieldValue.arrayUnion(props.jobID) })
-    })
-    let jobRef = firebase.db.collection('jobs').doc(props.jobID)
-    jobRef.get().then(function (doc) { // append student's id to job's applicants field
-      jobRef.update({ applicants: firebase.raw.firestore.FieldValue.arrayUnion(props.studentID) })
-    })
-
-    //Close Modal
-    props.handleClose()
 
   }
 
   useEffect(() => {
     let uid = authContext.user.uid
-    firebase.db.collection('students').doc(uid).get().then(function(doc){
-      if (doc.data().defResumeName){
+    firebase.db.collection('students').doc(uid).get().then(function (doc) {
+      if (doc.data().defResumeName) {
         setDefResumeName(doc.data().defResumeName)
       } else {
         return
@@ -131,13 +133,13 @@ function ApplyModal(props) {
                 <Formik
                   enableReinitialize={true} x
                   initialValues={{ file: '' }}
-                  onSubmit={(values, {setSubmitting}) => {
+                  onSubmit={(values, { setSubmitting }) => {
                     let resumeRef = firebase.storage.child(props.studentID + props.jobID + '.pdf')
                     resumeRef.put(values.file).then(() => {
                       setFileUploaded(true)
                       setSubmitting(false)
                       alert('File uploaded')
-                    }).catch(function(error){
+                    }).catch(function (error) {
                       setSubmitting(false)
                       alert(error)
                     })
@@ -151,13 +153,13 @@ function ApplyModal(props) {
                         }} className="form-control" />
                       </div>
                       <button className="my-2 btn btn-primary bg-wb" type="submit" disabled={!dirty || isSubmitting}>
-                      {isSubmitting && <Spinner
-                        as="span"
-                        animation="border"
-                        size="sm"
-                        role="status"
-                        aria-hidden="true"
-                      />}
+                        {isSubmitting && <Spinner
+                          as="span"
+                          animation="border"
+                          size="sm"
+                          role="status"
+                          aria-hidden="true"
+                        />}
                       Submit
                     </button>
                     </Form>
@@ -165,20 +167,20 @@ function ApplyModal(props) {
                 </Formik>
               </div>
             </Collapse>
-            <br/>
-            <input type="radio" 
+            <br />
+            <input type="radio"
               id="old"
               onChange={() => {
-              setOpenNew(false)
-              setOpenDef(true)
-              setNewSelected(false)
-            }} checked={!newSelected} />
+                setOpenNew(false)
+                setOpenDef(true)
+                setNewSelected(false)
+              }} checked={!newSelected} />
             <label htmlFor="old">Upload your default resume</label>
             <Collapse in={openDef}>
               <div>
                 {defResumeName
-                    ? <div><i>{defResumeName}</i>{timeSinceUpload}</div>
-                    : <i>You haven't uploaded any resume yet!</i>}
+                  ? <div><i>{defResumeName}</i>{timeSinceUpload}</div>
+                  : <i>You haven't uploaded any resume yet!</i>}
               </div>
             </Collapse>
           </form>

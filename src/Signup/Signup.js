@@ -31,7 +31,7 @@ function Signup() {
             firebase.db.collection("students").doc(user.uid).set({
                 school: values.school,
                 classYear: values.classYear,
-                jobsAppliedTo: [],
+                applications: [],
                 displayName: values.name, 
                 lastUploadTime: null, 
                 defResumeName: ''
