@@ -62,7 +62,8 @@ function JobContainer(props) {
                 {reqSkills} <br />
                 Preferred Skills: <br />
                 {preSkills}
-                {/* {props.info} */}
+                {props.reqCoverLetter &&
+                  <p className="text-danger">Requires Cover Letter</p>}
               </Card.Text>
               <Button onClick={() => setOpen(!open)}
                 aria-expanded={open}>
@@ -110,6 +111,7 @@ function JobContainer(props) {
         location={props.location}
         companyName={props.companyName}
         companyLogoURL={props.companyLogoURL}
+        reqCoverLetter={props.reqCoverLetter}
         handleClose={props.handleClose}
         handleShow={props.handleShow}
         show={props.show}
