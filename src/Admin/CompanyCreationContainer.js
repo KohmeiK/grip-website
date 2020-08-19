@@ -3,6 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { Col, Row, Container, Spinner } from 'react-bootstrap'
 import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
+import { v4 as uuidv4 } from 'uuid'
 
 import FirebaseContext from '../Firebase'
 
@@ -16,6 +17,9 @@ function CompanyCreationContainer() {
   const handleChange = value => {
     setTextValue(value);
   };
+  const getExtension = filename => {
+    return filename.split('.').pop()
+  }
 
   /**
  * Insert text at cursor position.
@@ -158,9 +162,8 @@ function CompanyCreationContainer() {
               onSubmit={(values, { resetForm, setSubmitting }) => {
                 let logo = values.file
                 let storageRef = firebase.storage
-                let uid = new Date().getTime()
-                console.log(uid + '/' + values.file.name)
-                let logoRef = storageRef.child(uid + '/' + values.file.name) // name the file with its original name, under a folder with unique name
+                let fileName = uuidv4() + '.' + getExtension(values.file.name)
+                let logoRef = storageRef.child(fileName) 
                 logoRef.put(logo).then(async function () {
                   logoRef.getDownloadURL().then(function (url) {
                     setLogoURL(url)
