@@ -4,7 +4,7 @@ import { Col, Row, Container, Spinner } from 'react-bootstrap'
 import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
 
-import FirebaseContext from '../Firebase'
+import FirebaseContext from '../Firebase' 
 
 /**
  * Company Creation Container description goes here

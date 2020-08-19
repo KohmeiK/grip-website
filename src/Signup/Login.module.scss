@@ -1,0 +1,200 @@
+@import '../colorCodes.scss';
+
+.background{
+  font-family: 'Raleway', sans-serif;
+  background-position: 50% 0%;
+  background-size: 100%;
+  background-image: url('../Media/BackgroundShape.svg'); /* The image used */
+  background-color: $c-background; /* sUsed if the image is unavailable */
+  height: 100vh; /* Fallback for browsers that do not support Custom Properties */
+  width: 100%;
+  background-repeat: no-repeat; /* Do not repeat the image */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.mainBox{
+  width: 60vw;
+  min-width: 600px;
+  height: 65vh;
+  display: flex;
+  border-radius: 10px;
+  -webkit-box-shadow: 10px 10px 21px -9px rgba(0,0,0,0.75);
+  -moz-box-shadow: 10px 10px 21px -9px rgba(0,0,0,0.75);
+  box-shadow: 10px 10px 21px -9px rgba(0,0,0,0.75);
+}
+
+.leftCol{
+  border-radius: 10px 0 0 10px;
+  width: 50%;
+  background: url('../Media/LoginImage.svg');
+  background-repeat:no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+
+.rightCol{
+  display: flex;
+  width: 50%;
+  background: $c-background;
+  border-radius: 0 10px 10px 0;
+}
+
+
+.formWrapper{
+  margin: auto;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: $c-darkBlue;
+  text-align: center;
+  h4{
+    font-weight: 800;
+    font-size: 30px;
+  }
+  p{
+    padding: 0;
+    margin: 0;
+    font-weight: 400;
+    font-size: 14px;
+  }
+  input{
+    height: 35px;
+    font-size: 16px;
+    color:initial;
+    margin: 0 0 10px 0;
+    width: 100%;
+    padding: 0 0.5em;
+    border: none;
+    border-radius: 2px;
+    -webkit-appearance: none;
+    -webkit-box-shadow: 3px 3px 4px 1px rgba(0,0,0,0.18);
+    -moz-box-shadow: 3px 3px 4px 1px rgba(0,0,0,0.18);
+    box-shadow: 3px 3px 4px 1px rgba(0,0,0,0.18);
+    &:focus{
+      outline: none;
+      border: 1px solid $c-blue;
+    }
+    &:global(.textFieldError){
+      border: 1px solid red;
+    }
+  }
+  label{
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: $c-darkBlue;
+    padding: 0;
+    margin: 0;
+    align-self: flex-start;
+  }
+  div{ //Error msg
+    font-size: 14px;
+    color:red;
+    padding: 0;
+    margin: -10px 0 10px 0;
+    align-self: flex-start;
+  }
+  a{ //Forgot
+    color: grey;
+    font-size: 12px;
+    margin-top: -10px;
+    align-self: flex-end;
+  }
+  hr{
+    border-top: 1px solid black;
+    opacity: 0.4;
+    width: 100%;
+  }
+  .or{
+    text-align: center;
+    z-index: 20;
+    padding: 0 1em;
+    font-weight: 800;
+    background: $c-background;
+    color: $c-pink;
+    margin-top: -28px;
+  }
+  .mainButton{
+    color: white;
+    background: $c-pink;
+    font-size: 1.1em;
+    font-weight: 300;
+    border: none;
+    border-radius: 2em;
+    padding: 0.25em 1.4em;
+    margin-bottom: 0.5em;
+    margin-top: 0.5em;
+
+    &:hover{
+      background: $c-pinkHov;
+    }
+    &:active{
+      background: $c-darkBlue;
+    }
+
+  }
+
+  .subButton{
+    margin-top: 0.8em;
+    background: none;
+    color: $c-pink;
+    font-size: 1.1em;
+    font-weight: 300;
+    border: solid 2px $c-pink;
+    border-radius: 2em;
+    padding: 0.25em 1.4em;
+
+    &:hover{
+      background: #ddd;
+    }
+    &:active{
+      background: #999;
+    }
+  }
+
+  .serverError{
+    width: 100%;
+    margin: 1em 0;
+    padding: 0.4em;
+    font-size: 13px;
+    background: #FF4446;
+    color: white;
+    border-radius: 3px;
+  }
+}
+
+@media screen and (max-width: $s-desktopMin) {
+  .background{
+    overflow: hidden;
+  }
+  .mainBox{
+    height: 100%;
+    width: 100%;
+  }
+  .leftCol{
+    display: none;
+  }
+  .rightCol{
+    height: 100%;
+    width: 100%;
+    display: block;
+  }
+  .formWrapper{
+    margin-top: 100px;
+    width: 80vw;
+    h4{
+      display: none;
+    }
+    p{
+      display: none;
+    }
+    .or{
+      display: block;
+    }
+  }
+
+}

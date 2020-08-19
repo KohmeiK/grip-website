@@ -1,12 +1,13 @@
 import React, {useContext, useState, useRef, useEffect} from "react"
 import { Button, ButtonGroup, DropdownButton, Dropdown } from 'react-bootstrap'
-import {useHistory} from "react-router-dom";
+import {useHistory, useLocation} from "react-router-dom";
 import { LinkContainer } from 'react-router-bootstrap'
 
 import FirebaseContext from '../Firebase'
 import AuthContext from '../Firebase/AuthContext'
 
 import styles from './NavAuthSection.module.scss'
+import useWindowDimensions from '../useWindowDimensions.js'
 
 import iconGear from '../Media/iconGear.svg';
 import iconDoor from '../Media/iconDoor.svg';
@@ -24,6 +25,7 @@ function NavAuthSection(props){
   const firebase = useContext(FirebaseContext)
   const authContext = useContext(AuthContext)
   let history = useHistory()
+  let location = useLocation()
 
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef, setDropdown);
@@ -88,12 +90,16 @@ function NavAuthSection(props){
       </li>
       </div>
     )
+  }else if(location.pathname == "/login"){
+    return(
+      null
+    )
   }else{
     return(
-      <LinkContainer to="/login">
-        <li><a>Log In</a></li>
-      </LinkContainer>
-    )
+    <LinkContainer to="/login">
+      <li><a styles={styles.paddingTopFix}>Log In</a></li>
+    </LinkContainer>
+    );
   }
 
 
