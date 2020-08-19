@@ -14,8 +14,10 @@ function ApplyModal(props) {
   const [openDef, setOpenDef] = useState(false)
   const [defResumeName, setDefResumeName] = useState('')
   const [timeSinceUpload, setTimeSinceUpload] = useState(null)
-  const [fileUploaded, setFileUploaded] = useState(false)
+  const [newResumeUploaded, setNewResumeUploaded] = useState(false)
+  const [clUploaded, setClUploaded] = useState(false)
   const [newResumeName, setNewResumeName] = useState()
+  const [clName, setClName] = useState()
 
   const getDate = () => {
     var today = new Date();
@@ -59,7 +61,6 @@ function ApplyModal(props) {
     //Write to DB Here
     //Can be made a cloud function later
     let resumeName
-    console.log(newResumeName)
     if (newSelected) { // user has uploaded a new resume
       resumeName = newResumeName
     } else {
@@ -87,7 +88,7 @@ function ApplyModal(props) {
         allApplicants: firebase.raw.firestore.FieldValue.increment(1),
         newApplicants: firebase.raw.firestore.FieldValue.increment(1)
       })
-    }).then(function(){
+    }).then(function () {
       alert("You've applied to this job successfully!")
       props.handleClose() //Close Modal
     }).catch(error => {
@@ -97,7 +98,121 @@ function ApplyModal(props) {
 
   }
 
-  
+  function CLUploadForm() {
+    return (
+      <div>
+        <Formik
+          enableReinitialize={true} x
+          initialValues={{ file: '' }}
+          onSubmit={(values, { setSubmitting }) => {
+            let clNameBuilder = uuidv4() + '.pdf'
+            setClName(clNameBuilder)
+            let resumeRef = firebase.storage.child(clNameBuilder)
+            resumeRef.put(values.file).then(() => {
+              setClUploaded(true)
+              setSubmitting(false)
+              alert('File uploaded')
+            }).catch(function (error) {
+              setSubmitting(false)
+              alert(error)
+            })
+          }}
+        >
+          {({ isSubmitting, setFieldValue, dirty }) => (
+            <Form>
+              <div className="form-group">
+                <input name="file" type="file" accept=".pdf" onChange={(event) => {
+                  setFieldValue("file", event.currentTarget.files[0]);
+                }} className="form-control" />
+              </div>
+              <button className="my-2 btn btn-primary bg-wb" type="submit" disabled={!dirty || isSubmitting}>
+                {isSubmitting && <Spinner
+                  as="span"
+                  animation="border"
+                  size="sm"
+                  role="status"
+                  aria-hidden="true"
+                />}
+                  Submit
+                </button>
+            </Form>
+          )}
+        </Formik>
+      </div>
+
+    )
+  }
+
+  function ResumeUploadForm() {
+    return (
+      <form>
+        <input type="radio" id="new"
+          aria-expanded={openNew} onChange={() => {
+            setOpenNew(true)
+            setOpenDef(false)
+            setNewSelected(true)
+          }} checked={newSelected} />
+        <label htmlFor="new">Upload a New Resume</label>
+        <Collapse in={openNew}>
+          <div>
+            <Formik
+              enableReinitialize={true} x
+              initialValues={{ file: '' }}
+              onSubmit={(values, { setSubmitting }) => {
+                let newResumeNameBuilder = uuidv4() + '.pdf'
+                setNewResumeName(newResumeNameBuilder)
+                let resumeRef = firebase.storage.child(newResumeNameBuilder)
+                resumeRef.put(values.file).then(() => {
+                  setNewResumeUploaded(true)
+                  setSubmitting(false)
+                  alert('File uploaded')
+                }).catch(function (error) {
+                  setSubmitting(false)
+                  alert(error)
+                })
+              }}
+            >
+              {({ isSubmitting, setFieldValue, dirty }) => (
+                <Form>
+                  <div className="form-group">
+                    <input name="file" type="file" accept=".pdf" onChange={(event) => {
+                      setFieldValue("file", event.currentTarget.files[0]);
+                    }} className="form-control" />
+                  </div>
+                  <button className="my-2 btn btn-primary bg-wb" type="submit" disabled={!dirty || isSubmitting}>
+                    {isSubmitting && <Spinner
+                      as="span"
+                      animation="border"
+                      size="sm"
+                      role="status"
+                      aria-hidden="true"
+                    />}
+                      Submit
+                    </button>
+                </Form>
+              )}
+            </Formik>
+          </div>
+        </Collapse>
+        <br />
+        <input type="radio"
+          id="old"
+          onChange={() => {
+            setOpenNew(false)
+            setOpenDef(true)
+            setNewSelected(false)
+          }} checked={!newSelected} />
+        <label htmlFor="old">Upload your default resume</label>
+        <Collapse in={openDef}>
+          <div>
+            {defResumeName
+              ? <div><i>{defResumeName}</i>{timeSinceUpload}</div>
+              : <i>You haven't uploaded any resume yet!</i>}
+          </div>
+        </Collapse>
+      </form>
+    )
+  }
 
   useEffect(() => {
     let uid = authContext.user.uid
@@ -120,88 +235,39 @@ function ApplyModal(props) {
         </Modal.Header>
         <Modal.Body>
           <b>User: {props.studentName} &nbsp;</b> {/*nbsp is to force space*/}
-        is about to apply to
-        <br />
+          is about to apply to
+          <br />
           <b>Internship: {props.title} at {props.companyName}</b>
           <br />
 
-          <Card>
-            <Card.Body>
-          <form>
-            <input type="radio" id="new"
-              aria-expanded={openNew} onChange={() => {
-                setOpenNew(true)
-                setOpenDef(false)
-                setNewSelected(true)
-              }} checked={newSelected} />
-            <label htmlFor="new">Upload a New Resume</label>
-            <Collapse in={openNew}>
-              <div>
-                <Formik
-                  enableReinitialize={true} x
-                  initialValues={{ file: '' }}
-                  onSubmit={async(values, { setSubmitting }) => {
-                    let newResumeNameBuilder = uuidv4() + '.pdf'
-                    setNewResumeName(newResumeNameBuilder)
-                    let resumeRef = firebase.storage.child(newResumeNameBuilder)
-                    resumeRef.put(values.file).then(() => {
-                      setFileUploaded(true)
-                      setSubmitting(false)
-                      alert('File uploaded')
-                    }).catch(function (error) {
-                      setSubmitting(false)
-                      alert(error)
-                    })
-                  }}
-                >
-                  {({ isSubmitting, setFieldValue, dirty }) => (
-                    <Form>
-                      <div className="form-group">
-                        <input name="file" type="file" accept=".pdf" onChange={(event) => {
-                          setFieldValue("file", event.currentTarget.files[0]);
-                        }} className="form-control" />
-                      </div>
-                      <button className="my-2 btn btn-primary bg-wb" type="submit" disabled={!dirty || isSubmitting}>
-                        {isSubmitting && <Spinner
-                          as="span"
-                          animation="border"
-                          size="sm"
-                          role="status"
-                          aria-hidden="true"
-                        />}
-                      Submit
-                    </button>
-                    </Form>
-                  )}
-                </Formik>
+          {props.reqCoverLetter  // display differently depending on whether a cover letter is required
+            ? <div>
+                <Card>
+                  <Card.Header>
+                    Upload a Cover Letter
+                </Card.Header>
+                  <Card.Body>
+                    <CLUploadForm />
+                  </Card.Body>
+                </Card>
+                <Card>
+                  <Card.Header>
+                    Resume to Apply with
+                </Card.Header>
+                  <Card.Body>
+                    <ResumeUploadForm />
+                  </Card.Body>
+                </Card>
               </div>
-            </Collapse>
-            <br />
-            <input type="radio"
-              id="old"
-              onChange={() => {
-                setOpenNew(false)
-                setOpenDef(true)
-                setNewSelected(false)
-              }} checked={!newSelected} />
-            <label htmlFor="old">Upload your default resume</label>
-            <Collapse in={openDef}>
-              <div>
-                {defResumeName
-                  ? <div><i>{defResumeName}</i>{timeSinceUpload}</div>
-                  : <i>You haven't uploaded any resume yet!</i>}
-              </div>
-            </Collapse>
-          </form>
-          </Card.Body>
-          </Card>
+            : <ResumeUploadForm />
+          }
 
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={props.handleClose}>
             Cancel
           </Button>
-          <Button variant="primary" onClick={handleConfirm} disabled={(newSelected && !fileUploaded) || (!newSelected && !defResumeName)}>
+          <Button variant="primary" onClick={handleConfirm} disabled={(newSelected && !newResumeUploaded) || (!newSelected && !defResumeName) || (props.reqCoverLetter && !clUploaded)}>
             Confirm
           </Button>
         </Modal.Footer>
