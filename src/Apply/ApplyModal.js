@@ -15,7 +15,7 @@ function ApplyModal(props) {
   const [defResumeName, setDefResumeName] = useState('')
   const [timeSinceUpload, setTimeSinceUpload] = useState(null)
   const [fileUploaded, setFileUploaded] = useState(false)
-  let newResumeName
+  const [newResumeName, setNewResumeName] = useState()
 
   const generateResumeName = async() => {
     return uuidv4() + '.pdf'
@@ -141,8 +141,8 @@ function ApplyModal(props) {
                   enableReinitialize={true} x
                   initialValues={{ file: '' }}
                   onSubmit={async(values, { setSubmitting }) => {
-                    newResumeName = await generateResumeName()
-                    console.log(newResumeName)
+                    let newResumeNameBuilder = await generateResumeName()
+                    setNewResumeName(newResumeNameBuilder)
                     let resumeRef = firebase.storage.child(newResumeName)
                     resumeRef.put(values.file).then(() => {
                       setFileUploaded(true)
