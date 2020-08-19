@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react"
 import { Modal, Button, Collapse, Spinner } from 'react-bootstrap'
 import { Formik, Field, Form } from 'formik';
+import { v4 as uuidv4 } from 'uuid'
 
 import FirebaseContext from '../Firebase'
 import AuthContext from '../Firebase/AuthContext'
@@ -14,6 +15,11 @@ function ApplyModal(props) {
   const [defResumeName, setDefResumeName] = useState('')
   const [timeSinceUpload, setTimeSinceUpload] = useState(null)
   const [fileUploaded, setFileUploaded] = useState(false)
+  let newResumeName
+
+  const generateResumeName = async() => {
+    return uuidv4() + '.pdf'
+  }
 
   const getDate = () => {
     var today = new Date();
@@ -57,8 +63,9 @@ function ApplyModal(props) {
     //Write to DB Here
     //Can be made a cloud function later
     let resumeName
+    console.log(newResumeName)
     if (newSelected) { // user has uploaded a new resume
-      resumeName = props.studentID + props.jobID + '.pdf'
+      resumeName = newResumeName
     } else {
       resumeName = props.studentID + '.pdf'
     }
@@ -78,7 +85,7 @@ function ApplyModal(props) {
       // append aplication's document id to studnet's jobsAppliedTo field
       let studentRef = firebase.db.collection('students').doc(props.studentID)
       studentRef.update({ applications: firebase.raw.firestore.FieldValue.arrayUnion(doc.id) })
-      
+
       let jobRef = firebase.db.collection('jobs').doc(props.jobID)
       jobRef.update({
         allApplicants: firebase.raw.firestore.FieldValue.increment(1),
@@ -133,8 +140,10 @@ function ApplyModal(props) {
                 <Formik
                   enableReinitialize={true} x
                   initialValues={{ file: '' }}
-                  onSubmit={(values, { setSubmitting }) => {
-                    let resumeRef = firebase.storage.child(props.studentID + props.jobID + '.pdf')
+                  onSubmit={async(values, { setSubmitting }) => {
+                    newResumeName = await generateResumeName()
+                    console.log(newResumeName)
+                    let resumeRef = firebase.storage.child(newResumeName)
                     resumeRef.put(values.file).then(() => {
                       setFileUploaded(true)
                       setSubmitting(false)
