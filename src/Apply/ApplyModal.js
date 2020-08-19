@@ -17,7 +17,7 @@ function ApplyModal(props) {
   const [newResumeUploaded, setNewResumeUploaded] = useState(false)
   const [clUploaded, setClUploaded] = useState(false)
   const [newResumeName, setNewResumeName] = useState()
-  const [clName, setClName] = useState()
+  const [clName, setClName] = useState('')
 
   const getDate = () => {
     var today = new Date();
@@ -74,6 +74,7 @@ function ApplyModal(props) {
       dl: props.dl,
       location: props.location,
       resumeName: resumeName,
+      clName: clName, 
       applyDate: getDate(),
       downloaded: '',
       companyName: props.companyName,
