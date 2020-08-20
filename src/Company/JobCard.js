@@ -8,24 +8,32 @@ import {Spinner} from "react-bootstrap"
  */
 function JobCard(props){
 
-  const [clicked, setClicked] = useState(false)
-  const handleClick = () => {
-    setClicked(true)
-    props.handleClick(props.index, props.title)
+  const [clickedAll, setClickedAll] = useState(false)
+  const [clickedPartial, setClickedPartial] = useState(false)
+  const [newApplicants, setNewApplicants] = useState(props.newApplicants)
+  const handleClickAll = () => {
+    setClickedAll(true)
+    props.handleClick(props.index, props.title, true) // true for downloading all
   }
-  const handleSecondClick = () => {
+  const handleSecondClickAll = () => {
     props.handleSecondClick(props.index)
-    handleClick()
+    handleClickAll()
   }
 
-  let buttonHTML;
-  if(!props.loading){
-    if(clicked){
-      buttonHTML =
+  const handleClickPartial = () => {
+    setClickedPartial(true)
+    props.handleClick(props.index, props.title, false) // false for not downloading all
+    setNewApplicants(0)
+  }
+
+  let buttonPartial, buttonAll;
+  if(!props.loadingAll){
+    if(clickedAll){
+      buttonAll =
       <>
       Downloading all resumes, this might take a while...
       <br/>
-      <Button disabled onClick={handleClick}>
+      <Button disabled onClick={handleClickAll}>
        Download all resumes
        <Spinner
          as="span"
@@ -38,15 +46,44 @@ function JobCard(props){
        </>
     }
     else{
-      buttonHTML = <Button onClick={handleClick} disabled={props.allApplicants === 0}> Download all resumes </Button>
-
+      buttonAll = <Button onClick={handleClickAll} disabled={props.allApplicants === 0}> Download all resumes </Button>
     }
   }else{
-    buttonHTML =
+    buttonAll =
     <>
-    Resumes downloaded
-    <br/>
-    <Button onClick={handleSecondClick}> Download again </Button>
+      All resumes downloaded
+      <br/>
+      <Button onClick={handleSecondClickAll}> Download again </Button>
+    </>
+  }
+
+  if(!props.loadingPartial){
+    if(clickedPartial){
+      buttonPartial =
+      <>
+      Downloading new resumes, this might take a while...
+      <br/>
+      <Button variant="warning" disabled onClick={handleClickPartial}>
+       Download all new resumes
+       <Spinner
+         as="span"
+         animation="border"
+         size="sm"
+         role="status"
+         aria-hidden="true"
+         />
+       </Button>
+       </>
+    }
+    else{
+      buttonPartial = <Button variant="warning" onClick={handleClickPartial} disabled={props.allApplicants === 0}> Download all new resumes </Button>
+    }
+  }else{
+    buttonPartial =
+    <>
+      New resumes downloaded
+      <br/>
+      <Button variant="warning" disabled> Download all new resumes </Button>
     </>
   }
 
@@ -58,12 +95,12 @@ function JobCard(props){
           <Card.Title>{props.title}</Card.Title>
           <Card.Text>
               Deadline: {props.dl} <br/>
-              Number of New Applicants: {props.newApplicants} <br/>
+              Number of New Applicants: {newApplicants} <br/>
               Numbr of All Applicants: {props.allApplicants}
           </Card.Text>
         </Card.Body>
         <Card.Footer>
-              {buttonHTML}
+              {buttonPartial}<br/><br/>{buttonAll}
         </Card.Footer>
       </Card>
       <br/>

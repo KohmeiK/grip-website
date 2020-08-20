@@ -86,20 +86,7 @@ function JobContainer(props) {
           <Button onClick={handleClick}> Apply! </Button>
         </Card.Footer>
       </Card>
-      {/* <Card>
-        <Card.Img variant="top" src={imageURL} style={{height:"7em"}} />
-        <Card.Body>
-          <Card.Title>{props.companyName} - {props.name}</Card.Title>
-          <Card.Text style={{wordWrap: "breakWord"}}>
-            Deadline: {props.dl}
-            {props.info}
-          </Card.Text>
-        </Card.Body>
-        <Card.Footer>
-          <Button onClick={handleClick}> Apply! </Button>
-        </Card.Footer>
-      </Card> */}
-      {/*Normally Hidden*/}
+  
       <ApplyModal
         key={props.index}
         index={props.index}

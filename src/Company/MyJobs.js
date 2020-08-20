@@ -12,7 +12,8 @@ import AuthContext from '../Firebase/AuthContext'
 function MyJobs() {
   const firebase = useContext(FirebaseContext)
   const authContext = useContext(AuthContext)
-  const [downloaded, setDownloaded] = useState([])
+  const [downloadedAll, setDownloadedAll] = useState([])
+  const [downloadedPartial, setDownloadedPartial] = useState([])
   const [jobs, setJobs] = useState([]) //Data from DB
   const [loading, setLoading] = useState(true); //Still loading array
 
@@ -52,14 +53,25 @@ function MyJobs() {
     return urlsBuilder
   }
 
-  const makeZip = (urls, studentNames, jobTitle, zipFileName, jobIndex) => {
+  const makeZip = async (urls, studentNames, jobTitle, zipFileName, reqCoverLetter) => {
     let zip = new JSZip();
     let count = 0;
     urls.forEach(function (url, index) { // build a zip file containing all resumes
-      let filename = studentNames[index] + ' - ' + jobTitle + ".pdf";
+      let filename
+      if (reqCoverLetter) {
+        if (index % 2 === 0) {
+          filename = studentNames[Math.floor(index / 2)] + ' - Resume.pdf'
+        } else {
+          filename = studentNames[Math.floor(index / 2)] + ' - Cover Letter.pdf' // files: resume1, CL1, resume2, CL2...
+        }
+      } else {
+        filename = studentNames[index] + ' - ' + jobTitle + ".pdf";
+      }
+
       // loading a file and add it in a zip file
       JSZipUtils.getBinaryContent(url, function (err, data) {
         if (err) {
+          alert(err)
           throw err; // or handle the error
         }
         zip.file(filename, data, { binary: true });
@@ -67,68 +79,49 @@ function MyJobs() {
         if (count === urls.length) {
           zip.generateAsync({ type: 'blob' }).then(function (content) {
             saveAs(content, zipFileName)
-            let downloadedBuilder = deepCopyArray(downloaded)
-            downloadedBuilder[jobIndex] = true
-            setDownloaded(downloadedBuilder)
           });
         }
       });
     });
   }
 
-  const makeClZip = (urls, studentNames, jobTitle, zipFilename, jobIndex) => {
-    let zip = new JSZip();
-    let count = 0;
-    console.log(urls)
-    urls.forEach(function (url, index) { // build a zip file containing all resumes
-      let filename
-      if (index % 2 === 0) {
-        filename = studentNames[Math.floor(index / 2)] + ' - Resume.pdf'
-      } else {
-        filename = studentNames[Math.floor(index / 2)] + ' - Cover Letter.pdf' // files: resume1, CL1, resume2, CL2...
-      }
-      // loading a file and add it in a zip file
-      JSZipUtils.getBinaryContent(url, function (err, data) {
-        if (err) {
-          throw err; // or handle the error
-        }
-        zip.file(filename, data, { binary: true });
-        count++;
-        if (count === urls.length) {
-          zip.generateAsync({ type: 'blob' }).then(function (content) {
-            saveAs(content, zipFilename)
-            let downloadedBuilder = deepCopyArray(downloaded)
-            downloadedBuilder[jobIndex] = true
-            setDownloaded(downloadedBuilder)
-          });
-        }
-      });
-    });
+  const handleSecondClick = (index) => { // this will only happen for all download
+    let downloadedAllBuilder = deepCopyArray(downloadedAll)
+    downloadedAllBuilder[index] = false
+    setDownloadedAll(downloadedAllBuilder)
   }
 
-  const handleSecondClick = (index) => { // set loading to false when the user clicks download the second time
-    let downloadedBuilder = deepCopyArray(downloaded)
-    downloadedBuilder[index] = false
-    setDownloaded(downloadedBuilder)
-  }
-
-  const handleClick = async (index, jobTitle) => { //To downolad resumes
+  const handleClick = async (index, jobTitle, downloadAll) => { //To downolad resumes
     const jobID = jobs[index].jobID
     const reqCoverLetter = jobs[index].reqCoverLetter
     let resumeRefs = []
     let clRefs = []
     let studentNames = []
 
-    try {
-      let querySnapshot = await firebase.db.collection('applications').where("jobID", "==", jobID).get()
-      querySnapshot.forEach(function (doc) {
-        let application = doc.data()
-        resumeRefs.push(application.resumeName)
-        studentNames.push(application.studentName)
-        if (reqCoverLetter) clRefs.push(application.clName)
-      })
-    } catch (error) {
-      alert(error)
+    if (downloadAll) {
+      try {
+        let querySnapshot = await firebase.db.collection('applications').where("jobID", "==", jobID).get()
+        querySnapshot.forEach(function (doc) {
+          let application = doc.data()
+          resumeRefs.push(application.resumeName)
+          studentNames.push(application.studentName)
+          if (reqCoverLetter) clRefs.push(application.clName)
+        })
+      } catch (error) {
+        alert(error)
+      }
+    } else {
+      try {
+        let querySnapshot = await firebase.db.collection('applications').where("jobID", "==", jobID).where("downloaded", "==", "").get()
+        querySnapshot.forEach(function (doc) {
+          let application = doc.data()
+          resumeRefs.push(application.resumeName)
+          studentNames.push(application.studentName)
+          if (reqCoverLetter) clRefs.push(application.clName)
+        })
+      } catch (error) {
+        alert(error)
+      }
     }
 
     //Delay for UI demo
@@ -144,27 +137,37 @@ function MyJobs() {
       if (reqCoverLetter) {
         clUrls = await updateUrls(clRefs)
         let allUrls = combineUrls(resumeUrls, clUrls)
-        makeClZip(allUrls, studentNames, jobTitle, zipFilename, index) // same as makeZip except for file naming 
+        await makeZip(allUrls, studentNames, jobTitle, zipFilename, true) // true for reqCoverLetter
       } else {
-        makeZip(resumeUrls, studentNames, jobTitle, zipFilename, index)
+        await makeZip(resumeUrls, studentNames, jobTitle, zipFilename, false) // false for reqCoverLetter
       }
+
+      if (downloadAll) {
+        let downloadedAllBuilder = deepCopyArray(downloadedAll)
+        downloadedAllBuilder[index] = true
+        setDownloadedAll(downloadedAllBuilder)
+      } else {
+        let downloadedPartialBuilder = deepCopyArray(downloadedPartial)
+        downloadedPartialBuilder[index] = true
+        setDownloadedPartial(downloadedPartialBuilder)
+      }
+
 
       firebase.db.collection('jobs').doc(jobID).update({
         newApplicants: 0
-      }).catch(function(error){
+      }).catch(function (error) {
         alert(error)
       })
 
-      firebase.db.collection('applications').where("jobID", "==", jobID).get().then(function(querySnapshot){
+      firebase.db.collection('applications').where("jobID", "==", jobID).where("downloaded", "==", "").get().then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
           doc.ref.update({
             downloaded: getDate()
           })
         })
-      }).catch(function(error){
+      }).catch(function (error) {
         alert(error)
       })
-
     }
     catch (err) {
       alert(err.message)
@@ -180,15 +183,18 @@ function MyJobs() {
           setJobs("No Jobs");
         } else {
           let jobsBuilder = []
-          let downloadedBuilder = []
+          let downloadedAllBuilder = []
+          let downloadedPartialBuilder = []
           querySnapshot.forEach(function (doc) {
             let job = doc.data()
             job.jobID = doc.id //Similarly, include job's id
             jobsBuilder.push(job) //Add all jobs to array
-            downloadedBuilder.push(false)
+            downloadedAllBuilder.push(false)
+            downloadedPartialBuilder.push(false)
           })
           setJobs(jobsBuilder)
-          setDownloaded(downloadedBuilder)
+          setDownloadedAll(downloadedAllBuilder)
+          setDownloadedPartial(downloadedPartialBuilder)
         }
         setLoading(false)
       } catch (error) {
@@ -218,7 +224,8 @@ function MyJobs() {
             handleSecondClick={handleSecondClick}
             newApplicants={job.newApplicants}
             allApplicants={job.allApplicants}
-            loading={downloaded[index]}
+            loadingAll={downloadedAll[index]}
+            loadingPartial={downloadedPartial[index]}
           />
         );
       })

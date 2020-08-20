@@ -57,7 +57,6 @@ function ApplyModal(props) {
   }
 
   const handleConfirm = () => {
-    alert(props.studentID + " is appying to " + props.jobID)
     //Write to DB Here
     //Can be made a cloud function later
     let resumeName
@@ -219,6 +218,7 @@ function ApplyModal(props) {
   useEffect(() => {
     let uid = authContext.user.uid
     firebase.db.collection('students').doc(uid).get().then(function (doc) {
+      if (!doc.data()) return
       if (doc.data().defResumeName) {
         setDefResumeName(doc.data().defResumeName)
       } else {
