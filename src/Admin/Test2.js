@@ -75,9 +75,9 @@ function Test() {
             // console.log('dl: ' + moment(ddl).format())
             // console.log(moment('2020-08-24').format())
             // return
-            const closeApplication = firebase.functions.httpsCallable('closeApplication')
-            const result = await closeApplication({ formVals: null })
-            console.log(result.data.message, "result.data.message")
+            // const closeApplication = firebase.functions.httpsCallable('closeApplication')
+            // const result = await closeApplication({ formVals: null })
+            // console.log(result.data.message, "result.data.message")
             let date = 'Aug 24, 2020'
             let newt = moment(date).format('YYYY-MM-DD')
             let d = moment.tz('Aug 24, 2020', "America/Los_Angeles")
