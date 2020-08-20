@@ -21,17 +21,12 @@ function CompanyCreationContainer() {
     return filename.split('.').pop()
   }
 
-  /**
- * Insert text at cursor position.
- *
- * @param {string} text
- * @public
- */
 
   useEffect(() => {
     //This is called every time the component shows up on the screen
 
   }, []);
+
 
   const handleSubmit = async (values, setSubmitting, resetForm) => {
     try {
@@ -40,9 +35,8 @@ function CompanyCreationContainer() {
       const createNewCompany = firebase.functions.httpsCallable('createNewCompany')
       const result = await createNewCompany({ formVals: values })
       console.log(result.data.message, "result.data.message")
-      setSubmitting(false)
       resetForm()
-      alert("Keep of a copy of the Company ID!         " + result.data.message)
+      alert("Company Created with ID of: " + result.data.message)
       return (null);
 
     } catch (error) {
@@ -101,7 +95,6 @@ function CompanyCreationContainer() {
                   values.info = textValue
                   values.url = logoURL
                   alert(JSON.stringify(values, null, 2))
-                  resetForm()
                   setTextValue('')
                   setLogoURL('') // a part of resetForm
                   handleSubmit(values, setSubmitting, resetForm)
@@ -147,6 +140,9 @@ function CompanyCreationContainer() {
             </div>
 
           </Col>
+
+
+
           <Col sm={4}> {/* place for uploading company logo */}
             <Formik
               initialValues={{ file: null }}
@@ -163,16 +159,15 @@ function CompanyCreationContainer() {
                 let logo = values.file
                 let storageRef = firebase.storage
                 let fileName = uuidv4() + '.' + getExtension(values.file.name)
-                let logoRef = storageRef.child(fileName) 
+                let logoRef = storageRef.child(fileName)
                 logoRef.put(logo).then(async function () {
                   logoRef.getDownloadURL().then(function (url) {
                     setLogoURL(url)
                     setSubmitting(false)
-                    resetForm()
                   })
                 })
               }}>
-              {({ values, isSubmitting, handleSubmit, setFieldValue }) => (
+              {({ values, isSubmitting, handleSubmit, setFieldValue, isSubmitted }) => (
                 <form onSubmit={handleSubmit}>
                   <div className="form-group">
                     <label htmlFor="file">Company Logo Upload</label>
@@ -182,9 +177,16 @@ function CompanyCreationContainer() {
                     <ErrorMessage name="file" component="div" />
                   </div>
                   <br />
-                  {isSubmitting
-                    ? <button type="submit" className="btn btn-dark" disabled>Uploading</button>
-                    : <button type="submit" className="btn btn-primary">Submit</button>}
+                  <button className="my-2 btn btn-primary bg-wb" type="submit" disabled={isSubmitting}>
+                    {isSubmitting && <Spinner
+                      as="span"
+                      animation="border"
+                      size="sm"
+                      role="status"
+                      aria-hidden="true"
+                    />}
+                    {isSubmitted ? "Resubmit" : "Submit"}
+                  </button>
                 </form>
 
               )}
