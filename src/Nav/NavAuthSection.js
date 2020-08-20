@@ -97,7 +97,7 @@ function NavAuthSection(props){
   }else{
     return(
     <LinkContainer to="/login">
-      <li><a styles={styles.paddingTopFix}>Log In</a></li>
+      <li><a>Log In</a></li>
     </LinkContainer>
     );
   }

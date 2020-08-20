@@ -56,7 +56,10 @@ function Login() {
             //wait until log in is complete
             await firebase.auth.signInWithEmailAndPassword(values.email, values.pass)
             setLoading(false)
-            history.replace(from);
+            if(from.pathname !== "/"){
+              history.replace(from);
+            }
+            history.replace("apply");
           }catch(error){
             setErrorText(error.message);
           }
