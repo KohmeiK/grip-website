@@ -38,7 +38,7 @@ function JobCard(props){
        </>
     }
     else{
-      buttonHTML = <Button onClick={handleClick}> Download all resumes </Button>
+      buttonHTML = <Button onClick={handleClick} disabled={props.allApplicants === 0}> Download all resumes </Button>
 
     }
   }else{
@@ -58,7 +58,8 @@ function JobCard(props){
           <Card.Title>{props.title}</Card.Title>
           <Card.Text>
               Deadline: {props.dl} <br/>
-              Number of Applicants: {props.applicantNum}
+              Number of New Applicants: {props.newApplicants} <br/>
+              Numbr of All Applicants: {props.allApplicants}
           </Card.Text>
         </Card.Body>
         <Card.Footer>
@@ -66,7 +67,6 @@ function JobCard(props){
         </Card.Footer>
       </Card>
       <br/>
-      {/*Normally Hidden*/}
 
     </>
   )

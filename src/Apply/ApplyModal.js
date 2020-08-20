@@ -75,6 +75,7 @@ function ApplyModal(props) {
       location: props.location,
       resumeName: resumeName,
       clName: clName, 
+      studentName: props.studentName, 
       applyDate: getDate(),
       downloaded: '',
       companyName: props.companyName,

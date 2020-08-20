@@ -61,14 +61,23 @@ function MyJobs() {
 
   const handleClick = async (index, jobTitle) => { //To downolad resumes
     const jobID = jobs[index].jobID
-    let applicants = jobs[index].applicants
-    let resumeRefs = applicants.map((applicant) => {
-      return applicant + jobID + '.pdf'
-    })
+    let resumeRefs = []
+    let studentNames = []
+
+    try {
+      let querySnapshot = await firebase.db.collection('applications').where("jobID", "==", jobID).get()
+      querySnapshot.forEach(function (doc) {
+        let application = doc.data()
+        resumeRefs.push(application.resumeName)
+        studentNames.push(application.studentName)
+      })
+    } catch (error) {
+      alert(error)
+    }
 
     //Delay for UI demo
     let promise = new Promise((res, rej) => {
-      setTimeout(() => res("Now it's done!"), 2000)
+      setTimeout(() => res("Now it's done!"), 1000)
     });
     await promise;
 
@@ -76,14 +85,10 @@ function MyJobs() {
       let zip = new JSZip();
       let count = 0;
       let zipFilename = jobTitle + " Resumes.zip";
-      let urls, names
-      await Promise.all([updateUrls(resumeRefs), getStudentName(applicants)]).then((values) => { // to get both information at the same time
-        urls = values[0]
-        names = values[1]
-      })
+      let urls = await updateUrls(resumeRefs)
 
       urls.forEach(function (url, indexForUrl) { // build a zip file containing all resumes
-        let filename = names[indexForUrl] + ' - ' + jobTitle + ".pdf";
+        let filename = studentNames[indexForUrl] + ' - ' + jobTitle + ".pdf";
         // loading a file and add it in a zip file
         JSZipUtils.getBinaryContent(url, function (err, data) {
           if (err) {
@@ -128,7 +133,6 @@ function MyJobs() {
           let downloadedBuilder = []
           querySnapshot.forEach(function (doc) {
             let job = doc.data()
-            job.applicantNum = job.applicants.length //So this way the number of applicant is included
             job.jobID = doc.id //Similarly, include job's id
             jobsBuilder.push(job) //Add all jobs to array
             downloadedBuilder.push(false)
@@ -162,7 +166,8 @@ function MyJobs() {
             dl={job.deadline}
             handleClick={handleClick}
             handleSecondClick={handleSecondClick}
-            applicantNum={job.applicantNum}
+            newApplicants={job.newApplicants}
+            allApplicants={job.allApplicants}
             loading={downloaded[index]}
           />
         );
