@@ -22,7 +22,7 @@ function MyJobs() {
     var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
     var yyyy = today.getFullYear();
 
-    return mm + dd + yyyy
+    return mm + '/' + dd + '/' + yyyy
   }
 
   const deepCopyArray = (arr) => {
@@ -31,16 +31,6 @@ function MyJobs() {
       arrayHolder[index] = element
     })
     return arrayHolder
-  }
-
-  const getStudentName = async (applicants) => {
-    let names = []
-    await Promise.all(applicants.map(async (applicant, index) => {
-      firebase.db.collection('students').doc(applicant).get().then(function (doc) {
-        names[index] = doc.data().displayName
-      })
-    }))
-    return names
   }
 
   const updateUrls = async (resumeRefs) => {
@@ -53,6 +43,69 @@ function MyJobs() {
     return urlsBuildingArray
   }
 
+  const combineUrls = (urls1, urls2) => {
+    let urlsBuilder = []
+    urls1.forEach((url, index) => {
+      urlsBuilder.push(urls1[index])
+      urlsBuilder.push(urls2[index])
+    })
+    return urlsBuilder
+  }
+
+  const makeZip = (urls, studentNames, jobTitle, zipFileName, jobIndex) => {
+    let zip = new JSZip();
+    let count = 0;
+    urls.forEach(function (url, index) { // build a zip file containing all resumes
+      let filename = studentNames[index] + ' - ' + jobTitle + ".pdf";
+      // loading a file and add it in a zip file
+      JSZipUtils.getBinaryContent(url, function (err, data) {
+        if (err) {
+          throw err; // or handle the error
+        }
+        zip.file(filename, data, { binary: true });
+        count++;
+        if (count === urls.length) {
+          zip.generateAsync({ type: 'blob' }).then(function (content) {
+            saveAs(content, zipFileName)
+            let downloadedBuilder = deepCopyArray(downloaded)
+            downloadedBuilder[jobIndex] = true
+            setDownloaded(downloadedBuilder)
+          });
+        }
+      });
+    });
+  }
+
+  const makeClZip = (urls, studentNames, jobTitle, zipFilename, jobIndex) => {
+    let zip = new JSZip();
+    let count = 0;
+    console.log(urls)
+    urls.forEach(function (url, index) { // build a zip file containing all resumes
+      let filename
+      if (index % 2 === 0) {
+        filename = studentNames[Math.floor(index / 2)] + ' - Resume.pdf'
+      } else {
+        filename = studentNames[Math.floor(index / 2)] + ' - Cover Letter.pdf' // files: resume1, CL1, resume2, CL2...
+      }
+      // loading a file and add it in a zip file
+      JSZipUtils.getBinaryContent(url, function (err, data) {
+        if (err) {
+          throw err; // or handle the error
+        }
+        zip.file(filename, data, { binary: true });
+        count++;
+        if (count === urls.length) {
+          zip.generateAsync({ type: 'blob' }).then(function (content) {
+            saveAs(content, zipFilename)
+            let downloadedBuilder = deepCopyArray(downloaded)
+            downloadedBuilder[jobIndex] = true
+            setDownloaded(downloadedBuilder)
+          });
+        }
+      });
+    });
+  }
+
   const handleSecondClick = (index) => { // set loading to false when the user clicks download the second time
     let downloadedBuilder = deepCopyArray(downloaded)
     downloadedBuilder[index] = false
@@ -61,7 +114,9 @@ function MyJobs() {
 
   const handleClick = async (index, jobTitle) => { //To downolad resumes
     const jobID = jobs[index].jobID
+    const reqCoverLetter = jobs[index].reqCoverLetter
     let resumeRefs = []
+    let clRefs = []
     let studentNames = []
 
     try {
@@ -70,6 +125,7 @@ function MyJobs() {
         let application = doc.data()
         resumeRefs.push(application.resumeName)
         studentNames.push(application.studentName)
+        if (reqCoverLetter) clRefs.push(application.clName)
       })
     } catch (error) {
       alert(error)
@@ -82,39 +138,33 @@ function MyJobs() {
     await promise;
 
     try {
-      let zip = new JSZip();
-      let count = 0;
       let zipFilename = jobTitle + " Resumes.zip";
-      let urls = await updateUrls(resumeRefs)
+      let resumeUrls = await updateUrls(resumeRefs)
+      let clUrls
+      if (reqCoverLetter) {
+        clUrls = await updateUrls(clRefs)
+        let allUrls = combineUrls(resumeUrls, clUrls)
+        makeClZip(allUrls, studentNames, jobTitle, zipFilename, index) // same as makeZip except for file naming 
+      } else {
+        makeZip(resumeUrls, studentNames, jobTitle, zipFilename, index)
+      }
 
-      urls.forEach(function (url, indexForUrl) { // build a zip file containing all resumes
-        let filename = studentNames[indexForUrl] + ' - ' + jobTitle + ".pdf";
-        // loading a file and add it in a zip file
-        JSZipUtils.getBinaryContent(url, function (err, data) {
-          if (err) {
-            throw err; // or handle the error
-          }
-          zip.file(filename, data, { binary: true });
-          count++;
-          if (count === urls.length) {
-            zip.generateAsync({ type: 'blob' }).then(function (content) {
-              saveAs(content, zipFilename)
-              let downloadedBuilder = deepCopyArray(downloaded)
-              downloadedBuilder[index] = true
-              setDownloaded(downloadedBuilder)
-            });
-          }
-        });
-      });
-      let docRef = firebase.db.collection('jobs').doc(jobID)
-      docRef.get().then(function (doc) {
-        if (doc.data().downloaded === "") { // not downloaded yet
-          let date = getDate()
-          docRef.update({
-            downloaded: date // add downloaded date
-          })
-        }
+      firebase.db.collection('jobs').doc(jobID).update({
+        newApplicants: 0
+      }).catch(function(error){
+        alert(error)
       })
+
+      firebase.db.collection('applications').where("jobID", "==", jobID).get().then(function(querySnapshot){
+        querySnapshot.forEach(function (doc) {
+          doc.ref.update({
+            downloaded: getDate()
+          })
+        })
+      }).catch(function(error){
+        alert(error)
+      })
+
     }
     catch (err) {
       alert(err.message)
