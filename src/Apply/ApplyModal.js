@@ -103,7 +103,7 @@ function ApplyModal(props) {
     return (
       <div>
         <Formik
-          enableReinitialize={true} x
+          enableReinitialize={true} 
           initialValues={{ file: '' }}
           onSubmit={(values, { setSubmitting }) => {
             let clNameBuilder = uuidv4() + '.pdf'
@@ -157,7 +157,7 @@ function ApplyModal(props) {
         <Collapse in={openNew}>
           <div>
             <Formik
-              enableReinitialize={true} x
+              enableReinitialize={true} 
               initialValues={{ file: '' }}
               onSubmit={(values, { setSubmitting }) => {
                 let newResumeNameBuilder = uuidv4() + '.pdf'
