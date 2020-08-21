@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid'
 
 import FirebaseContext from '../Firebase'
 import AuthContext from '../Firebase/AuthContext'
+import { truncate } from "lodash";
 
 function ApplyModal(props) {
   const firebase = useContext(FirebaseContext)
@@ -18,6 +19,7 @@ function ApplyModal(props) {
   const [clUploaded, setClUploaded] = useState(false)
   const [newResumeName, setNewResumeName] = useState()
   const [clName, setClName] = useState('')
+  const setLocalApplied = newValue => props.setLocalApplied(newValue)
 
   const getDate = () => {
     var today = new Date();
@@ -90,6 +92,7 @@ function ApplyModal(props) {
         newApplicants: firebase.raw.firestore.FieldValue.increment(1)
       })
     }).then(function () {
+      setLocalApplied(truncate)
       alert("You've applied to this job successfully!")
       props.handleClose() //Close Modal
     }).catch(error => {

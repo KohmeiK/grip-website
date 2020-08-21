@@ -20,6 +20,7 @@ function JobContainer(props) {
   const [preSkills, setPreSkills] = useState()
   const [info, setInfo] = useState()
   const [companyInfo, setCompanyInfo] = useState()
+  const [localApplied, setLocalApplied] = useState(false) // turn true after one applies to the job, disabling the Apply button
 
 
   useEffect(() => {
@@ -83,7 +84,8 @@ function JobContainer(props) {
         </Collapse>
 
         <Card.Footer>
-          <Button onClick={handleClick}> Apply! </Button>
+          <Button disabled={props.applied || localApplied} onClick={handleClick}> Apply! </Button>
+          {(props.applied || localApplied) && <p className="font-italic">You've applied to this job</p>}
         </Card.Footer>
       </Card>
   
@@ -102,6 +104,7 @@ function JobContainer(props) {
         handleClose={props.handleClose}
         handleShow={props.handleShow}
         show={props.show}
+        setLocalApplied={setLocalApplied}
       />
     </>
   )
