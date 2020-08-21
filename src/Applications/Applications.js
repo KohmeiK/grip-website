@@ -17,15 +17,14 @@ function Applications() {
     const [jobs, setJobs] = useState([]) //Data from DB
     const [loading, setLoading] = useState(true); //Still loading array
 
-  /**
-   * Insert text at cursor position.
-   *
-   * @param {string} text
-   * @public
-   */
-    const updateJobs = async (doc) => {
+    /**
+     * Insert text at cursor position.
+     *
+     * @param {string} text
+     * @public
+     */
+    const updateJobs = async (jobIDs) => {
         let jobsBuildingArray = []
-        let jobIDs = doc.data().jobsAppliedTo
         await Promise.all(jobIDs.map(async (jobID, index) => {
             let jobRef = firebase.db.collection('jobs').doc(jobID)
             await getJob(jobRef, index, jobsBuildingArray)
@@ -40,22 +39,23 @@ function Applications() {
         // jobs.push(doc.data())
         // setJobs(jobs.concat(doc.data()))
         outputArray[index] = doc.data()
-        return("Ethan - You must return something to a promise (when you await soemthing)")
+        return ""
     }
 
     useEffect(() => {
         //Only on mount
-        let studentRef = firebase.db.collection('students').doc(authContext.user.uid)
-        studentRef.get().then(function (doc) {
-            if(doc.data().jobsAppliedTo == null){
-              alert("You do not have a jobsAppliedTo array.")
-            } else if(doc.data().jobsAppliedTo.length === 0){
-              alert("You have not applied to any jobs!")
-            }else{
-              updateJobs(doc)
+        let jobIDs = []
+        firebase.db.collection('applications').where("studentID", "==", authContext.user.uid).get().then(function(applications){
+            applications.forEach(application => {
+                jobIDs.push(application.data().jobID)
+            })
+        }).then(function(){
+            if (jobIDs.length === 0){
+                alert("You haven't applied to any jobs") 
+                // localDisplay = <h3>You haven't applied to any jobs!</h3>
+            } else {
+                updateJobs(jobIDs)
             }
-        }).catch(function (error) {
-            console.log(error)
         })
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
