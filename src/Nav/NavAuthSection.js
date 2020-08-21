@@ -1,5 +1,5 @@
 import React, {useContext, useState, useRef, useEffect} from "react"
-import { Button, ButtonGroup, DropdownButton, Dropdown } from 'react-bootstrap'
+// import { Button, ButtonGroup, DropdownButton, Dropdown } from 'react-bootstrap'
 import {useHistory, useLocation} from "react-router-dom";
 import { LinkContainer } from 'react-router-bootstrap'
 
@@ -7,11 +7,11 @@ import FirebaseContext from '../Firebase'
 import AuthContext from '../Firebase/AuthContext'
 
 import styles from './NavAuthSection.module.scss'
-import useWindowDimensions from '../useWindowDimensions.js'
+// import useWindowDimensions from '../useWindowDimensions.js'
 
 import iconGear from '../Media/iconGear.svg';
 import iconDoor from '../Media/iconDoor.svg';
-import iconUser from '../Media/iconUser.svg';
+// import iconUser from '../Media/iconUser.svg';
 import iconGearDark from '../Media/iconGearDark.svg';
 import iconDoorDark from '../Media/iconDoorDark.svg';
 import iconUserDark from '../Media/iconUserDark.svg';

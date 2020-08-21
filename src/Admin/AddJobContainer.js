@@ -11,7 +11,6 @@ import FirebaseContext from '../Firebase'
  */
 function AddJobContainer() {
   const firebase = useContext(FirebaseContext)
-  const [logoURL, setLogoURL] = useState('')
   const [textValue, setTextValue] = useState('')
   const [companyList, setCompanyList] = useState(<option value="none">Loading...</option>)
   const handleChange = value => {

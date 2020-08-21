@@ -1,7 +1,6 @@
-import React, { useContext, useState } from "react"
+import React from "react"
 import { Row, Col, Container } from 'react-bootstrap'
 import {
-    BrowserRouter as Router,
     Switch,
     Route,
     Link,

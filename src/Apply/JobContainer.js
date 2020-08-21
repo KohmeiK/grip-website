@@ -10,7 +10,7 @@ import styles from './JobContainer.module.scss';
 //Job card for Apply page
 function JobContainer(props) {
 
-  const imageURL = "https://picsum.photos/" + (800 + props.index) + "/100"
+  // const imageURL = "https://picsum.photos/" + (800 + props.index) + "/100"
   //just to randomize image
 
   const handleClick = () => props.handleShow(props.index)

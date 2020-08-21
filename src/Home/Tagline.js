@@ -1,7 +1,6 @@
 import React from 'react'
 
 import styles from './Tagline.module.scss';
-import { useHistory } from "react-router-dom";
 
 
 import { LinkContainer } from 'react-router-bootstrap'
@@ -20,7 +19,6 @@ window.addEventListener('resize', () => {
 *
 */
 function Tagline(){
-  let history = useHistory();
   let vh = window.innerHeight * 0.01;
   // Then we set the value in the --vh custom property to the root of the document
   document.documentElement.style.setProperty('--vh', `${vh}px`);

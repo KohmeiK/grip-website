@@ -63,7 +63,7 @@ function EmailHandler() {
     function handleResetPassword(auth, actionCode, continueUrl, lang) {
         // Localize the UI to the selected language as determined by the lang
         // parameter.
-        var accountEmail;
+        
         // Verify the password reset code is valid.
         auth.verifyPasswordResetCode(actionCode).then(function (email) {
             var accountEmail = email;

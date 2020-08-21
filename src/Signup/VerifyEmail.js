@@ -3,11 +3,9 @@ import { Button, Spinner } from 'react-bootstrap'
 import { useHistory } from 'react-router-dom'
 
 import AuthContext from '../Firebase/AuthContext'
-import FirebaseContext from '../Firebase/'
 
 function VerifyEmail() {
     const authContext = useContext(AuthContext)
-    const firebase = useContext(FirebaseContext)
     const [isSending, setSending] = useState(false)
     const [isSent, setSent] = useState(false)
     const history = useHistory()
