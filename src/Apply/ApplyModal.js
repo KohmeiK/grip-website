@@ -75,8 +75,8 @@ function ApplyModal(props) {
       dl: props.dl,
       location: props.location,
       resumeName: resumeName,
-      clName: clName, 
-      studentName: props.studentName, 
+      clName: clName,
+      studentName: props.studentName,
       applyDate: getDate(),
       downloaded: '',
       companyName: props.companyName,
@@ -110,7 +110,7 @@ function ApplyModal(props) {
           initialValues={{ file: '' }}
           onSubmit={(values, { setSubmitting }) => {
             let clNameBuilder = uuidv4() + '.pdf'
-            setClName(clNameBuilder)
+            // setClName(clNameBuilder)
             let resumeRef = firebase.storage.child(clNameBuilder)
             resumeRef.put(values.file).then(() => {
               setClUploaded(true)
@@ -160,11 +160,11 @@ function ApplyModal(props) {
         <Collapse in={openNew}>
           <div>
             <Formik
-              enableReinitialize={true} 
+              enableReinitialize={true}
               initialValues={{ file: '' }}
               onSubmit={(values, { setSubmitting }) => {
                 let newResumeNameBuilder = uuidv4() + '.pdf'
-                setNewResumeName(newResumeNameBuilder)
+                // setNewResumeName(newResumeNameBuilder)
                 let resumeRef = firebase.storage.child(newResumeNameBuilder)
                 resumeRef.put(values.file).then(() => {
                   setNewResumeUploaded(true)
