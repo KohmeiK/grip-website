@@ -5,7 +5,6 @@ import { v4 as uuidv4 } from 'uuid'
 
 import FirebaseContext from '../Firebase'
 import AuthContext from '../Firebase/AuthContext'
-import { truncate } from "lodash";
 
 function ApplyModal(props) {
   const firebase = useContext(FirebaseContext)
@@ -82,17 +81,13 @@ function ApplyModal(props) {
       companyName: props.companyName,
       companyLogoURL: props.companyLogoURL
     }).then(function (doc) {
-      // append aplication's document id to studnet's jobsAppliedTo field
-      let studentRef = firebase.db.collection('students').doc(props.studentID)
-      studentRef.update({ applications: firebase.raw.firestore.FieldValue.arrayUnion(doc.id) })
-
       let jobRef = firebase.db.collection('jobs').doc(props.jobID)
       jobRef.update({
         allApplicants: firebase.raw.firestore.FieldValue.increment(1),
         newApplicants: firebase.raw.firestore.FieldValue.increment(1)
       })
     }).then(function () {
-      setLocalApplied(truncate)
+      setLocalApplied(true)
       alert("You've applied to this job successfully!")
       props.handleClose() //Close Modal
     }).catch(error => {

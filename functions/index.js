@@ -121,7 +121,6 @@ exports.createNewCompany = functions.https.onCall(async (data, context) => {
     await admin.firestore().collection("companies").doc(user.uid).set({
       name: data.formVals.name,
       info: data.formVals.info,
-      jobs: [],
       hasTempPass: true, 
       logoURL: data.formVals.url
     })
@@ -163,7 +162,6 @@ exports.addNewJob = functions.https.onCall(async (data, context) => {
         companyInfo: compDoc.data().info, 
         companyLogoURL: compDoc.data().logoURL, 
       })
-      await compRef.update({jobs: admin.firestore.FieldValue.arrayUnion(jobRef.id)}) // add the job id to the company doc
       console.log({message: `Job successfully added`}, "return")
       return({message: `Job successfully added`})
     }
