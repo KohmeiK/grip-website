@@ -87,7 +87,7 @@ function ApplyContainer() {
   }
 
   return (
-    <div style={{ background: "#e0e0e0" }} >
+    <div style={{ background: "#e0e0e0", paddingTop: "85px"}} >
       <Container fluid style={{ paddingTop: "2em" }}>
         <Row>
           <Col>

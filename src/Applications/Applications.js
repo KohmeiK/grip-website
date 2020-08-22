@@ -64,7 +64,7 @@ function Applications() {
     }
 
     return (
-        <div style={{ background: "#e0e0e0" }}>
+        <div style={{ background: "#e0e0e0", paddingTop: "85px" }}>
             <h1>A student page where you can see your applications</h1>
             <Container fluid style={{ paddingTop: "2em" }}>
                 <Row>
