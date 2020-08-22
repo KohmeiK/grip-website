@@ -22,33 +22,37 @@ function ApplyContainer() {
     setShow(true)
   }
 
-  useEffect(async () => {
+  useEffect(() => {
     //Only on mount
-    let applicationsRef = await firebase.db.collection('applications').where("studentID", "==", authContext.user.uid).get()
-    let jobsApplied = []
-    applicationsRef.forEach(applicationRef => {
-      jobsApplied.push(applicationRef.data().jobID)
-    })
-    console.log('applied', jobsApplied)
-    firebase.db.collection('jobs')
-      .get()
-      .then(function (querySnapshot) { // no condition for query, thus returns all jobs
-        if (querySnapshot.docs.length === 0) {
-          return (<h1> Oops, there are currently no available internships! </h1>)
-        }
-        let jobsBuilder = []
-        querySnapshot.forEach(function (doc) {
-          let job = doc.data()
-          job.jobID = doc.id // so this way job's document id is included
-          job.applied = jobsApplied.includes(job.jobID)
-          setJobs(jobsBuilder.push(job)) //Add all jobs to array
-        })
-        console.log(jobsBuilder)
-        setJobs(jobsBuilder)
-        setLoading(false)
-      }).catch(function (error) {
-        console.log(error)
+    const loadContent = async() => {
+      let applicationsRef = await firebase.db.collection('applications').where("studentID", "==", authContext.user.uid).get()
+      let jobsApplied = []
+      applicationsRef.forEach(applicationRef => {
+        jobsApplied.push(applicationRef.data().jobID)
       })
+      console.log('applied', jobsApplied)
+      firebase.db.collection('jobs')
+        .get()
+        .then(function (querySnapshot) { // no condition for query, thus returns all jobs
+          if (querySnapshot.docs.length === 0) {
+            return (<h1> Oops, there are currently no available internships! </h1>)
+          }
+          let jobsBuilder = []
+          querySnapshot.forEach(function (doc) {
+            let job = doc.data()
+            job.jobID = doc.id // so this way job's document id is included
+            job.applied = jobsApplied.includes(job.jobID)
+            setJobs(jobsBuilder.push(job)) //Add all jobs to array
+          })
+          console.log(jobsBuilder)
+          setJobs(jobsBuilder)
+          setLoading(false)
+        }).catch(function (error) {
+          console.log(error)
+        })
+    }
+    
+    loadContent() // useEffect(async()...) is bad practice so do this instead
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
