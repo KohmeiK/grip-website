@@ -76,10 +76,10 @@
     box-shadow: 3px 3px 4px 1px rgba(0,0,0,0.18);
     &:focus{
       outline: none;
-      border: 1px solid $c-blue;
+      border: 2px solid #9CC1FF;
     }
     &:global(.textFieldError){
-      border: 1px solid red;
+      border: 2px solid red;
     }
   }
   label{

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { useFormik } from 'formik';
 import { useHistory, useLocation } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage, FieldArray, useField, useFormikContext} from 'formik';
@@ -12,6 +12,17 @@ const MyTextInput = ({ label, ...props }) => {
   // useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
   // which we can spread on <input> and alse replace ErrorMessage entirely.
   const [field, meta] = useField(props);
+  const [lastError, setLastError] = useState(false);
+
+  useEffect(() => {
+    if(meta.error && !lastError){
+      setLastError(true);
+    }else if(lastError){
+      focusOnFeild(props.id);
+      setLastError(false);
+    }
+  },[meta.error]);
+
   return (
     <>
       <label htmlFor={props.id || props.name}>{label}</label>
@@ -25,6 +36,11 @@ const MyTextInput = ({ label, ...props }) => {
   );
 };
 
+function focusOnFeild(id){
+  var textbox = document.getElementById(id);
+  textbox.focus();
+}
+
 function Login() {
   let history = useHistory()
   let location = useLocation()
@@ -33,6 +49,9 @@ function Login() {
   const [errorText, setErrorText] = useState("")
 
   let { from } = location.state || { from: { pathname: "/" } };
+  useEffect(() => {
+    focusOnFeild("email")
+  },[]);
 
   return(
     <div className={styles.background}>
@@ -73,8 +92,8 @@ function Login() {
             <div className={errorText != "" && styles.serverError}>
               {errorText}
             </div>
-            <MyTextInput label="EMAIL" type="text" name="email" placeholder="yourEmail@example.com" />
-            <MyTextInput label="PASSWORD" type="password" name="pass" placeholder="Your Password"/>
+            <MyTextInput label="EMAIL" type="text" name="email" placeholder="yourEmail@example.com" id="email" />
+            <MyTextInput label="PASSWORD" type="password" name="pass" placeholder="Your Password" id="pass" />
             <LinkContainer to="forgotPassword">
               <a>
               Forgot?
