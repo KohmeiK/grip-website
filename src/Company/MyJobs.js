@@ -17,13 +17,13 @@ function MyJobs() {
   const [jobs, setJobs] = useState([]) //Data from DB
   const [loading, setLoading] = useState(true); //Still loading array
 
-  const getDate = () => {
-    var today = new Date();
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-    var yyyy = today.getFullYear();
+  function getDate() {
+    const d = new Date()
+    const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d)
+    const mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d)
+    const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d)
 
-    return mm + '/' + dd + '/' + yyyy
+    return `${mo} ${da}, ${ye}` // formatted as Aug, 22, 2020
   }
 
   const deepCopyArray = (arr) => {

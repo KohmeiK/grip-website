@@ -23,38 +23,21 @@ function Applications() {
      * @param {string} text
      * @public
      */
-    const updateJobs = async (jobIDs) => {
-        let jobsBuildingArray = []
-        await Promise.all(jobIDs.map(async (jobID, index) => {
-            let jobRef = firebase.db.collection('jobs').doc(jobID)
-            await getJob(jobRef, index, jobsBuildingArray)
-        }))
-
-        setJobs(jobsBuildingArray)
-        setLoading(false)
-    }
-
-    const getJob = async (jobRef, index, outputArray) => {
-        let doc = await jobRef.get()
-        // jobs.push(doc.data())
-        // setJobs(jobs.concat(doc.data()))
-        outputArray[index] = doc.data()
-        return ""
-    }
 
     useEffect(() => {
         //Only on mount
-        let jobIDs = []
+        let jobsBuilder = []
         firebase.db.collection('applications').where("studentID", "==", authContext.user.uid).get().then(function(applications){
             applications.forEach(application => {
-                jobIDs.push(application.data().jobID)
+                jobsBuilder.push(application.data())
             })
+            setJobs(jobsBuilder)
         }).then(function(){
-            if (jobIDs.length === 0){
+            if (jobsBuilder.length === 0){
                 alert("You haven't applied to any jobs") 
                 // localDisplay = <h3>You haven't applied to any jobs!</h3>
             } else {
-                updateJobs(jobIDs)
+                setLoading(false)
             }
         })
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -69,8 +52,12 @@ function Applications() {
                     key={index}
                     index={index}
                     title={job.title}
+                    location={job.location}
+                    dl={job.dl}
+                    downloaded={job.downloaded}
+                    applyDate={job.applyDate}
                     companyName={job.companyName}
-                    dl={job.deadline}
+                    companyLogoURL={job.companyLogoURL}
                 />
             );
         })
@@ -85,7 +72,7 @@ function Applications() {
                         <div style={{ marginLeft: "1em", borderRadius: "25px", background: "white", height: "40em" }}>
                             <div style={{ margin: "2em", marginTop: "0em", background: "white", height: "40em" }}>
                                 Search Options Go Here
-            </div>
+                            </div>
                         </div>
                     </Col>
                     <Col sm={7}>
