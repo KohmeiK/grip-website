@@ -1,0 +1,135 @@
+@import '../colorCodes.scss';
+
+.background{
+  font-family: 'Raleway', sans-serif;
+  background-position: 50% 0%;
+  background-size: 100%;
+  background-image: url('../Media/BackgroundShape.svg'); /* The image used */
+  background-color: $c-background; /* sUsed if the image is unavailable */
+  height: 100vh; /* Fallback for browsers that do not support Custom Properties */
+  width: 100%;
+  background-repeat: no-repeat; /* Do not repeat the image */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.mainBox{
+  background-color: $c-background;
+  width: 60vw;
+  min-width: 600px;
+  height: 65vh;
+  border-radius: 10px;
+  -webkit-box-shadow: 10px 10px 21px -9px rgba(0,0,0,0.75);
+  -moz-box-shadow: 10px 10px 21px -9px rgba(0,0,0,0.75);
+  box-shadow: 10px 10px 21px -9px rgba(0,0,0,0.75);
+}
+
+.stepsWrapper{
+  border-radius: 10px 10px 0 0;
+  width: 100%;
+  background-color: $c-pink;
+
+  .stepsCaption{
+    color: white;
+    display: flex;
+    justify-content: center;
+    li{
+      text-align: center;
+      font-size: 13px;
+      margin: 0;
+      min-width: 161px;
+    }
+  }
+
+  .steps{
+    padding: 10px 0 5px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    hr{
+      border-top: 4px solid #CB979F;
+      width: 80px;
+      margin: 0;
+      &.done{
+        border-top: 4px solid white;
+      }
+    }
+    li{
+      width: 80px;
+      height: 80px;
+      border-radius: 40px;
+      border: 4px solid #CB979F;
+      background: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      img{
+        width: 55px;
+        height: 55px;
+      }
+      &.doing{
+        background: #89D9F7;
+        border: 4px solid white;
+      }
+      &.done{
+        background: #9ADE52;
+        border: 4px solid white;
+      }
+    }
+  }
+
+}
+
+//------------- DESKTOP ------------------
+//Mobile Below this desktop above
+//------------- MOBILE ------------------
+
+.mobileBackground{
+  background: $c-blackBlue;
+  .stepsWrap{
+    padding: 20px 0 0 0;
+    color: white;
+    display: flex;
+    justify-content: center;
+
+    li{
+      text-align: center;
+      align-items: center;
+      display: flex;
+      background: $c-background;
+      border-radius: 20px;
+      margin: 0 5px;
+      p{
+        color: $c-blackBlue;
+        font-size: 18px;
+        font-weight: 800;
+        margin: 0 10px;
+      }
+      div{
+        color: white;
+        height: 35px;
+        width: 35px;
+        border-radius: 17.5px;
+        background: #FF8B8B;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 25px;
+        font-weight: 900;
+        &.doing{
+          background: #89D9F7;
+        }
+        &.done{
+          background: #9ADE52;
+        }
+      }
+    }
+  }
+  .contentWrap{
+    border-radius: 20px 20px 0 0;
+    background: $c-background;
+  }
+}

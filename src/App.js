@@ -24,6 +24,7 @@ import Signup from "./Signup/Signup"
 import VerifyEmail from './Signup/VerifyEmail'
 import FirstUpload from './Signup/FirstUpload'
 import EmailHandler from './Signup/EmailHandler'
+import OnboardingContainer from './Signup/OnboardingContainer'
 
 import CompanyCreationContainer from './Admin/CompanyCreationContainer'
 import AdminSettingsContainer from './Admin/AdminSettingsContainer'
@@ -59,6 +60,7 @@ function App(){
           <Route path="/needCompany"> <NeedCompany /> </Route>
           <Route path="/forgotPassword"> <ForgotPassword /> </Route>
           <Route path="/signup"> <Signup /> </Route>
+          <Route path="/onboarding"> <OnboardingContainer onStep={2}> <Signup /> </OnboardingContainer> </Route>
           <Route path="/login"> <Login /> </Route>
           <Route path="/emailHandler"> <EmailHandler /> </Route>
           <Route path="/changeEmail"> <ChangeEmail /> </Route>
