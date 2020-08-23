@@ -78,6 +78,7 @@ function ApplyContainer() {
             companyName={job.companyName}
             companyLogoURL={job.companyLogoURL}
             reqCoverLetter={job.reqCoverLetter}
+            timePosted={job.timePosted}
             applied={job.applied}
             handleClose={handleClose}
             handleShow={handleShow}

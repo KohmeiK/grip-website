@@ -8,6 +8,7 @@ import snarkdown from 'snarkdown';
 import ReactMarkdown from 'react-markdown'
 import * as marked from 'marked'
 import "easymde/dist/easymde.min.css";
+import DatePicker from 'react-datepicker'
 
 import FirebaseContext from '../Firebase'
 
@@ -18,6 +19,7 @@ function Test() {
     const firebase = useContext(FirebaseContext)
     const [textValue, setTextValue] = useState('Placeholder')
     const [localDisplay, setLocalDisplay] = useState()
+    const [startDate, setStartDate] = useState(new Date());
     const handleChange = value => {
         setTextValue(value);
     };
@@ -56,7 +58,7 @@ function Test() {
     }
 
     return (
-        <div className={`${lol.mainWrapper}`}>
+        <div className={`${lol.mainWrapper}`} style={{paddingTop: "85px"}}>
 
             {/* <h3 id="header">Header</h3>
             <ul class="list-inline">
@@ -64,6 +66,7 @@ function Test() {
                 <li>list2</li>
                 <li>list3</li>
             </ul> */}
+            <DatePicker selected={startDate} onChange={date => setStartDate(date)} />
             <Button onClick={handleClick}>console log marked(text)</Button>
             <br/>
             {/* <Button onClick={handleClick2}>render from db</Button> */}

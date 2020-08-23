@@ -22,6 +22,27 @@ function JobContainer(props) {
   const [companyInfo, setCompanyInfo] = useState()
   const [localApplied, setLocalApplied] = useState(false) // turn true after one applies to the job, disabling the Apply button
 
+  function timeSince(date) {
+
+    var days = Math.ceil((new Date() - date) / 1000 / 86400);
+
+    var interval = days / 365;
+
+    if (interval > 1) {
+      return Math.floor(interval) + " years";
+    }
+    interval = days / 30;
+    if (interval > 1) {
+      return Math.floor(interval) + " months";
+    }
+
+    if (days === 1){
+      return days + " day"
+    } else {
+      return days + " days"
+    }
+  }
+
 
   useEffect(() => {
     if (props.reqSkills && props.preSkills) {
@@ -62,9 +83,10 @@ function JobContainer(props) {
                 Required Skills: <br />
                 {reqSkills} <br />
                 Preferred Skills: <br />
-                {preSkills}
+                {preSkills} <br/>
                 {props.reqCoverLetter &&
-                  <p className="text-danger">Requires Cover Letter</p>}
+                  <p className="text-danger">Requires Cover Letter <br/> </p>}
+                Posted: {timeSince(props.timePosted) + ' ago'}
               </Card.Text>
               <Button onClick={() => setOpen(!open)}
                 aria-expanded={open}>

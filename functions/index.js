@@ -161,6 +161,7 @@ exports.addNewJob = functions.https.onCall(async (data, context) => {
         allApplicants: 0, 
         companyInfo: compDoc.data().info, 
         companyLogoURL: compDoc.data().logoURL, 
+        timePosted: new Date().getTime(), 
       })
       console.log({message: `Job successfully added`}, "return")
       return({message: `Job successfully added`})

@@ -3,8 +3,10 @@ import { Formik, Form, Field, ErrorMessage, FieldArray } from 'formik';
 import { Col, Row, Container, Spinner } from 'react-bootstrap'
 import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
+import DatePicker from "react-datepicker"
+import "react-datepicker/dist/react-datepicker.css"
 
-import FirebaseContext from '../Firebase' 
+import FirebaseContext from '../Firebase'
 
 /**
  * Company Creation Container description goes here
@@ -13,6 +15,7 @@ function AddJobContainer() {
   const firebase = useContext(FirebaseContext)
   const [textValue, setTextValue] = useState('')
   const [companyList, setCompanyList] = useState(<option value="none">Loading...</option>)
+  const [startDate, setStartDate] = useState(new Date()); 
   const handleChange = value => {
     setTextValue(value);
   };
@@ -33,22 +36,22 @@ function AddJobContainer() {
 
 
   return (
-    <div style={{ background: "#ba916e", marginTop:"85px"}} >
+    <div style={{ background: "#ba916e", marginTop: "85px" }} >
       <Container fluid style={{ paddingTop: "2em" }}>
         <Row>
           <Col>
             <div style={{ marginLeft: "1em", borderRadius: "25px", background: "white", height: "40em" }}>
               <div style={{ margin: "2em", marginTop: "0em", background: "white", height: "40em" }}>
-              <h5>Adding a Job Reminder: </h5>
-                1. Job Info uses markdown language. <br/>
+                <h5>Adding a Job Reminder: </h5>
+                1. Job Info uses markdown language. <br />
                    - You can access different formattings at the toolbar, including
                 bold/header/list. <br />
-                   - For all lines except those for headers and lists, type two spaces at the end to make a line break.<br/>
-                   - Upon completion, click the eye icon in the tool bar to preview how it will be displayed. (Make sure you do this before submitting!)<br/>
-                   - If you accidentally expand the typearea, simiply press esc key. <br/>
-                <br/>
-                2. Required skills and preferred skills can be left blank. <br/>
-                <br/>
+                   - For all lines except those for headers and lists, type two spaces at the end to make a line break.<br />
+                   - Upon completion, click the eye icon in the tool bar to preview how it will be displayed. (Make sure you do this before submitting!)<br />
+                   - If you accidentally expand the typearea, simiply press esc key. <br />
+                <br />
+                2. Required skills and preferred skills can be left blank. <br />
+                <br />
                 3. It takes some time after you click submit; you will be alerted when the process is completed.
             </div>
             </div>
@@ -57,8 +60,10 @@ function AddJobContainer() {
             {/* add a job to a company */}
             <div>
               <Formik
-                initialValues={{ companyID: '', title: '', info: '', dl: '', duration: '', reqSkills: [],
-                                  preSkills: [], location: '', reqCoverLetter: '', regionForSearch: '' }}
+                initialValues={{
+                  companyID: '', title: '', info: '', dl: '', duration: '', reqSkills: [],
+                  preSkills: [], location: '', reqCoverLetter: '', regionForSearch: ''
+                }}
                 validate={values => {
                   const errors = {};
                   if (!values.companyID) {
@@ -69,9 +74,6 @@ function AddJobContainer() {
                   }
                   if (!textValue) {
                     errors.info = 'Required';
-                  }
-                  if (!values.dl) {
-                    errors.dl = 'Required';
                   }
                   if (!values.duration) {
                     errors.duration = 'Required';
@@ -90,6 +92,8 @@ function AddJobContainer() {
                 onSubmit={async (values, { setSubmitting, resetForm }) => {
                   try {
                     values.info = textValue
+                    // console.log(typeof startDate.toString())
+                    values.dl = startDate
                     alert(JSON.stringify(values, null, 2))
                     console.log("RequestSent")
                     console.log(values, "values")
@@ -129,8 +133,12 @@ function AddJobContainer() {
                     <ErrorMessage name="info" component="div" />
                     {/* <br/> */}
                     Deadline: <br />
-                    <Field type="text" name="dl" style={{ width: "100%" }} />
-                    <ErrorMessage name="dl" component="div" />
+                    <DatePicker selected={startDate} onChange={date => setStartDate(date)} />
+                    {/* <Field as="select" name="dlYear">
+                      <option value="" disabled selected>Year</option>
+                      {years}
+                    </Field> */}
+                    {/* <ErrorMessage name="dl" component="div" /> */}
                     <br />
                     Duration: <br />
                     <Field type="text" name="duration" style={{ width: "100%" }} />
