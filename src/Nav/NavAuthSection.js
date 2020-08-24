@@ -51,7 +51,7 @@ function NavAuthSection(props){
     return(
       "Loading..."
     )
-  }else if(props.isMobile){
+  }else if(props.isMobile && authContext.isAuthenticated){
     return(
       <>
       <LinkContainer to="/editInfo/basic">
@@ -90,14 +90,10 @@ function NavAuthSection(props){
       </li>
       </div>
     )
-  }else if(location.pathname == "/login"){
-    return(
-      null
-    )
   }else{
     return(
     <LinkContainer to="/login">
-      <li><a>Log In</a></li>
+      <li><a >Log In</a></li>
     </LinkContainer>
     );
   }

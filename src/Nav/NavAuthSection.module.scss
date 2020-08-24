@@ -1,5 +1,9 @@
 @import '../colorCodes.scss';
 
+.whiteText{
+  color: white;
+}
+
 @media screen and (min-width: $s-desktopMin) {
   .profileIcon{
     cursor: pointer;

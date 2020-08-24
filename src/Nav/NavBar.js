@@ -21,13 +21,20 @@ function NavBar(props){
   const authContext = useContext(AuthContext)
   // console.log(authContext.isVerified, "emailVerfied?")
   let location = useLocation();
-  let isDarkText = null;
+  let isWhiteText = null;
+  let isNavHidden = null;
   const { height, width } = useWindowDimensions();
-  if(shouldTextBeWhite(location.pathname, width)){
-    isDarkText = styles.brightText;
-  }else{
-    isDarkText = styles.darkText;
+
+  function shouldTextBeWhite(){
+    return(location.pathname == "/" && width > 650);
   }
+  function shouldNavBeHidden(){
+    return (location.pathname == "/login");
+  }
+  isWhiteText = shouldTextBeWhite();
+  isNavHidden = shouldNavBeHidden();
+
+
   const [isNavOpenStyle, setNavOpenStyle] = useState(false)
   const toggleMobileNav = ()=>{
     setNavOpenStyle(!isNavOpenStyle);
@@ -58,11 +65,11 @@ function NavBar(props){
           </li>
           </LinkContainer>
           <li>
-          <ul className={`${styles.navOptions} ${isDarkText}`}>
+          <ul className={`${styles.navOptions} ${isWhiteText && styles.brightText} ${isNavHidden && styles.hide}`}>
               <StudentNavLinks isVisible={authContext.isAuthenticated}/>
               <CompanyNavLinks isVisible={authContext.isCompany && authContext.isAuthenticated}/>
               <AdminNavLinks isVisible={authContext.isAdmin && authContext.isAuthenticated}/>
-              <NavAuthSection isWhiteText={isDarkText}/>
+              <NavAuthSection white={false}/>
           </ul>
           </li>
       </ul>
@@ -84,7 +91,7 @@ function NavBar(props){
             <p className={styles.abroadText}>Abroad</p>
         </div>
         </LinkContainer>
-        <div onClick={toggleMobileNav} className={`${styles.menuSection } ${isNavOpenStyle ?  styles.on : " "}`}>
+        <div onClick={toggleMobileNav} className={`${styles.menuSection } ${isNavOpenStyle ?  styles.on : " "} ${isNavHidden && styles.hide}`}>
           <div className={`${styles.menuToggle } ${isNavOpenStyle ? styles.on : " "}`}>
             <div className={styles.one}></div>
             <div className={styles.two}></div>
@@ -107,7 +114,7 @@ function NavBar(props){
               <CompanyNavLinks isVisible={authContext.isCompany && authContext.isAuthenticated}/>
               <AdminNavLinks isVisible={authContext.isAdmin && authContext.isAuthenticated}/>
               <hr className={styles.divider} />
-              <NavAuthSection isMobile={true}/>
+              <NavAuthSection isMobile={true} white={false}/>
         		</ul>
         	</nav>
         </div>
@@ -131,8 +138,8 @@ function NavBar(props){
           </li>
           </LinkContainer>
           <LinkContainer to="/login">
-            <li className={`${styles.navOptions}`}>
-              <a>Log In</a>
+            <li className={`${styles.navOptions} ${isWhiteText && styles.brightText} ${isNavHidden && styles.hide}`}>
+              <li className={styles.paddingLeft}>Log In</li>
             </li>
           </LinkContainer>
       </ul>
@@ -140,10 +147,6 @@ function NavBar(props){
     );
   }
 
-}
-
-function shouldTextBeWhite(location, width){
-  return(location == "/" && width > 650)
 }
 
 function StudentNavLinks(props){
