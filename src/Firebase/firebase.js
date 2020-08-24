@@ -10,6 +10,7 @@ import 'firebase/firestore';
 import 'firebase/storage';
 import 'firebase/auth';
 import 'firebase/functions';
+import "firebase/performance";
 
 const config = {
   apiKey: "AIzaSyBI-HC_K_CzKsv7oTV1ERDNDN3PbkRt6cM",
@@ -29,7 +30,9 @@ const Firebase = {
     storage: firebase.storage().ref(),
     raw: firebase,
     functions: firebase.functions(),
+    perf: firebase.performance(),
 }
+
 export default Firebase;
 
 // let Firebase = app.initializeApp(config);
