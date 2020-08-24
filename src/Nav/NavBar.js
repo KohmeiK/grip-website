@@ -23,16 +23,30 @@ function NavBar(props){
   let location = useLocation();
   let isWhiteText = null;
   let isNavHidden = null;
+  let isLogoHidden = null;
   const { height, width } = useWindowDimensions();
 
   function shouldTextBeWhite(){
-    return(location.pathname == "/" && width > 650);
+    return(
+    (location.pathname == "/" && width > 650)|| //Home page, desktop
+    (location.pathname == "/next item")
+    )
   }
   function shouldNavBeHidden(){
-    return (location.pathname == "/login");
+    return(
+    (location.pathname == "/login") || //Login, both
+    (location.pathname == "/onboarding") //onboarding, both
+    )
+  }
+  function shouldLogoBeHidden(){
+    return(
+    (location.pathname == "/onboarding" && width < 650)|| //onboarding, both
+    (location.pathname == "/next item")
+    )
   }
   isWhiteText = shouldTextBeWhite();
   isNavHidden = shouldNavBeHidden();
+  isLogoHidden = shouldLogoBeHidden();
 
 
   const [isNavOpenStyle, setNavOpenStyle] = useState(false)
@@ -53,7 +67,7 @@ function NavBar(props){
       <div className={styles.navWrap}>
       <ul className={styles.nav}>
           <LinkContainer to="/">
-          <li className={styles.logo}>
+          <li className={`${styles.logo} ${isLogoHidden && styles.hide}`}>
               <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 62 62">
                 <g id="Logo" data-name="Group 1" transform="translate(-1037 -229)">
                   <path id="Subtraction_5" data-name="Subtraction 5" d="M31,62a31.5,31.5,0,0,1-3.17-.16A30.954,30.954,0,0,1,.16,34.17a31.465,31.465,0,0,1,0-6.339A30.943,30.943,0,0,1,8.506,9.669L13.034,14.2A24.6,24.6,0,0,0,47.8,48.966l4.528,4.528a31.043,31.043,0,0,1-9.264,6.07,30.826,30.826,0,0,1-8.9,2.276A31.5,31.5,0,0,1,31,62Zm22.494-9.669h0L48.966,47.8A24.6,24.6,0,0,0,14.2,13.034L9.669,8.506a31.042,31.042,0,0,1,9.264-6.07A30.826,30.826,0,0,1,27.83.16a31.465,31.465,0,0,1,6.339,0A30.954,30.954,0,0,1,61.84,27.83a31.466,31.466,0,0,1,0,6.339,30.943,30.943,0,0,1-8.346,18.161Z" transform="translate(1037 229)" fill="#233f71"/>
@@ -80,7 +94,7 @@ function NavBar(props){
     return(
       <div className={`${styles.navWrap } ${isNavOpenStyle ?  styles.on : " "}`} >
         <LinkContainer to="/">
-        <div onClick={closeMobileNav}className={`${styles.logoAlt } ${isNavOpenStyle ?  styles.on : " "}`}>
+        <div onClick={closeMobileNav}className={`${styles.logoAlt } ${isNavOpenStyle ?  styles.on : " "} ${isLogoHidden && styles.hide}`}>
             <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 62 62">
               <g id="Logo" data-name="Group 1" transform="translate(-1037 -229)">
                 <path id="Subtraction_5" data-name="Subtraction 5" d="M31,62a31.5,31.5,0,0,1-3.17-.16A30.954,30.954,0,0,1,.16,34.17a31.465,31.465,0,0,1,0-6.339A30.943,30.943,0,0,1,8.506,9.669L13.034,14.2A24.6,24.6,0,0,0,47.8,48.966l4.528,4.528a31.043,31.043,0,0,1-9.264,6.07,30.826,30.826,0,0,1-8.9,2.276A31.5,31.5,0,0,1,31,62Zm22.494-9.669h0L48.966,47.8A24.6,24.6,0,0,0,14.2,13.034L9.669,8.506a31.042,31.042,0,0,1,9.264-6.07A30.826,30.826,0,0,1,27.83.16a31.465,31.465,0,0,1,6.339,0A30.954,30.954,0,0,1,61.84,27.83a31.466,31.466,0,0,1,0,6.339,30.943,30.943,0,0,1-8.346,18.161Z" transform="translate(1037 229)" fill="#233f71"/>
@@ -126,7 +140,7 @@ function NavBar(props){
       <div className={styles.navWrap}>
       <ul className={styles.nav}>
           <LinkContainer to="/">
-          <li className={styles.logo}>
+          <li className={`${styles.logo} ${isLogoHidden && styles.hide}`}>
               <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 62 62">
                 <g id="Logo" data-name="Group 1" transform="translate(-1037 -229)">
                   <path id="Subtraction_5" data-name="Subtraction 5" d="M31,62a31.5,31.5,0,0,1-3.17-.16A30.954,30.954,0,0,1,.16,34.17a31.465,31.465,0,0,1,0-6.339A30.943,30.943,0,0,1,8.506,9.669L13.034,14.2A24.6,24.6,0,0,0,47.8,48.966l4.528,4.528a31.043,31.043,0,0,1-9.264,6.07,30.826,30.826,0,0,1-8.9,2.276A31.5,31.5,0,0,1,31,62Zm22.494-9.669h0L48.966,47.8A24.6,24.6,0,0,0,14.2,13.034L9.669,8.506a31.042,31.042,0,0,1,9.264-6.07A30.826,30.826,0,0,1,27.83.16a31.465,31.465,0,0,1,6.339,0A30.954,30.954,0,0,1,61.84,27.83a31.466,31.466,0,0,1,0,6.339,30.943,30.943,0,0,1-8.346,18.161Z" transform="translate(1037 229)" fill="#233f71"/>
