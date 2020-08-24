@@ -12,25 +12,16 @@ const MyTextInput = ({ label, ...props }) => {
   // useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
   // which we can spread on <input> and alse replace ErrorMessage entirely.
   const [field, meta] = useField(props);
-  const [lastError, setLastError] = useState(false);
-
-  useEffect(() => {
-    if(meta.error && !lastError){
-      setLastError(true);
-    }else if(lastError){
-      focusOnFeild(props.id);
-      setLastError(false);
-    }
-  },[meta.error]);
 
   return (
     <>
       <label htmlFor={props.id || props.name}>{label}</label>
+      <div className={`${styles.inputBorder} ${meta.touched && meta.error && styles.error}`}>
+        <input {...field} {...props} />
+      </div>
       {meta.touched && meta.error ? (<>
-        <input className="textFieldError" {...field} {...props} />
-        <div >{meta.error}</div>
-      </>) :
-        (<input {...field} {...props} />)
+        <div className={styles.errorMsg}>{meta.error}</div>
+      </>) : null
       }
     </>
   );
@@ -87,6 +78,7 @@ function Login() {
         {({ values, isSubmitting }) => (
           <div className={styles.rightCol}>
           <Form className={styles.formWrapper}>
+            <h5>{from.pathname !== '/' ? " Log in to view the page: "+from.pathname : "Log in" }</h5>
             <h4>{from.pathname !== '/' ? " Log in to view the page: "+from.pathname : "Welcome Back!" }</h4>
             <p>Log in to continue</p>
             <div className={errorText != "" && styles.serverError}>

@@ -61,37 +61,46 @@
     font-weight: 400;
     font-size: 14px;
   }
-  input{
-    height: 35px;
-    font-size: 16px;
-    color:initial;
+  .inputBorder{
     margin: 0 0 10px 0;
+    padding: 0;
     width: 100%;
-    padding: 0 0.5em;
-    border: none;
-    border-radius: 2px;
+    background: white;
+    border-radius: 4px;
     -webkit-appearance: none;
     -webkit-box-shadow: 3px 3px 4px 1px rgba(0,0,0,0.18);
     -moz-box-shadow: 3px 3px 4px 1px rgba(0,0,0,0.18);
     box-shadow: 3px 3px 4px 1px rgba(0,0,0,0.18);
+    &.error{
+      background: red;
+    }
+    &:focus-within{
+      background: #9CC1FF;;
+    }
+  }
+  input{
+    height: 35px;
+    font-size: 16px;
+    color:initial;
+    margin: 2px;
+    width: calc(100% - 4px);
+    padding: 0 0.5em;
+    border: none;
+    border-radius: 2px;
     &:focus{
       outline: none;
-      border: 2px solid #9CC1FF;
-    }
-    &:global(.textFieldError){
-      border: 2px solid red;
     }
   }
   label{
     font-size: 12px;
-    font-weight: 700;
+    font-weight: 800;
     letter-spacing: 1px;
     color: $c-darkBlue;
     padding: 0;
     margin: 0;
     align-self: flex-start;
   }
-  div{ //Error msg
+  .errorMsg{ //Error msg
     font-size: 14px;
     color:red;
     padding: 0;
@@ -100,8 +109,8 @@
   }
   a{ //Forgot
     color: grey;
-    font-size: 12px;
-    margin-top: -10px;
+    font-size: 15px;
+    margin-top: -6px;
     align-self: flex-end;
   }
   hr{
@@ -165,6 +174,9 @@
     color: white;
     border-radius: 3px;
   }
+  h5{
+    display: none;
+  }
 }
 
 @media screen and (max-width: $s-desktopMin) {
@@ -186,6 +198,14 @@
   .formWrapper{
     margin-top: 100px;
     width: 80vw;
+    h5{
+      color: $c-blackBlue;
+      display: initial;
+      font-weight: 900;
+      font-size: 35px;
+      margin-top: -75px;
+      margin-bottom: 40px;
+    }
     h4{
       display: none;
     }
