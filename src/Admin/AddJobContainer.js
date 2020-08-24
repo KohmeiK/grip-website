@@ -5,6 +5,7 @@ import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
+import moment from 'moment'
 
 import FirebaseContext from '../Firebase'
 
@@ -26,13 +27,15 @@ function AddJobContainer() {
  * @param {string} text
  * @public
  */
-  useEffect(() => {
+  useEffect(async() => {
     //This is called every time the component shows up on the screen
     firebase.db.collection("companies").get().then((querySnapshot) => {
       let arrayBuilder = querySnapshot.docs.map((doc) => <option value={doc.id}> {`${doc.data().name} => ${doc.id}`} </option>)
       setCompanyList(arrayBuilder);
     });
   }, []);
+
+  console.log(moment(startDate).tz('America/Los_Angeles').format('ll'))
 
 
   return (
@@ -92,8 +95,8 @@ function AddJobContainer() {
                 onSubmit={async (values, { setSubmitting, resetForm }) => {
                   try {
                     values.info = textValue
-                    // console.log(typeof startDate.toString())
-                    values.dl = startDate
+                    // console.log( startDate)
+                    values.dl = moment(startDate).format('ll')
                     alert(JSON.stringify(values, null, 2))
                     console.log("RequestSent")
                     console.log(values, "values")

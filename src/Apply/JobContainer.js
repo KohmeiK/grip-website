@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react"
 import { Card, Button, Collapse, Badge, Row, Col } from 'react-bootstrap'
 
 import * as marked from 'marked'
+import moment from 'moment'
+import * as tz from 'moment-timezone'
 
 import ApplyModal from "./ApplyModal.js"
 
@@ -21,6 +23,7 @@ function JobContainer(props) {
   const [info, setInfo] = useState()
   const [companyInfo, setCompanyInfo] = useState()
   const [localApplied, setLocalApplied] = useState(false) // turn true after one applies to the job, disabling the Apply button
+  const [remainingTime, setRemainingTime] = useState(null)
 
   function timeSince(date) {
 
@@ -29,39 +32,63 @@ function JobContainer(props) {
     var interval = days / 365;
 
     if (interval > 1) {
+      if (Math.floor(interval === 1)) {
+        return "1 year"
+      }
       return Math.floor(interval) + " years";
     }
     interval = days / 30;
     if (interval > 1) {
+      if (Math.floor(interval) === 1) {
+        return "1 month"
+      }
       return Math.floor(interval) + " months";
     }
 
-    if (days === 1){
-      return days + " day"
-    } else {
-      return days + " days"
+    if (days === 1) {
+      return "1 day"
     }
+    return days + " days"
+  }
+
+  function timeUntil(date) {
+
+    var days = Math.floor((date - new Date()) / 1000 / 86400);
+
+    if (days < 0) {
+      return null
+    }
+
+    if (days > 3) {
+      return true
+    }
+
+    if (days === 1) {
+      return '1 day left'
+    }
+
+    return days + ' days left'
   }
 
 
   useEffect(() => {
-    if (props.reqSkills && props.preSkills) {
-      let reqSkillsBuilder, preSkillsBuilder
-      reqSkillsBuilder = props.reqSkills.map(skill => {
-        return <Badge className="mr-1" variant="secondary">{skill}</Badge>
-      })
-      preSkillsBuilder = props.preSkills.map(skill => {
-        return <Badge className="mr-1" variant="secondary">{skill}</Badge>
-      })
-      setReqSkills(reqSkillsBuilder)
-      setPreSkills(preSkillsBuilder)
-    }
-    if (props.info){
-      setInfo(<p dangerouslySetInnerHTML={{ __html: marked(props.info) }} />)
-    }
-    if (props.companyInfo){
-      setCompanyInfo(<p dangerouslySetInnerHTML={{ __html: marked(props.companyInfo) }} />)
-    }
+    let reqSkillsBuilder, preSkillsBuilder
+    reqSkillsBuilder = props.reqSkills.map(skill => {
+      return <Badge className="mr-1" variant="secondary">{skill}</Badge>
+    })
+    preSkillsBuilder = props.preSkills.map(skill => {
+      return <Badge className="mr-1" variant="secondary">{skill}</Badge>
+    })
+    setReqSkills(reqSkillsBuilder)
+    setPreSkills(preSkillsBuilder)
+
+    setInfo(<p dangerouslySetInnerHTML={{ __html: marked(props.info) }} />)
+
+    setCompanyInfo(<p dangerouslySetInnerHTML={{ __html: marked(props.companyInfo) }} />)
+
+    let localDL = moment(props.dl).valueOf() // unix time in local time zone
+    setRemainingTime(timeUntil(localDL))
+
   }, [])
 
 
@@ -83,10 +110,11 @@ function JobContainer(props) {
                 Required Skills: <br />
                 {reqSkills} <br />
                 Preferred Skills: <br />
-                {preSkills} <br/>
+                {preSkills} <br />
                 {props.reqCoverLetter &&
-                  <p className="text-danger">Requires Cover Letter <br/> </p>}
-                Posted: {timeSince(props.timePosted) + ' ago'}
+                  <p className="text-danger">Requires Cover Letter <br /> </p>}
+                Posted: {timeSince(props.timePosted) + ' ago'} <br />
+                {remainingTime ? remainingTime : <p className="text-danger">Deadline Passed!</p>}
               </Card.Text>
               <Button onClick={() => setOpen(!open)}
                 aria-expanded={open}>
@@ -106,11 +134,11 @@ function JobContainer(props) {
         </Collapse>
 
         <Card.Footer>
-          <Button disabled={props.applied || localApplied} onClick={handleClick}> Apply! </Button>
-          {(props.applied || localApplied) && <p className="font-italic">You've applied to this job</p>}
+          <Button disabled={props.applied || localApplied || !remainingTime} onClick={handleClick}> Apply! </Button>
+          {(props.applied || localApplied ) && <p className="font-italic">You've applied to this job</p>}
         </Card.Footer>
       </Card>
-  
+
       <ApplyModal
         key={props.index}
         index={props.index}

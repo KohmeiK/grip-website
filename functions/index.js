@@ -162,6 +162,7 @@ exports.addNewJob = functions.https.onCall(async (data, context) => {
         companyInfo: compDoc.data().info, 
         companyLogoURL: compDoc.data().logoURL, 
         timePosted: new Date().getTime(), 
+        closed: false, 
       })
       console.log({message: `Job successfully added`}, "return")
       return({message: `Job successfully added`})
@@ -189,6 +190,31 @@ exports.hello1234 = functions.https.onCall(async (data, context) => {
     console.log("Send html error:",err.message)
     throw new functions.https.HttpsError("invalid-argument", err.message)
   }
+})
+
+exports.closeApplication = functions.https.onCall(async (data, context) => {
+  console.log("Running close application")
+  try{
+    let currentTime = admin.firestore().FieldValue.serverTimestamp()
+    let querySnapshot = await admin.firestore().collection("jobs").get()
+    querySnapshot.forEach(async function(doc) {
+      let dl = doc.data().deadline
+      let standardized = moment(dl).format('YYYY-MM-DD')
+      dl = moment(standardized, "America/Los_Angeles")
+      if (currentTime > dl.valueOf()){
+        await admin.firestore().collection("jobs").doc(doc.id).update({
+          closed: true
+        })
+      }
+    })
+    console.log({message: 'Checked appliction deadlines'}, "return")
+    return({message: 'Checked appliction deadlines'})
+  }catch(err){
+    console.log("Send html error:",err.message)
+    throw new functions.https.HttpsError("invalid-argument", err.message)
+  }
+  
+
 })
 
 

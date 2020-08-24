@@ -9,6 +9,9 @@ import ReactMarkdown from 'react-markdown'
 import * as marked from 'marked'
 import "easymde/dist/easymde.min.css";
 import DatePicker from 'react-datepicker'
+import moment from 'moment'
+// import * as tz from 'moment-timezone'
+
 
 import FirebaseContext from '../Firebase'
 
@@ -19,7 +22,11 @@ function Test() {
     const firebase = useContext(FirebaseContext)
     const [textValue, setTextValue] = useState('Placeholder')
     const [localDisplay, setLocalDisplay] = useState()
-    const [startDate, setStartDate] = useState(new Date());
+    const [date, setDate] = useState(null);
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
+    const [focused, setFocused] = useState(false)
+    const [focusedInput, setFocusedInput] = useState(null)
     const handleChange = value => {
         setTextValue(value);
     };
@@ -52,39 +59,34 @@ function Test() {
     }
 
     const testURL = () => {
-        firebase.storage.child('Screen Shot 2020-07-01 at 6.46.42 PM.png').getDownloadURL().then(function(url){
+        firebase.storage.child('Screen Shot 2020-07-01 at 6.46.42 PM.png').getDownloadURL().then(function (url) {
             console.log(url)
         })
     }
+    useEffect(async() => {
+        let values = {}
+        const closeApplication = firebase.functions.httpsCallable('closeApplication')
+        const result = await closeApplication({formVals: null})
+        console.log(result.data.message, "result.data.message")
+        let date = 'Aug 24, 2020'
+        let newt = moment(date).format('YYYY-MM-DD')
+        let d = moment.tz('Aug 24, 2020', "America/Los_Angeles")
+        var a = moment.tz("2013-11-18 11:55", "Asia/Taipei");
+        let dl = d.valueOf()
+        // console.log(d.utc().format())
+        console.log(d.format())
+        d = moment.tz(newt, "America/New_York")
+        console.log(new Date().getTime() - d.valueOf())
+        // console.log(d.format())
+        // console.log(d.format())
+    }, [])
+
+    
 
     return (
-        <div className={`${lol.mainWrapper}`} style={{paddingTop: "85px"}}>
+        <div className={`${lol.mainWrapper}`} style={{ paddingTop: "85px", paddingLeft: "30px" }}>
 
-            {/* <h3 id="header">Header</h3>
-            <ul class="list-inline">
-                <li>list1</li>
-                <li>list2</li>
-                <li>list3</li>
-            </ul> */}
-            <DatePicker selected={startDate} onChange={date => setStartDate(date)} />
-            <Button onClick={handleClick}>console log marked(text)</Button>
-            <br/>
-            {/* <Button onClick={handleClick2}>render from db</Button> */}
-            <SimpleMDE value={textValue} onChange={handleChange} />
-            <h6>marked:</h6>
-            <p dangerouslySetInnerHTML={{ __html: marked(textValue) }} />
-            {/* <h6>snarkdown:</h6>
-            <p dangerouslySetInnerHTML={{ __html: snarkdown(textValue) }} />
 
-            <h6>ReactMarkdown:</h6>
-            <ReactMarkdown source={textValue} /> */}
-
-            <h6 className={`${lol.randomClass}`}>DB render: </h6>
-            <p dangerouslySetInnerHTML={{ __html: localDisplay }} />
-
-            <br/> <br/> <br/> <br/>
-
-            <Button onClick={testURL}>test url</Button>
         </div>
 
     );
