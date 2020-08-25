@@ -64,12 +64,11 @@ function AdminSettings() {
     (No admin + company unless for testing)
     <br />
     Company accounts start with a company role by default
-    <br />
-        <b>You can easily see your account's roles by looking at the color around your profile pic. </b>
-        <br />White => Studnet - No Role
-    <br />Red => Admin - Admin Role
-    <br />Blue => Company - Company Role
-    <br />Yellow => Developer - Admin and Company Role
+    <br /><b>List of role combinations:</b>
+    <br />Studnet - No Role
+    <br />Admin - Admin Role
+    <br />Company - Company Role
+    <br />Developer - Admin and Company Role
     </p>
       <h5>Don't Forget: These changes take effect the next time the user logs in (at least for the UI). </h5>
       <Formik
@@ -239,7 +238,9 @@ function AdminSettings() {
         )}
       </Formik>
 
-
+      <h5>Don't Forget: These changes take effect the next time the user logs in (at least for the UI). </h5>
+      <b> User's have way of verfiying their own email. The verify email button should rarely be used.</b>
+      <p>If someone abuses thier account, there are "disable" and "delete" options aviable in the firebase console as well.</p>
       <Formik
         initialValues={{ email: '' }}
         onSubmit={async (values, { setSubmitting }) => {
@@ -280,7 +281,7 @@ function AdminSettings() {
           </Form>
         )}
       </Formik>
-      <h5>Don't Forget: These changes take effect the next time the user logs in (at least for the UI). </h5>
+
     </>
   )
 }

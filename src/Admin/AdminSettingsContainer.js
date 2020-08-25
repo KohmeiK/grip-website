@@ -15,10 +15,10 @@ function AdminSettingsContainer(){
             </div>
           </div>
         </Col>
-        <Col sm={7}>
+        <Col sm={8}>
             <AdminSettings />
         </Col>
-        <Col sm={3}></Col>
+        <Col></Col>
       </Row>
     </Container>
     </div>
