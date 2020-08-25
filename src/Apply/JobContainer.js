@@ -15,8 +15,6 @@ function JobContainer(props) {
   // const imageURL = "https://picsum.photos/" + (800 + props.index) + "/100"
   //just to randomize image
 
-  const handleClick = () => props.handleShow(props.index)
-
   const [open, setOpen] = useState(false)
   const [reqSkills, setReqSkills] = useState()
   const [preSkills, setPreSkills] = useState()
@@ -24,7 +22,28 @@ function JobContainer(props) {
   const [companyInfo, setCompanyInfo] = useState()
   const [localApplied, setLocalApplied] = useState(false) // turn true after one applies to the job, disabling the Apply button
   const [remainingTime, setRemainingTime] = useState(null)
-
+  const [modal, setModal] = useState(null)
+  const handleClick = () => {
+    setModal(
+      <ApplyModal
+        key={props.index}
+        index={props.index}
+        studentName={props.studentName}
+        studentID={props.studentID}
+        title={props.title}
+        jobID={props.jobID}
+        dl={props.dl}
+        location={props.location}
+        companyName={props.companyName}
+        companyLogoURL={props.companyLogoURL}
+        reqCoverLetter={props.reqCoverLetter}
+        handleClose={handleClose}
+        setLocalApplied={setLocalApplied}
+      />
+    )
+  }
+  const handleClose = () => setModal()
+  
   function timeSince(date) {
 
     var days = Math.ceil((new Date() - date) / 1000 / 86400);
@@ -139,23 +158,8 @@ function JobContainer(props) {
         </Card.Footer>
       </Card>
 
-      <ApplyModal
-        key={props.index}
-        index={props.index}
-        studentName={props.studentName}
-        studentID={props.studentID}
-        title={props.title}
-        jobID={props.jobID}
-        dl={props.dl}
-        location={props.location}
-        companyName={props.companyName}
-        companyLogoURL={props.companyLogoURL}
-        reqCoverLetter={props.reqCoverLetter}
-        handleClose={props.handleClose}
-        handleShow={props.handleShow}
-        show={props.show}
-        setLocalApplied={setLocalApplied}
-      />
+      {modal}
+
     </>
   )
 }

@@ -13,18 +13,18 @@ function ApplyContainer() {
   const firebase = useContext(FirebaseContext)
   const authContext = useContext(AuthContext)
   const [jobs, setJobs] = useState([]) //Data from DB
-  const [indexToShow, setIndexToShow] = useState(-1); //Modal
-  const [show, setShow] = useState(false); //Modal show
+  // const [indexToShow, setIndexToShow] = useState(-1); //Modal
+  // const [show, setShow] = useState(false); //Modal show
   const [loading, setLoading] = useState(true); //Still loading array
-  const handleClose = () => setShow(false);
-  const handleShow = (index) => {
-    setIndexToShow(index)
-    setShow(true)
-  }
+  // const handleClose = () => setShow(false);
+  // const handleShow = (index) => {
+  //   setIndexToShow(index)
+  //   setShow(true)
+  // }
 
   useEffect(() => {
     //Only on mount
-    const loadContent = async() => {
+    const loadContent = async () => {
       let applicationsRef = await firebase.db.collection('applications').where("studentID", "==", authContext.user.uid).get()
       let jobsApplied = []
       applicationsRef.forEach(applicationRef => {
@@ -51,14 +51,14 @@ function ApplyContainer() {
           console.log(error)
         })
     }
-    
+
     loadContent() // useEffect(async()...) is bad practice so do this instead
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   let localDisplay = "Loading..."
   if (!loading) {
-    localDisplay = jobs.map(function annon(job, index) { //Convert each element to JSX
+    localDisplay = jobs.map(function (job, index) { //Convert each element to JSX
       //convert all elements before reach render, this is only updates when show is changed
       return (
         <div>
@@ -80,9 +80,9 @@ function ApplyContainer() {
             reqCoverLetter={job.reqCoverLetter}
             timePosted={job.timePosted}
             applied={job.applied}
-            handleClose={handleClose}
-            handleShow={handleShow}
-            show={show && (index === indexToShow) ? true : false}
+            // handleClose={handleClose}
+            // handleShow={handleShow}
+            // show={show && (index === indexToShow) ? true : false}
             studentName={authContext.user.displayName}
             studentID={authContext.user.uid}
           />
@@ -92,14 +92,44 @@ function ApplyContainer() {
   }
 
   return (
-    <div style={{ background: "#e0e0e0", paddingTop: "85px"}} >
+    <div style={{ background: "#e0e0e0", paddingTop: "85px" }} >
       <Container fluid style={{ paddingTop: "2em" }}>
         <Row>
           <Col>
             <div style={{ marginLeft: "1em", borderRadius: "25px", background: "white", height: "40em" }}>
               <div style={{ margin: "2em", marginTop: "0em", background: "white", height: "40em" }}>
-                Search Options Go Here
-            </div>
+                <h4>Filter Options:</h4>
+                <label htmlFor="region">Region:</label>
+                <Form id="region">
+                  <Form.Check
+                    type={'checkbox'}
+                    label={'Region 1'}
+                  />
+                  <Form.Check
+                    type={'checkbox'}
+                    label={'Region 2'}
+                  />
+                  <Form.Check
+                    type={'checkbox'}
+                    label={'Region 3'}
+                  />
+                </Form>
+                <label htmlFor="others">Others:</label>
+                <Form id="others">
+                  <Form.Check
+                    type={'checkbox'}
+                    label={'Deadline within 3 days'}
+                  />
+                  <Form.Check
+                    type={'checkbox'}
+                    label={'Posted within a week'}
+                  />
+                  <Form.Check
+                    type={'checkbox'}
+                    label={'Only resume required'}
+                  />
+                </Form>
+              </div>
             </div>
           </Col>
           <Col sm={7}>
