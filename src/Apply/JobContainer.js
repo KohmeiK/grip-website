@@ -3,7 +3,6 @@ import { Card, Button, Collapse, Badge, Row, Col } from 'react-bootstrap'
 
 import * as marked from 'marked'
 import moment from 'moment'
-import * as tz from 'moment-timezone'
 
 import ApplyModal from "./ApplyModal.js"
 
