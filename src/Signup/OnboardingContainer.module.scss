@@ -19,7 +19,7 @@
   background-color: $c-background;
   width: 60vw;
   min-width: 600px;
-  height: 65vh;
+  min-height: 85vh;
   border-radius: 10px;
   -webkit-box-shadow: 10px 10px 21px -9px rgba(0,0,0,0.75);
   -moz-box-shadow: 10px 10px 21px -9px rgba(0,0,0,0.75);
@@ -33,13 +33,15 @@
 
   .stepsCaption{
     color: white;
+    padding-bottom: 5px;
+    margin: 0;
     display: flex;
     justify-content: center;
     li{
       text-align: center;
       font-size: 13px;
       margin: 0;
-      min-width: 161px;
+      min-width: 160px;
     }
   }
 
@@ -89,11 +91,16 @@
 
 .mobileBackground{
   background: $c-blackBlue;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
   .stepsWrap{
+    z-index: 5;
     padding: 20px 0 0 0;
     color: white;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
 
     li{
       text-align: center;
@@ -101,7 +108,7 @@
       display: flex;
       background: $c-background;
       border-radius: 20px;
-      margin: 0 5px;
+      margin: 0;
       p{
         color: $c-blackBlue;
         font-size: 18px;
@@ -129,6 +136,7 @@
     }
   }
   .contentWrap{
+    flex: 1; 
     border-radius: 20px 20px 0 0;
     background: $c-background;
   }

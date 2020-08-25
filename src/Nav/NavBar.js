@@ -35,12 +35,12 @@ function NavBar(props){
   function shouldNavBeHidden(){
     return(
     (location.pathname == "/login") || //Login, both
-    (location.pathname == "/onboarding") //onboarding, both
+    (location.pathname == "/signup") //onboarding, both
     )
   }
   function shouldLogoBeHidden(){
     return(
-    (location.pathname == "/onboarding" && width < 650)|| //onboarding, both
+    (location.pathname == "/signup" && width < 650)|| //onboarding, both
     (location.pathname == "/next item")
     )
   }

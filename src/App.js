@@ -59,12 +59,11 @@ function App(){
           <Route path="/needAdmin"> <NeedAdmin /> </Route>
           <Route path="/needCompany"> <NeedCompany /> </Route>
           <Route path="/forgotPassword"> <ForgotPassword /> </Route>
-          <Route path="/signup"> <Signup /> </Route>
-          <Route path="/onboarding"> <OnboardingContainer onStep={2}> <Signup /> </OnboardingContainer> </Route>
+          <Route path="/signup"><OnboardingContainer onStep={0}> <Signup /></OnboardingContainer> </Route>
           <Route path="/login"> <Login /> </Route>
           <Route path="/emailHandler"> <EmailHandler /> </Route>
           <Route path="/changeEmail"> <ChangeEmail /> </Route>
-          <Route path="/verifyEmail"> <VerifyEmail /> </Route>
+          <Route path="/verifyEmail"> <OnboardingContainer onStep={1}> <VerifyEmail /> </OnboardingContainer> </Route>
           <Route path="/test"> <Test /> </Route>
           <Route path="/"> <HomeContainer/> </Route>
         </Switch>

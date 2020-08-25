@@ -1,0 +1,257 @@
+@import '../colorCodes.scss';
+
+.mainBox{
+  width: 100%;
+  min-height: calc(85vh - 118px);
+  padding: 0;
+  margin: 0;
+  display: flex;
+
+  .leftCol{
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+  }
+  .rightCol{
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.infoWrapper{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  color: $c-blackBlue;
+  h4, h2, div{
+    color: $c-darkBlue;
+    font-weight: 800;
+  }
+  p{
+    font-size: 14px;
+    max-width: 300px;
+  }
+  hr{
+    border-top: 1px solid grey;
+    width: 60%;
+  }
+  div{ //Text "OR"
+    margin-top: -28px;
+    background: $c-background;
+    padding: 0 15px;
+  }
+  .subButton{
+    margin-top: 0.8em;
+    background: none;
+    color: $c-pink;
+    font-size: 1.1em;
+    font-weight: 300;
+    border: solid 2px $c-pink;
+    border-radius: 2em;
+    padding: 0.25em 1.4em;
+
+    &:hover{
+      background: #ddd;
+    }
+    &:active{
+      background: #999;
+    }
+  }
+}
+
+
+.formWrapper{
+  margin: auto;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: $c-darkBlue;
+  text-align: center;
+  h4{
+    font-weight: 800;
+    font-size: 30px;
+  }
+  p{
+    padding: 0;
+    margin: 0;
+    font-weight: 400;
+    font-size: 14px;
+  }
+  .inputBorder{
+    margin: 0 0 10px 0;
+    padding: 0;
+    width: 100%;
+    background: white;
+    border-radius: 4px;
+    -webkit-appearance: none;
+    -webkit-box-shadow: 3px 3px 4px 1px rgba(0,0,0,0.18);
+    -moz-box-shadow: 3px 3px 4px 1px rgba(0,0,0,0.18);
+    box-shadow: 3px 3px 4px 1px rgba(0,0,0,0.18);
+    &.error{
+      background: red;
+    }
+    &:focus-within{
+      background: #9CC1FF;;
+    }
+  }
+  input{
+    height: 35px;
+    font-size: 16px;
+    color:initial;
+    margin: 2px;
+    width: calc(100% - 4px);
+    padding: 0 0.5em;
+    border: none;
+    border-radius: 2px;
+    &:focus{
+      outline: none;
+    }
+  }
+  select{
+    -webkit-appearance: none;
+    background-image: url("../Media/DarkDownArrow.svg");
+    background-repeat: no-repeat;
+    background-size: 4%;
+    background-position: right 8px center;
+    background-color: white;
+
+    height: 35px;
+    font-size: 16px;
+    color:initial;
+    margin: 2px;
+    width: calc(100% - 4px);
+    padding: 0 0.5em;
+    border: none;
+    border-radius: 2px;
+    &:focus{
+      outline: none;
+    }
+  }
+  label{
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: $c-darkBlue;
+    padding: 0;
+    margin: 0;
+    align-self: flex-start;
+  }
+  .errorMsg{ //Error msg
+    font-size: 14px;
+    color:red;
+    padding: 0;
+    margin: -10px 0 10px 0;
+    align-self: flex-start;
+  }
+  a{ //Forgot
+    color: grey;
+    font-size: 15px;
+    margin-top: -6px;
+    align-self: flex-end;
+  }
+  .mainButton{
+    color: white;
+    background: $c-pink;
+    font-size: 1.1em;
+    font-weight: 300;
+    border: none;
+    border-radius: 2em;
+    padding: 0.25em 1.4em;
+    margin-bottom: 0.5em;
+    margin-top: 0.5em;
+
+    &:hover{
+      background: $c-pinkHov;
+    }
+    &:active{
+      background: $c-darkBlue;
+    }
+
+  }
+
+  .serverError{
+    width: 100%;
+    margin: 1em 0;
+    padding: 0.4em;
+    font-size: 13px;
+    background: #FF4446;
+    color: white;
+    border-radius: 3px;
+  }
+  h5{
+    display: none;
+  }
+
+  p{
+    color:grey;
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+@media screen and (max-width: $s-desktopMin) {
+  .mainBox{
+    .leftCol{
+      display: none;
+    }
+    .rightCol{
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  .formWrapper{
+    p{
+      font-size: 10px;
+      margin-top: -8px;
+    }
+    h5{
+      display: none;
+    }
+    hr{
+      border-top: 1px solid $c-darkBlue;
+      opacity: 1;
+      width: 100%;
+    }
+    .or{ //Text "OR"
+      font-weight: 800;
+      margin-top: -28px;
+      background: $c-background;
+      padding: 0 15px;
+    }
+    .subButton{
+      margin-top: 0.8em;
+      background: none;
+      color: $c-pink;
+      font-size: 1.1em;
+      font-weight: 300;
+      border: solid 2px $c-pink;
+      border-radius: 2em;
+      padding: 0.25em 1.4em;
+
+      &:hover{
+        background: #ddd;
+      }
+      &:active{
+        background: #999;
+      }
+    }
+  }
+
+}
+
+@media screen and (min-width: $s-desktopMin){
+  .formWrapper{
+    hr, .or , .subButton{
+      display: none;
+    }
+  }
+}
