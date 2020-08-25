@@ -27,7 +27,7 @@ function AddJobContainer() {
  * @param {string} text
  * @public
  */
-  useEffect(async() => {
+  useEffect(() => {
     //This is called every time the component shows up on the screen
     firebase.db.collection("companies").get().then((querySnapshot) => {
       let arrayBuilder = querySnapshot.docs.map((doc) => <option value={doc.id}> {`${doc.data().name} => ${doc.id}`} </option>)
