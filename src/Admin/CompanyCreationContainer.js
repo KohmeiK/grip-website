@@ -52,8 +52,8 @@ function CompanyCreationContainer() {
       <Container fluid style={{ paddingTop: "2em" }}>
         <Row>
           <Col>
-            <div style={{ marginLeft: "1em", borderRadius: "25px", background: "white", height: "40em" }}>
-              <div style={{ margin: "2em", marginTop: "0em", background: "white", height: "40em" }}>
+            <div style={{ marginLeft: "1em", borderRadius: "25px", background: "white" }}>
+              <div style={{ margin: "2em", marginTop: "0em", background: "white" }}>
                 <h5>Comapny Creation Reminder: </h5>
                 1. Comapny Info uses markdown language. <br />
                    - You can access different formattings at the toolbar, including
@@ -167,7 +167,7 @@ function CompanyCreationContainer() {
                   })
                 })
               }}>
-              {({ values, isSubmitting, handleSubmit, setFieldValue, isSubmitted }) => (
+              {({ values, isSubmitting, handleSubmit, setFieldValue }) => (
                 <form onSubmit={handleSubmit}>
                   <div className="form-group">
                     <label htmlFor="file">Company Logo Upload</label>
@@ -185,7 +185,7 @@ function CompanyCreationContainer() {
                       role="status"
                       aria-hidden="true"
                     />}
-                    {isSubmitted ? "Resubmit" : "Submit"}
+                    Submit
                   </button>
                 </form>
 

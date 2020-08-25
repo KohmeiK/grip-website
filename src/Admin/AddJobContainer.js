@@ -16,7 +16,7 @@ function AddJobContainer() {
   const firebase = useContext(FirebaseContext)
   const [textValue, setTextValue] = useState('')
   const [companyList, setCompanyList] = useState(<option value="none">Loading...</option>)
-  const [startDate, setStartDate] = useState(new Date()); 
+  const [startDate, setStartDate] = useState(new Date());
   const handleChange = value => {
     setTextValue(value);
   };
@@ -43,8 +43,8 @@ function AddJobContainer() {
       <Container fluid style={{ paddingTop: "2em" }}>
         <Row>
           <Col>
-            <div style={{ marginLeft: "1em", borderRadius: "25px", background: "white", height: "40em" }}>
-              <div style={{ margin: "2em", marginTop: "0em", background: "white", height: "40em" }}>
+            <div style={{ marginLeft: "1em", borderRadius: "25px", background: "white"}}>
+              <div style={{ margin: "2em", marginTop: "0em", background: "white" }}>
                 <h5>Adding a Job Reminder: </h5>
                 1. Job Info uses markdown language. <br />
                    - You can access different formattings at the toolbar, including
