@@ -194,14 +194,17 @@ exports.verifyEmail = functions.https.onCall(async (data, context) => {
 
 exports.closeApplication = functions.https.onCall(async (data, context) => {
   console.log("Running close application")
+  const moment = require('moment-timezone')
   try{
-    let currentTime = admin.firestore().FieldValue.serverTimestamp()
+    let currentTime = admin.firestore.Timestamp.now().toDate().getTime()
     let querySnapshot = await admin.firestore().collection("jobs").get()
-    querySnapshot.forEach(async function(doc) {
+    querySnapshot.forEach(async doc => {
       let dl = doc.data().deadline
       let standardized = moment(dl).format('YYYY-MM-DD')
-      dl = moment(standardized, "America/Los_Angeles")
-      if (currentTime > dl.valueOf()){
+      dl = moment.tz(standardized, "America/Los_Angeles")
+      // console.log('currentIme: ' + currentTime)
+      // console.log('dl: ' + dl.valueOf())
+      if (currentTime >= dl.valueOf()){
         await admin.firestore().collection("jobs").doc(doc.id).update({
           closed: true
         })
