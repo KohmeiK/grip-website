@@ -28,6 +28,7 @@ function NavBar(props){
   let isLogoHidden = null;
   const { height, width } = useWindowDimensions();
 
+  //Just FYI it will act werid if you disable logo but not nav!
   function shouldTextBeWhite(){
     return(
     (location.pathname == "/" && width > 650)|| //Home page, desktop
@@ -37,13 +38,14 @@ function NavBar(props){
   function shouldNavBeHidden(){
     return(
     (location.pathname == "/login") || //Login, both
-    (location.pathname == "/signup") //onboarding, both
+    (location.pathname == "/signup") ||//onboarding, both
+    (location.pathname == "/verifyEmail")
     )
   }
   function shouldLogoBeHidden(){
     return(
     (location.pathname == "/signup" && width < 650)|| //onboarding, both
-    (location.pathname == "/next item")
+    (location.pathname == "/verifyEmail" && width < 650)
     )
   }
   isWhiteText = shouldTextBeWhite();

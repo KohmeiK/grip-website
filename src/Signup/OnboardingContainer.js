@@ -53,7 +53,7 @@ function OnboardingContainer(props) {
           <li> <div className={props.onStep == 3 ? styles.doing : props.onStep >  3 && styles.done}>4</div> <>{fourText}</> </li>
         </ul>
         <div className={styles.contentWrap}>
-            {props.children}
+          {props.children}
         </div>
       </div>
     );

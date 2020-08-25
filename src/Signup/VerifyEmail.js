@@ -1,8 +1,13 @@
 import React, { useContext, useState } from 'react'
 import { Button, Spinner } from 'react-bootstrap'
 import { useHistory } from 'react-router-dom'
+import Skeleton from 'react-loading-skeleton';
+import { LinkContainer } from 'react-router-bootstrap'
 
 import AuthContext from '../Firebase/AuthContext'
+
+import styles from './VerifyEmail.module.scss'
+import sheildLogo from '../Media/Step2.svg'
 
 function VerifyEmail() {
     const authContext = useContext(AuthContext)
@@ -21,17 +26,23 @@ function VerifyEmail() {
     }
 
     if (!authContext.isLoadingAuthState && !authContext.isAuthenticated){
+        alert("Not logged in, going to login")
         history.push('/login')
     }
-    
+
     return (
-        <div>
-            <h3>Your account has been created. However, you need to verify your email to see this page.</h3>
-            <br />
-            <p>A verification email has been sent to the email address you provided, please click on the link before continuing.</p>
-            <br />
-            <p>If you haven't received the email after a few minutes, please click on the button below:</p>
-            <Button
+      <div className={styles.mainWrapper}>
+        <div className={styles.infoWrapper}>
+            <img src={sheildLogo}/>
+            <h5>Step 2 of 4:</h5>
+            <h3>Verify email</h3>
+            <h6>A verification email has been sent to:</h6>
+            <div>{authContext.isLoadingAuthState || !authContext.isAuthenticated ? <Skeleton width={150} height={20}/> : authContext.user.email}</div>
+            <LinkContainer to="changeEmail"><button className={styles.subButton}>Change (Fix) Email</button></LinkContainer>
+            <p>Please click on the link before continuing. If you have not received an email in a few minutes, please click on the button below.</p>
+            {authContext.isLoadingAuthState ? <Skeleton width={310} height={40}/> :
+            <button
+                className={styles.subButton}
                 disabled={authContext.isLoadingAuthState | isSending | authContext.isVerified}
                 onClick={handleVerEmail}
                 variant="success"
@@ -43,14 +54,10 @@ function VerifyEmail() {
                     role="status"
                     aria-hidden="true"
                 />}
-                {authContext.isVerified ? "Email Already Verified" : "Re-send Verification Email"}
-            </Button>
-            <br/>
-            <br/>
-
-            <h5>Made a typo and want to change your email address? Click here:</h5>
-            <Button variant="Secondary" onClick={() => history.push('/ChangeEmail')}>Change Email</Button>
+                {authContext.isVerified ? "Your email is verified, should you be on this page?" : "re-send verification email"}
+            </button>}
         </div>
+      </div>
     )
 }
 

@@ -92,12 +92,8 @@
 .mobileBackground{
   background: $c-blackBlue;
   height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
   .stepsWrap{
-    z-index: 5;
-    padding: 20px 0 0 0;
+    padding: 18px 0 0 0;
     color: white;
     display: flex;
     justify-content: space-around;
@@ -136,7 +132,7 @@
     }
   }
   .contentWrap{
-    flex: 1; 
+    height: calc(100vh - 69px);
     border-radius: 20px 20px 0 0;
     background: $c-background;
   }
