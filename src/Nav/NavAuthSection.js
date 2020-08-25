@@ -2,6 +2,7 @@ import React, {useContext, useState, useRef, useEffect} from "react"
 // import { Button, ButtonGroup, DropdownButton, Dropdown } from 'react-bootstrap'
 import {useHistory, useLocation} from "react-router-dom";
 import { LinkContainer } from 'react-router-bootstrap'
+import Skeleton from 'react-loading-skeleton';
 
 import FirebaseContext from '../Firebase'
 import AuthContext from '../Firebase/AuthContext'
@@ -49,7 +50,7 @@ function NavAuthSection(props){
 
   if(authContext.isLoadingAuthState){
     return(
-      "Loading..."
+      <li><a><Skeleton circle={true} height={40} width={40} /></a></li>
     )
   }else if(props.isMobile && authContext.isAuthenticated){
     return(
