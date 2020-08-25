@@ -121,7 +121,7 @@ exports.createNewCompany = functions.https.onCall(async (data, context) => {
     await admin.firestore().collection("companies").doc(user.uid).set({
       name: data.formVals.name,
       info: data.formVals.info,
-      hasTempPass: true, 
+      hasTempPass: true,
       logoURL: data.formVals.url
     })
 
@@ -149,20 +149,20 @@ exports.addNewJob = functions.https.onCall(async (data, context) => {
         title: data.formVals.title,
         info: data.formVals.info,
         deadline: data.formVals.dl,
-        duration: data.formVals.duration, 
-        reqSkills: data.formVals.reqSkills, 
-        preSkills: data.formVals.preSkills, 
-        location: data.formVals.location, 
+        duration: data.formVals.duration,
+        reqSkills: data.formVals.reqSkills,
+        preSkills: data.formVals.preSkills,
+        location: data.formVals.location,
         reqCoverLetter: (data.formVals.reqCoverLetter === 'true'), // convert string to boolean
-        regionForSearch: data.formVals.regionForSearch, 
+        regionForSearch: data.formVals.regionForSearch,
         companyID: data.formVals.companyID,
         companyName: compDoc.data().name,
         newApplicants: 0,
-        allApplicants: 0, 
-        companyInfo: compDoc.data().info, 
-        companyLogoURL: compDoc.data().logoURL, 
-        timePosted: new Date().getTime(), 
-        closed: false, 
+        allApplicants: 0,
+        companyInfo: compDoc.data().info,
+        companyLogoURL: compDoc.data().logoURL,
+        timePosted: new Date().getTime(),
+        closed: false,
       })
       console.log({message: `Job successfully added`}, "return")
       return({message: `Job successfully added`})
@@ -178,7 +178,7 @@ exports.addNewJob = functions.https.onCall(async (data, context) => {
   }
 })
 
-exports.hello1234 = functions.https.onCall(async (data, context) => {
+exports.verifyEmail = functions.https.onCall(async (data, context) => {
   console.log("Running verify email (hello1234)")
   console.log(data.email,"email")
   try{
@@ -213,7 +213,6 @@ exports.closeApplication = functions.https.onCall(async (data, context) => {
     console.log("Send html error:",err.message)
     throw new functions.https.HttpsError("invalid-argument", err.message)
   }
-  
 
 })
 

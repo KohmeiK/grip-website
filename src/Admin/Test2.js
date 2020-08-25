@@ -64,7 +64,8 @@ function Test() {
         })
     }
     useEffect(async() => {
-        let values = {}
+      console.log("Making new fucntion call!")
+      try{
         const closeApplication = firebase.functions.httpsCallable('closeApplication')
         const result = await closeApplication({formVals: null})
         console.log(result.data.message, "result.data.message")
@@ -79,9 +80,13 @@ function Test() {
         console.log(new Date().getTime() - d.valueOf())
         // console.log(d.format())
         // console.log(d.format())
+      }catch(err){
+        alert(err);
+      }
+
     }, [])
 
-    
+
 
     return (
         <div className={`${lol.mainWrapper}`} style={{ paddingTop: "85px", paddingLeft: "30px" }}>
