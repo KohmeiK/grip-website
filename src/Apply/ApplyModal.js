@@ -57,7 +57,7 @@ function ApplyModal(props) {
     return Math.floor(seconds) + " seconds";
   }
 
-  const handleConfirm = () => {
+  const handleConfirm = async() => {
     //Write to DB Here
     //Can be made a cloud function later
     let resumeName
@@ -67,33 +67,45 @@ function ApplyModal(props) {
       resumeName = props.studentID + '.pdf'
     }
 
-    firebase.db.collection('applications').add({
-      studentID: props.studentID,
-      jobID: props.jobID,
-      title: props.title,
-      dl: props.dl,
-      location: props.location,
-      resumeName: resumeName,
-      clName: clName,
-      studentName: props.studentName,
-      applyDate: getDate(),
-      downloaded: '',
-      companyName: props.companyName,
-      companyLogoURL: props.companyLogoURL
-    }).then(function (doc) {
-      let jobRef = firebase.db.collection('jobs').doc(props.jobID)
-      jobRef.update({
-        allApplicants: firebase.raw.firestore.FieldValue.increment(1),
-        newApplicants: firebase.raw.firestore.FieldValue.increment(1)
+    try {
+      await firebase.db.collection('jobs').doc(props.jobID).get().then(function (doc) {
+        if (doc.data().closed) {
+          props.handleClose()
+          throw 'Deadline has passed'
+        }
       })
-    }).then(function () {
-      setLocalApplied(true)
-      alert("You've applied to this job successfully!")
-      props.handleClose() //Close Modal
-    }).catch(error => {
+
+      firebase.db.collection('applications').add({
+        studentID: props.studentID,
+        jobID: props.jobID,
+        title: props.title,
+        dl: props.dl,
+        location: props.location,
+        resumeName: resumeName,
+        clName: clName,
+        studentName: props.studentName,
+        applyDate: getDate(),
+        downloaded: '',
+        companyName: props.companyName,
+        companyLogoURL: props.companyLogoURL
+      }).then(function (doc) {
+        let jobRef = firebase.db.collection('jobs').doc(props.jobID)
+        jobRef.update({
+          allApplicants: firebase.raw.firestore.FieldValue.increment(1),
+          newApplicants: firebase.raw.firestore.FieldValue.increment(1)
+        })
+      }).then(function () {
+        setLocalApplied(true)
+        alert("You've applied to this job successfully!")
+        props.handleClose() //Close Modal
+      })
+
+    } catch (error) {
       alert(error)
       props.handleClose()
-    })
+    }
+
+    
 
   }
 
