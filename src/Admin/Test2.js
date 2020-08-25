@@ -11,6 +11,9 @@ import "easymde/dist/easymde.min.css";
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 // import * as tz from 'moment-timezone'
+import 'react-dates/initialize';
+import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
+import 'react-dates/lib/css/_datepicker.css';
 
 
 import FirebaseContext from '../Firebase'
@@ -64,34 +67,35 @@ function Test() {
         })
     }
     useEffect(() => {
-        console.log("Making new fucntion call!")
-        try {
-            console.log(moment(1598354976273).format())
-            return 
-            // let ddl = 'Aug 24, 2020'
-            // let standardized = moment(ddl).format('YYYY-MM-DD')
-            // ddl = moment(standardized, "America/Los_Angeles")
-            // // console.log('currentIme: ' + currentTime)
-            // console.log('dl: ' + moment(ddl).format())
-            // console.log(moment('2020-08-24').format())
-            // return
-            // const closeApplication = firebase.functions.httpsCallable('closeApplication')
-            // const result = await closeApplication({ formVals: null })
-            // console.log(result.data.message, "result.data.message")
-            let date = 'Aug 24, 2020'
-            let newt = moment(date).format('YYYY-MM-DD')
-            let d = moment.tz('Aug 24, 2020', "America/Los_Angeles")
-            var a = moment.tz("2013-11-18 11:55", "Asia/Taipei");
-            let dl = d.valueOf()
-            // console.log(d.utc().format())
-            console.log(d.format())
-            d = moment.tz(newt, "America/New_York")
-            console.log(new Date().getTime() - d.valueOf())
-            // console.log(d.format())
-            // console.log(d.format())
-        } catch (err) {
-            alert(err);
-        }
+
+        // console.log("Making new fucntion call!")
+        // try {
+        //     console.log(moment(1598354976273).format())
+        //     return 
+        //     // let ddl = 'Aug 24, 2020'
+        //     // let standardized = moment(ddl).format('YYYY-MM-DD')
+        //     // ddl = moment(standardized, "America/Los_Angeles")
+        //     // // console.log('currentIme: ' + currentTime)
+        //     // console.log('dl: ' + moment(ddl).format())
+        //     // console.log(moment('2020-08-24').format())
+        //     // return
+        //     // const closeApplication = firebase.functions.httpsCallable('closeApplication')
+        //     // const result = await closeApplication({ formVals: null })
+        //     // console.log(result.data.message, "result.data.message")
+        //     let date = 'Aug 24, 2020'
+        //     let newt = moment(date).format('YYYY-MM-DD')
+        //     let d = moment.tz('Aug 24, 2020', "America/Los_Angeles")
+        //     var a = moment.tz("2013-11-18 11:55", "Asia/Taipei");
+        //     let dl = d.valueOf()
+        //     // console.log(d.utc().format())
+        //     console.log(d.format())
+        //     d = moment.tz(newt, "America/New_York")
+        //     console.log(new Date().getTime() - d.valueOf())
+        //     // console.log(d.format())
+        //     // console.log(d.format())
+        // } catch (err) {
+        //     alert(err);
+        // }
 
     }, [])
 
@@ -99,7 +103,18 @@ function Test() {
 
     return (
         <div className={`${lol.mainWrapper}`} style={{ paddingTop: "85px", paddingLeft: "30px" }}>
-
+            <DateRangePicker
+                startDate={startDate} // momentPropTypes.momentObj or null,
+                startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
+                endDate={endDate} // momentPropTypes.momentObj or null,
+                endDateId="your_unique_end_date_id" // PropTypes.string.isRequired,
+                onDatesChange={({ startDate, endDate }) => {
+                    setStartDate(startDate)
+                    setEndDate(endDate)
+                }} // PropTypes.func.isRequired,
+                focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+                onFocusChange={focusedInput => setFocusedInput(focusedInput)} // PropTypes.func.isRequired,
+            />
 
         </div>
 

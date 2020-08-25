@@ -24,7 +24,7 @@ function ApplyContainer() {
 
   useEffect(() => {
     //Only on mount
-    const loadContent = async() => {
+    const loadContent = async () => {
       let applicationsRef = await firebase.db.collection('applications').where("studentID", "==", authContext.user.uid).get()
       let jobsApplied = []
       applicationsRef.forEach(applicationRef => {
@@ -51,7 +51,7 @@ function ApplyContainer() {
           console.log(error)
         })
     }
-    
+
     loadContent() // useEffect(async()...) is bad practice so do this instead
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -92,14 +92,44 @@ function ApplyContainer() {
   }
 
   return (
-    <div style={{ background: "#e0e0e0", paddingTop: "85px"}} >
+    <div style={{ background: "#e0e0e0", paddingTop: "85px" }} >
       <Container fluid style={{ paddingTop: "2em" }}>
         <Row>
           <Col>
             <div style={{ marginLeft: "1em", borderRadius: "25px", background: "white", height: "40em" }}>
               <div style={{ margin: "2em", marginTop: "0em", background: "white", height: "40em" }}>
-                Search Options Go Here
-            </div>
+                <h4>Filter Options:</h4>
+                <label htmlFor="region">Region:</label>
+                <Form id="region">
+                  <Form.Check
+                    type={'checkbox'}
+                    label={'Region 1'}
+                  />
+                  <Form.Check
+                    type={'checkbox'}
+                    label={'Region 2'}
+                  />
+                  <Form.Check
+                    type={'checkbox'}
+                    label={'Region 3'}
+                  />
+                </Form>
+                <label htmlFor="others">Others:</label>
+                <Form id="others">
+                  <Form.Check
+                    type={'checkbox'}
+                    label={'Deadline within 3 days'}
+                  />
+                  <Form.Check
+                    type={'checkbox'}
+                    label={'Posted within a week'}
+                  />
+                  <Form.Check
+                    type={'checkbox'}
+                    label={'Only resume required'}
+                  />
+                </Form>
+              </div>
             </div>
           </Col>
           <Col sm={7}>
