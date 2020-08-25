@@ -13,14 +13,14 @@ function ApplyContainer() {
   const firebase = useContext(FirebaseContext)
   const authContext = useContext(AuthContext)
   const [jobs, setJobs] = useState([]) //Data from DB
-  const [indexToShow, setIndexToShow] = useState(-1); //Modal
-  const [show, setShow] = useState(false); //Modal show
+  // const [indexToShow, setIndexToShow] = useState(-1); //Modal
+  // const [show, setShow] = useState(false); //Modal show
   const [loading, setLoading] = useState(true); //Still loading array
-  const handleClose = () => setShow(false);
-  const handleShow = (index) => {
-    setIndexToShow(index)
-    setShow(true)
-  }
+  // const handleClose = () => setShow(false);
+  // const handleShow = (index) => {
+  //   setIndexToShow(index)
+  //   setShow(true)
+  // }
 
   useEffect(() => {
     //Only on mount
@@ -58,7 +58,7 @@ function ApplyContainer() {
 
   let localDisplay = "Loading..."
   if (!loading) {
-    localDisplay = jobs.map(function annon(job, index) { //Convert each element to JSX
+    localDisplay = jobs.map(function (job, index) { //Convert each element to JSX
       //convert all elements before reach render, this is only updates when show is changed
       return (
         <div>
@@ -80,9 +80,9 @@ function ApplyContainer() {
             reqCoverLetter={job.reqCoverLetter}
             timePosted={job.timePosted}
             applied={job.applied}
-            handleClose={handleClose}
-            handleShow={handleShow}
-            show={show && (index === indexToShow) ? true : false}
+            // handleClose={handleClose}
+            // handleShow={handleShow}
+            // show={show && (index === indexToShow) ? true : false}
             studentName={authContext.user.displayName}
             studentID={authContext.user.uid}
           />
