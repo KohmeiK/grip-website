@@ -71,7 +71,7 @@ function Test() {
         // console.log("Making new fucntion call!")
         // try {
         //     console.log(moment(1598354976273).format())
-        //     return 
+        //     return
         //     // let ddl = 'Aug 24, 2020'
         //     // let standardized = moment(ddl).format('YYYY-MM-DD')
         //     // ddl = moment(standardized, "America/Los_Angeles")
@@ -102,7 +102,7 @@ function Test() {
 
 
     return (
-        <div className={`${lol.mainWrapper}`} style={{ paddingTop: "85px", paddingLeft: "30px" }}>
+        <div style={{ paddingTop: "85px", paddingLeft: "30px" }}>
             <DateRangePicker
                 startDate={startDate} // momentPropTypes.momentObj or null,
                 startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
