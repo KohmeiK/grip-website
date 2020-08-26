@@ -200,7 +200,7 @@ exports.closeApplication = functions.https.onCall(async (data, context) => {
     let querySnapshot = await admin.firestore().collection("jobs").get()
     querySnapshot.forEach(async doc => {
       let dl = doc.data().deadline
-      let standardized = moment(dl).format('YYYY-MM-DD')
+      let standardized = moment(dl).add(1, 'days').format('YYYY-MM-DD') // deadline is passed at the next day's 12:00 AM
       dl = moment.tz(standardized, "America/Los_Angeles")
       // console.log('currentIme: ' + currentTime)
       // console.log('dl: ' + dl.valueOf())
