@@ -39,13 +39,15 @@ function NavBar(props){
     return(
     (location.pathname == "/login") || //Login, both
     (location.pathname == "/signup") ||//onboarding, both
-    (location.pathname == "/verifyEmail")
+    (location.pathname == "/verifyEmail") ||
+    (location.pathname == "/firstUpload")
     )
   }
   function shouldLogoBeHidden(){
     return(
     (location.pathname == "/signup" && width < 650)|| //onboarding, both
-    (location.pathname == "/verifyEmail" && width < 650)
+    (location.pathname == "/verifyEmail" && width < 650) ||
+    (location.pathname == "/firstUpload" && width < 650)
     )
   }
   isWhiteText = shouldTextBeWhite();

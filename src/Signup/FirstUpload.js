@@ -4,6 +4,7 @@ import { Button, Spinner } from "react-bootstrap"
 
 import FirebaseContext from "../Firebase/"
 import AuthContext from '../Firebase/AuthContext'
+import useWindowDimensions from '../useWindowDimensions.js'
 
 import Dropzone from './DropzoneFirst'
 
@@ -16,7 +17,10 @@ function FirstUpload() {
     const uid = authContext.user.uid
     const history = useHistory()
 
+    const { height, width } = useWindowDimensions();
+
     return (
+
         <Dropzone
             uid={uid}
             progress={progress}

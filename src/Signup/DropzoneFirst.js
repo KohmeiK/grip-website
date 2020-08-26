@@ -5,13 +5,16 @@ import { Button, Spinner } from "react-bootstrap"
 import { Formik } from "formik";
 import * as yup from "yup"
 import { useDropzone } from 'react-dropzone'
+import useWindowDimensions from '../useWindowDimensions.js'
 
 import styles from './DropzoneFirst.module.scss'
 import FirebaseContext from "../Firebase/"
 import cloudIcon from '../Media/cloudIcon.svg'
 import docIcon from '../Media/iconDocDark.svg'
+import phoneIcon from '../Media/phoneIcon.svg'
 
 function Dropzone(props) {
+    const { height, width } = useWindowDimensions();
     const onDrop = useCallback(acceptedFiles => {
       // Do something with the files
     }, [])
@@ -47,7 +50,7 @@ function Dropzone(props) {
             }
         }
 
-        acceptedFiles.length = 0 // clear selected files
+        // acceptedFiles.length = 0 // clear selected files
         forceUpdate()
 
         setUploading(true)
@@ -89,40 +92,62 @@ function Dropzone(props) {
     }else{
       displayName = "No file selcted"
     }
-    // console.log(files)
-
-    return (
-      <>
-      <div {...getRootProps()} className={styleString} >
-        <input multiple={false} {...getInputProps({multiple: false})}/>
-        <div className={styles.inputWrapper}>
-          <div className={styles.leftCol}>
-              <h5> Step 3 of 4:</h5>
-              <h3> Upload Resume</h3>
-              {
-                isDragActive ?
-                  <p>Drop the file here ...</p> :
-                  <p>Drag 'n' drop your resume here, or click anywhere to select files</p>
-              }
-          </div>
-          <div className={styles.rightCol}>
-            <img src={cloudIcon}/>
-            <hr />
-            <h6> OR </h6>
-            <button> Choose file</button>
-            <div className={styles.fileLabel}> <img src={docIcon}/> <div>{displayName} </div></div>
-            <div className={styles.progressWrap}>
-              {props.uploading && <><ProgressBar now={props.progress} /><p>{props.progress}%</p></>}
+    console.log((props.uploading || acceptedFiles.length !== 1))
+    if(width >650){ //Desktop
+      return (
+        <>
+        <div {...getRootProps()} className={styleString} >
+          <input multiple={false} {...getInputProps({multiple: false})}/>
+          <div className={styles.inputWrapper}>
+            <div className={styles.leftCol}>
+                <h5> Step 3 of 4:</h5>
+                <h3> Upload Resume</h3>
+                {
+                  isDragActive ?
+                    <p>Drop the file here ...</p> :
+                    <p>Drag 'n' drop your resume here, or click anywhere to select files</p>
+                }
+            </div>
+            <div className={styles.rightCol}>
+              <img src={cloudIcon}/>
+              <hr />
+              <h6> OR </h6>
+              <button> Choose file</button>
+              <div className={styles.fileLabel}> <img src={docIcon}/> <div>{displayName} </div></div>
+              <div className={styles.progressWrap}>
+                {props.uploading && <><ProgressBar now={props.progress} /><p>{props.progress}%</p></>}
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className={styles.footer}>
-        <button className={styles.mainButton}onClick={handleSubmit} disabled={props.uploading || acceptedFiles.length !== 1}>Upload Resume</button>
-        <button className={styles.subButton}> Upload later </button>
-      </div>
-      </>
-    )
+        <div className={styles.footer}>
+          <button className={styles.mainButton}onClick={handleSubmit} disabled={props.uploading || acceptedFiles.length !== 1}>Upload Resume</button>
+          <button className={styles.subButton}> Upload later </button>
+        </div>
+        </>
+      )
+    }else{ //Mobile
+      return (
+          <div className={styles.mobileWrap}>
+            <img src={phoneIcon} />
+            <p>Upload your resume now or skip for now.</p>
+            <div {...getRootProps()} className={styles.mobileFile} >
+              <input multiple={false} {...getInputProps({multiple: false})}/>
+              <button className={styles.fileButton}> Choose file</button>
+            </div>
+            <div className={styles.fileLabel}> <img src={docIcon}/> <div>{displayName} </div></div>
+            <div className={styles.progressWrap}>
+              {props.uploading && <><ProgressBar now={props.progress} /><p>{Math.round(props.progress)}%</p></>}
+            </div>
+            <button className={(!props.uploading && acceptedFiles.length !== 1) ? styles.subButton : styles.mainButton} onClick={handleSubmit} disabled={props.uploading || acceptedFiles.length !== 1}>Upload Resume</button>
+            <div className={styles.orWrap}>
+              <hr />
+              <h6> OR </h6>
+            </div>
+            <button className={(!props.uploading && acceptedFiles.length !== 1) ? styles.mainButton : styles.subButton}> Upload later </button>
+          </div>
+      )
+    }
 }
 
 export default Dropzone
