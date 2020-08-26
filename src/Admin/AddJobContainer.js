@@ -5,7 +5,11 @@ import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
-import moment from 'moment'
+import moment from 'moment-timezone'
+
+import 'react-dates/initialize';
+import { DateRangePicker } from 'react-dates';
+import 'react-dates/lib/css/_datepicker.css';
 
 import FirebaseContext from '../Firebase'
 
@@ -16,7 +20,12 @@ function AddJobContainer() {
   const firebase = useContext(FirebaseContext)
   const [textValue, setTextValue] = useState('')
   const [companyList, setCompanyList] = useState(<option value="none">Loading...</option>)
-  const [startDate, setStartDate] = useState(new Date());
+  const [date, setDate] = useState(new Date())
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [focusedInput, setFocusedInput] = useState(null)
+  const [checked, setChecked] = useState(false)
+  const [dateDisabled, setDateDisabled] = useState(false)
   const handleChange = value => {
     setTextValue(value);
   };
@@ -35,15 +44,12 @@ function AddJobContainer() {
     });
   }, []);
 
-  console.log(moment(startDate).tz('America/Los_Angeles').format('ll'))
-
-
   return (
     <div style={{ background: "#ba916e", marginTop: "85px" }} >
       <Container fluid style={{ paddingTop: "2em" }}>
         <Row>
           <Col>
-            <div style={{ marginLeft: "1em", borderRadius: "25px", background: "white"}}>
+            <div style={{ marginLeft: "1em", borderRadius: "25px", background: "white" }}>
               <div style={{ margin: "2em", marginTop: "0em", background: "white" }}>
                 <h5>Adding a Job Reminder: </h5>
                 1. Job Info uses markdown language. <br />
@@ -78,7 +84,7 @@ function AddJobContainer() {
                   if (!textValue) {
                     errors.info = 'Required';
                   }
-                  if (!values.duration) {
+                  if (!checked && (!startDate || !endDate)) {
                     errors.duration = 'Required';
                   }
                   if (!values.location) {
@@ -96,7 +102,12 @@ function AddJobContainer() {
                   try {
                     values.info = textValue
                     // console.log( startDate)
-                    values.dl = moment(startDate).format('ll')
+                    values.dl = moment(date).format('ll')
+                    if (checked){
+                      values.duration = 'Flexible Duration'
+                    } else {
+                      values.duration = startDate.format('ll') + ' - ' + endDate.format('ll')
+                    }
                     alert(JSON.stringify(values, null, 2))
                     console.log("RequestSent")
                     console.log(values, "values")
@@ -136,7 +147,7 @@ function AddJobContainer() {
                     <ErrorMessage name="info" component="div" />
                     {/* <br/> */}
                     Deadline: <br />
-                    <DatePicker selected={startDate} onChange={date => setStartDate(date)} />
+                    <DatePicker selected={date} onChange={date => setDate(date)} />
                     {/* <Field as="select" name="dlYear">
                       <option value="" disabled selected>Year</option>
                       {years}
@@ -144,8 +155,26 @@ function AddJobContainer() {
                     {/* <ErrorMessage name="dl" component="div" /> */}
                     <br />
                     Duration: <br />
-                    <Field type="text" name="duration" style={{ width: "100%" }} />
-                    <ErrorMessage name="diratom" component="div" />
+                    <DateRangePicker
+                      startDate={startDate} // momentPropTypes.momentObj or null,
+                      startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
+                      endDate={endDate} // momentPropTypes.momentObj or null,
+                      endDateId="your_unique_end_date_id" // PropTypes.string.isRequired,
+                      onDatesChange={({ startDate, endDate }) => {
+                        setStartDate(startDate)
+                        setEndDate(endDate)
+                      }} // PropTypes.func.isRequired,
+                      focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+                      onFocusChange={focusedInput => setFocusedInput(focusedInput)} // PropTypes.func.isRequired,
+                      disabled={dateDisabled}
+                    /> <br/> OR <br/>
+                    <input type="checkbox" id="flexible" checked={checked} onChange={() => {
+                      setChecked(!checked)
+                      setDateDisabled(!dateDisabled)
+                    }}></input>
+                    <label htmlFor="flexible">Flexible Duration</label>
+                    {/* <Field type="text" name="duration" style={{ width: "100%" }} /> */}
+                    <ErrorMessage name="duration" component="div" />
                     <br />
                     Required Skills: <br />
                     <FieldArray

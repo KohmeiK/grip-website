@@ -2,8 +2,11 @@ import React, { useState, useContext, useEffect } from 'react'
 import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
-import { Form, InputGroup, FormControl } from 'react-bootstrap'
+import { Form, InputGroup, FormControl, Button } from 'react-bootstrap'
 import moment from 'moment'
+import 'react-dates/initialize';
+import { DateRangePicker } from 'react-dates';
+import 'react-dates/lib/css/_datepicker.css';
 
 import FirebaseContext from '../Firebase'
 import AuthContext from '../Firebase/AuthContext'
@@ -18,6 +21,9 @@ function ApplyContainer() {
   // const [show, setShow] = useState(false); //Modal show
   const [loading, setLoading] = useState(true); //Still loading array
   const [filters, setFilters] = useState([])
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [focusedInput, setFocusedInput] = useState(null)
   // const handleClose = () => setShow(false);
   // const handleShow = (index) => {
   //   setIndexToShow(index)
@@ -94,18 +100,31 @@ function ApplyContainer() {
         case 'region3':
           jobsClone = jobsClone.filter(job => job.regionForSearch === 'region3')
           break;
+        case 'date':
+          jobsClone = jobsClone.filter(job => {
+            if (job.duration === 'Flexible Duration'){
+              return true
+            }
+            let [start, end] = job.duration.split('-')
+            start = moment(start)
+            end = moment(end)
+            console.log('start', start.format())
+            console.log('startDate', startDate.format())
+            return start.isBetween(startDate, endDate) || end.isBetween(startDate, endDate) || startDate.isBetween(start, end) || endDate.isBetween(start, end)
+          })
+          break;
         case 'deadline':
           jobsClone = jobsClone.filter(job => {
             let localDL = moment(job.deadline).valueOf() // unix time in local time zone
-            return timeUntil(localDL) >= 0 && timeUntil(localDL) <=3
+            return timeUntil(localDL) >= 0 && timeUntil(localDL) <= 3
           })
           break;
-        case 'posted': 
+        case 'posted':
           jobsClone = jobsClone.filter(job => timeSince(job.timePosted) <= 7 && timeSince(job.timePosted) > 0)
           break;
         case 'resume':
           jobsClone = jobsClone.filter(job => !job.reqCoverLetter)
-          break; 
+          break;
         default:
           console.log('error')
       }
@@ -142,6 +161,7 @@ function ApplyContainer() {
       );
     })
   }
+
 
   return (
     <div style={{ background: "#e0e0e0", paddingTop: "85px" }} >
@@ -187,6 +207,35 @@ function ApplyContainer() {
                     }}
                   />
                 </Form>
+                <label>Date:</label>
+                <DateRangePicker
+                  startDate={startDate} // momentPropTypes.momentObj or null,
+                  startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
+                  endDate={endDate} // momentPropTypes.momentObj or null,
+                  endDateId="your_unique_end_date_id" // PropTypes.string.isRequired,
+                  onDatesChange={({ startDate, endDate }) => {
+                    setStartDate(startDate)
+                    setEndDate(endDate)
+                    if (startDate && endDate){
+                      if (!filters.includes('date')){
+                        setFilters(filters.concat('date'))
+                      }
+                    } else {
+                      if (filters.includes('date')){
+                        setFilters(filters.filter(filter => filter !== 'date'))
+                      }
+                    }
+                  }} // PropTypes.func.isRequired,
+                  focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+                  onFocusChange={focusedInput => setFocusedInput(focusedInput)} // PropTypes.func.isRequired,
+                />
+                <Button onClick={() => {
+                  setStartDate(null)
+                  setEndDate(null)
+                  if (filters.includes('date')){
+                    setFilters(filters.filter(filter => filter !== 'date'))
+                  }
+                }}>Clear</Button> <br/>
                 <label htmlFor="others">Others:</label>
                 <Form id="others">
                   <Form.Check

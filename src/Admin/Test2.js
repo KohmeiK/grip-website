@@ -100,9 +100,28 @@ function Test() {
     }, [])
 
 
+    console.log(moment(' Aug 24, 2020 ').format())
 
     return (
         <div style={{ paddingTop: "85px", paddingLeft: "30px" }}>
+            {/* <DayPickerRangeController
+                startDate={startDate} // momentPropTypes.momentObj or null,
+                endDate={endDate} // momentPropTypes.momentObj or null,
+                onDatesChange={({ startDate, endDate }) => {
+                    setStartDate(startDate)
+                    setEndDate(endDate)
+                }} // PropTypes.func.isRequired,
+                focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+                onFocusChange={focusedInput => setFocusedInput(focusedInput)} // PropTypes.func.isRequired,
+                initialVisibleMonth={() => moment().add(2, "M")} // PropTypes.func or null,
+            /> */}
+            <SingleDatePicker
+                date={startDate} // momentPropTypes.momentObj or null
+                onDateChange={date => setStartDate(date)} // PropTypes.func.isRequired
+                focused={focused} // PropTypes.bool
+                onFocusChange={focused => setFocused(focused)} // PropTypes.func.isRequired
+                id="your_unique_id" // PropTypes.string.isRequired,
+            />
             <DateRangePicker
                 startDate={startDate} // momentPropTypes.momentObj or null,
                 startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
