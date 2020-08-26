@@ -92,7 +92,7 @@ function Dropzone(props) {
     }else{
       displayName = "No file selcted"
     }
-    console.log((props.uploading || acceptedFiles.length !== 1))
+    
     if(width >650){ //Desktop
       return (
         <>

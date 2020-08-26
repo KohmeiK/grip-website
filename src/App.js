@@ -25,6 +25,7 @@ import VerifyEmail from './Signup/VerifyEmail'
 import FirstUpload from './Signup/FirstUpload'
 import EmailHandler from './Signup/EmailHandler'
 import OnboardingContainer from './Signup/OnboardingContainer'
+import ReadyToApply from './Signup/ReadyToApply'
 
 import CompanyCreationContainer from './Admin/CompanyCreationContainer'
 import AdminSettingsContainer from './Admin/AdminSettingsContainer'
@@ -46,6 +47,7 @@ function App(){
         <Switch>
           <PrivateRoute path="/apply"> <ApplyContainer /> </PrivateRoute>
           <PrivateRoute path="/firstUpload"> <OnboardingContainer onStep={2}><FirstUpload /></ OnboardingContainer> </PrivateRoute>
+          <PrivateRoute path="/readyToApply"> <OnboardingContainer onStep={4}><ReadyToApply /></ OnboardingContainer> </PrivateRoute>
           <PrivateRoute path="/upload"> <UploadFrom /> </PrivateRoute>
           <PrivateRoute path="/applications"> <Applications /> </PrivateRoute>
           <PrivateRoute path="/editInfo"> <EditInfo /> </PrivateRoute>

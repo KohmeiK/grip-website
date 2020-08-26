@@ -18,10 +18,10 @@ function OnboardingContainer(props) {
         <div className={styles.mainBox}>
           <div className={styles.stepsWrapper}>
             <ul className={styles.steps}>
-                <li className={props.onStep == 0 ? styles.doing : props.onStep >  0 && styles.done}> <img src={step1}/> </li><hr className={props.onStep > 0  && styles.done}/>
-                <li className={props.onStep == 1 ? styles.doing : props.onStep >  1 && styles.done}> <img src={step2}/></li><hr className={props.onStep > 1  && styles.done}/>
-                <li className={props.onStep == 2 ? styles.doing : props.onStep >  2 && styles.done}> <img src={step3}/></li> <hr className={props.onStep > 2  && styles.done}/>
-                <li className={props.onStep == 3 ? styles.doing : props.onStep >  3 && styles.done}> <img src={step4}/></li>
+                <li className={props.onStep === 0 ? styles.doing : props.onStep >  0 && styles.done}> <img src={step1}/> </li><hr className={props.onStep > 0  && styles.done}/>
+                <li className={props.onStep === 1 ? styles.doing : props.onStep >  1 && styles.done}> <img src={step2}/></li><hr className={props.onStep > 1  && styles.done}/>
+                <li className={props.onStep === 2 ? styles.doing : props.onStep >  2 && styles.done}> <img src={step3}/></li> <hr className={props.onStep > 2  && styles.done}/>
+                <li className={props.onStep === 3 ? styles.doing : props.onStep >  3 && styles.done}> <img src={step4}/></li>
             </ul>
             <ul className={styles.stepsCaption}>
               <li> Sign up </li>
@@ -40,17 +40,16 @@ function OnboardingContainer(props) {
       case 0: oneText = <p>Sign up</p>; break;
       case 1: twoText = <p>Verify email</p>; break;
       case 2: threeText = <p>Upload resume</p>; break;
-      case 3: fourText = <p>Apply</p>; break;
-      default: oneText = <p>Error</p>; break;
+      default: fourText = <p>Apply</p>; break;
 
     }
     return(
       <div className={styles.mobileBackground}>
         <ul className={styles.stepsWrap}>
-          <li> <div className={props.onStep == 0 ? styles.doing : props.onStep >  0 && styles.done}>1</div> <>{oneText}</> </li>
-          <li> <div className={props.onStep == 1 ? styles.doing : props.onStep >  1 && styles.done}>2</div> <>{twoText}</> </li>
-          <li> <div className={props.onStep == 2 ? styles.doing : props.onStep >  2 && styles.done}>3</div> <>{threeText}</> </li>
-          <li> <div className={props.onStep == 3 ? styles.doing : props.onStep >  3 && styles.done}>4</div> <>{fourText}</> </li>
+          <li> <div className={props.onStep === 0 ? styles.doing : props.onStep >  0 && styles.done}>1</div> <>{oneText}</> </li>
+          <li> <div className={props.onStep === 1 ? styles.doing : props.onStep >  1 && styles.done}>2</div> <>{twoText}</> </li>
+          <li> <div className={props.onStep === 2 ? styles.doing : props.onStep >  2 && styles.done}>3</div> <>{threeText}</> </li>
+          <li> <div className={props.onStep === 3 ? styles.doing : props.onStep >  3 && styles.done}>4</div> <>{fourText}</> </li>
         </ul>
         <div className={styles.contentWrap}>
           {props.children}

@@ -31,23 +31,25 @@ function NavBar(props){
   //Just FYI it will act werid if you disable logo but not nav!
   function shouldTextBeWhite(){
     return(
-    (location.pathname == "/" && width > 650)|| //Home page, desktop
-    (location.pathname == "/next item")
+    (location.pathname === "/" && width > 650)|| //Home page, desktop
+    (location.pathname === "/next item")
     )
   }
   function shouldNavBeHidden(){
     return(
-    (location.pathname == "/login") || //Login, both
-    (location.pathname == "/signup") ||//onboarding, both
-    (location.pathname == "/verifyEmail") ||
-    (location.pathname == "/firstUpload")
+    (location.pathname === "/login") || //Login, both
+    (location.pathname === "/signup") ||//onboarding, both
+    (location.pathname === "/verifyEmail") ||
+    (location.pathname === "/firstUpload") ||
+    (location.pathname === "/readyToApply")
     )
   }
   function shouldLogoBeHidden(){
     return(
-    (location.pathname == "/signup" && width < 650)|| //onboarding, both
-    (location.pathname == "/verifyEmail" && width < 650) ||
-    (location.pathname == "/firstUpload" && width < 650)
+    (location.pathname === "/signup" && width < 650)|| //onboarding, both
+    (location.pathname === "/verifyEmail" && width < 650) ||
+    (location.pathname === "/firstUpload" && width < 650) ||
+    (location.pathname === "/readyToApply" && width < 650)
     )
   }
   isWhiteText = shouldTextBeWhite();
