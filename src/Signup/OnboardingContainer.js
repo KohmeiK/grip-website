@@ -9,8 +9,19 @@ import step4 from "../Media/Step4.svg"
 
 import useWindowDimensions from '../useWindowDimensions.js'
 
+
+// We listen to the resize event for IOS Vh update //this doesnt feel correct
+window.addEventListener('resize', () => {
+  // We execute the same script as before
+  let vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+});
+
 function OnboardingContainer(props) {
   const { height, width } = useWindowDimensions();
+  let vh = window.innerHeight * 0.01;
+  // Then we set the value in the --vh custom property to the root of the document
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
 
   if(width > 650){
     return( //Desktop

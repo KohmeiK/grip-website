@@ -7,6 +7,7 @@
   background-image: url('../Media/BackgroundShape.svg'); /* The image used */
   background-color: $c-background; /* sUsed if the image is unavailable */
   height: 100vh; /* Fallback for browsers that do not support Custom Properties */
+  height: calc(var(--vh, 1vh) * 100); //28 is the arrow called bgOne
   width: 100%;
   background-repeat: no-repeat; /* Do not repeat the image */
   display: flex;
@@ -93,7 +94,8 @@
 
 .mobileBackground{
   background: $c-blackBlue;
-  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100); //28 is the arrow called bgOne
+  min-height: -webkit-fill-available;
   .stepsWrap{
     padding: 18px 0 0 0;
     color: white;
@@ -134,7 +136,8 @@
     }
   }
   .contentWrap{
-    height: calc(100vh - 69px);
+    height: 80vh;
+    height: calc(var(--vh, 1vh) * 100 - 69px); //28 is the arrow called bgOne
     border-radius: 20px 20px 0 0;
     background: $c-background;
   }
