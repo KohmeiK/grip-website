@@ -1,24 +1,35 @@
 import ProgressBar from 'react-bootstrap/ProgressBar'
-import React, { useState, useContext, useReducer, useMemo, useEffect, useCallback} from 'react';
+import React, { useState, useContext, useReducer, useMemo, useEffect} from 'react';
 import { Button, Spinner } from "react-bootstrap"
 
 import { Formik } from "formik";
 import * as yup from "yup"
 import { useDropzone } from 'react-dropzone'
 import useWindowDimensions from '../useWindowDimensions.js'
+import { LinkContainer } from 'react-router-bootstrap'
 
 import styles from './DropzoneFirst.module.scss'
 import FirebaseContext from "../Firebase/"
 import cloudIcon from '../Media/cloudIcon.svg'
 import docIcon from '../Media/iconDocDark.svg'
 import phoneIcon from '../Media/phoneIcon.svg'
+import { useHistory } from "react-router-dom";
 
 function Dropzone(props) {
+    let history = useHistory();
+    const [errorText, setErrorText] = useState(false)
+    const [fileLabel, setFileLabel] = useState("No Files")
     const { height, width } = useWindowDimensions();
-    const onDrop = useCallback(acceptedFiles => {
-      // Do something with the files
-    }, [])
-    const { acceptedFiles, getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject } = useDropzone({ accept: '.pdf' });
+    const { acceptedFiles, getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject } = useDropzone({ accept: 'application/pdf',onDrop: (acceptedFiles, rejectedFiles) => {
+      if(rejectedFiles.length > 0 && rejectedFiles[0].errors[0].message != null){
+        setErrorText(rejectedFiles[0].errors[0].message)
+      }
+      else if(acceptedFiles.length !== 1){
+        setErrorText("Please drap and drop only one PDF file!")
+      }else{
+        setErrorText(false)
+      }
+    } });
     const firebase = useContext(FirebaseContext)
     const setUploading = (newValue) => props.setUploading(newValue)
     const setProgress = (newValue) => props.setProgress(newValue)
@@ -36,11 +47,22 @@ function Dropzone(props) {
         isDragAccept
     ]);
 
+    useEffect(() => {
+      if (acceptedFiles.length == 1){
+        setFileLabel(acceptedFiles[0].path);
+      }else if(acceptedFiles.length == 0){
+        setFileLabel("No file selcted")
+      }else{
+        setErrorText("Please drag and drop ONLY 1(one) file!")
+      }
+    },[acceptedFiles.length]);
+
+
     const handleSubmit = () => {
         let smallFile = false
         let resume = acceptedFiles[0]
         if (resume.size > 5 * 1024 * 1024) { // 5 MB limit
-            alert('File is too large!')
+            setErrorText("Your file must be under 5MB!")
             acceptedFiles.length = 0 // clear selected files
             forceUpdate()
             return
@@ -79,20 +101,10 @@ function Dropzone(props) {
             setProgress(0) // reset things so the user can submit again
             setNewUpload(!props.newUpload) // only for UploadForm, so the new resume is displayed
             setSubmitted(true) // only for FirstUpload, so the user can continue
-            alert('Upload Successful')
+            history.push("/readyToApply");
         })
     }
 
-    let displayName;
-    if (acceptedFiles.length == 1){
-      displayName = acceptedFiles[0].path;
-    }
-    else if (acceptedFiles.length > 1) { // limit to one file only
-        displayName = "Select one file only!"
-    }else{
-      displayName = "No file selcted"
-    }
-    
     if(width >650){ //Desktop
       return (
         <>
@@ -113,7 +125,8 @@ function Dropzone(props) {
               <hr />
               <h6> OR </h6>
               <button> Choose file</button>
-              <div className={styles.fileLabel}> <img src={docIcon}/> <div>{displayName} </div></div>
+              <div className={styles.fileLabel}> <img src={docIcon}/> <div>{fileLabel} </div></div>
+              {errorText && <div className={styles.errorMsg}>{errorText}</div>}
               <div className={styles.progressWrap}>
                 {props.uploading && <><ProgressBar now={props.progress} /><p>{props.progress}%</p></>}
               </div>
@@ -122,7 +135,7 @@ function Dropzone(props) {
         </div>
         <div className={styles.footer}>
           <button className={styles.mainButton}onClick={handleSubmit} disabled={props.uploading || acceptedFiles.length !== 1}>Upload Resume</button>
-          <button className={styles.subButton}> Upload later </button>
+          <button onClick={()=> history.push("/readyToApply")}className={styles.subButton}> Upload later </button>
         </div>
         </>
       )
@@ -135,7 +148,7 @@ function Dropzone(props) {
               <input multiple={false} {...getInputProps({multiple: false})}/>
               <button className={styles.fileButton}> Choose file</button>
             </div>
-            <div className={styles.fileLabel}> <img src={docIcon}/> <div>{displayName} </div></div>
+            <div className={styles.fileLabel}> <img src={docIcon}/> <div>{fileLabel} </div></div>
             <div className={styles.progressWrap}>
               {props.uploading && <><ProgressBar now={props.progress} /><p>{Math.round(props.progress)}%</p></>}
             </div>
@@ -144,7 +157,7 @@ function Dropzone(props) {
               <hr />
               <h6> OR </h6>
             </div>
-            <button className={(!props.uploading && acceptedFiles.length !== 1) ? styles.mainButton : styles.subButton}> Upload later </button>
+            <button onClick={()=> history.push("/readyToApply")} className={(!props.uploading && acceptedFiles.length !== 1) ? styles.mainButton : styles.subButton}> Upload later </button>
           </div>
       )
     }

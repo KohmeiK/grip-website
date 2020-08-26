@@ -51,6 +51,14 @@
         background: $c-pinkHov;
       }
     }
+    .errorMsg{
+      margin: 1em 0;
+      padding: 0.4em;
+      font-size: 13px;
+      background: #FF4446;
+      color: white;
+      border-radius: 3px;
+    }
     .fileLabel{
       display: flex;
       align-items: center;
