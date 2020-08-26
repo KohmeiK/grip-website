@@ -37,7 +37,7 @@ const rejectStyle = {
 };
 
 function Dropzone(props) {
-    const { acceptedFiles, getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject } = useDropzone({ accept: '.pdf' });
+    const { acceptedFiles, getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject } = useDropzone({ accept: 'application/pdf' });
     const firebase = useContext(FirebaseContext)
     const setUploading = (newValue) => props.setUploading(newValue)
     const setProgress = (newValue) => props.setProgress(newValue)
@@ -113,7 +113,7 @@ function Dropzone(props) {
         files = <h5>Select one file only!</h5>
     }
 
-    return ( 
+    return (
         <div>
             <section className="container">
                 <div {...getRootProps({ style })}>

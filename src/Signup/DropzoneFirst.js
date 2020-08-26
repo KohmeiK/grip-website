@@ -15,6 +15,36 @@ import docIcon from '../Media/iconDocDark.svg'
 import phoneIcon from '../Media/phoneIcon.svg'
 import { useHistory } from "react-router-dom";
 
+const baseStyle = {
+    margin: '20px',
+    marginBottom: '0px',
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    padding: '20px',
+    borderWidth: 3,
+    borderRadius: 40,
+    borderColor: '#81899C',
+    borderStyle: 'dashed',
+    backgroundColor: '#eeeeee',
+    color: '#bdbdbd',
+    outline: 'none',
+    transition: 'border .24s ease-in-out'
+};
+
+const activeStyle = {
+    borderColor: '#2196f3'
+};
+
+const acceptStyle = {
+    borderColor: '#00b35c'
+};
+
+const rejectStyle = {
+    borderColor: '#ff1744'
+};
+
 function Dropzone(props) {
     let history = useHistory();
     const [errorText, setErrorText] = useState(false)
@@ -39,9 +69,12 @@ function Dropzone(props) {
     const [styleString, setStyleString] = useState(styles.baseStyle)
     const [ignored, forceUpdate] = useReducer(x => x + 1, 0);
 
-    useEffect(() => {
-      setStyleString(`${styles.baseStyle} ${isDragActive && styles.activeStyle} ${isDragReject && styles.rejectStyle} ${isDragAccept && styles.acceptStyle}`)
-    },[
+    const style = useMemo(() => ({
+        ...baseStyle,
+        ...(isDragActive ? activeStyle : {}),
+        ...(isDragAccept ? acceptStyle : {}),
+        ...(isDragReject ? rejectStyle : {})
+    }), [
         isDragActive,
         isDragReject,
         isDragAccept
@@ -50,6 +83,11 @@ function Dropzone(props) {
     useEffect(() => {
       if (acceptedFiles.length == 1){
         setFileLabel(acceptedFiles[0].path);
+        if(acceptedFiles[0].size >  5 * 1024 * 1024){
+          setErrorText("Your file must be under 5MB!")
+          acceptedFiles.length = 0 // clear selected files
+          forceUpdate()
+        }
       }else if(acceptedFiles.length == 0){
         setFileLabel("No file selcted")
       }else{
@@ -108,7 +146,7 @@ function Dropzone(props) {
     if(width >650){ //Desktop
       return (
         <>
-        <div {...getRootProps()} className={styleString} >
+        <div {...getRootProps({style})} >
           <input multiple={false} {...getInputProps({multiple: false})}/>
           <div className={styles.inputWrapper}>
             <div className={styles.leftCol}>
