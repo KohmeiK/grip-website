@@ -186,6 +186,7 @@ function Dropzone(props) {
               <input multiple={false} {...getInputProps({multiple: false})}/>
               <button className={styles.fileButton}> Choose file</button>
             </div>
+            {errorText && <div className={styles.errorMsg}>{errorText}</div>}
             <div className={styles.fileLabel}> <img src={docIcon}/> <div>{fileLabel} </div></div>
             <div className={styles.progressWrap}>
               {props.uploading && <><ProgressBar now={props.progress} /><p>{Math.round(props.progress)}%</p></>}

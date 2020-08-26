@@ -143,36 +143,6 @@
   }
 }
 
-.baseStyle{
-    margin: 20px;
-    margin-bottom: 0px;
-    // height: 50vh;
-    flex-grow: 8;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-width: 3px;
-    border-radius: 40px;
-    border-color: #81899C;
-    border-style: dashed;
-    background-color: #eee;
-    color: #bdbdbd;
-    outline: none;
-    transition: border .24s ease-in-out;
-}
-
-.activeStyle{
-    border-color: #2196f3;
-}
-
-.rejectStyle{
-    border-color: #ff1744;
-}
-
-.acceptStyle{
-    border-olor: #00e676;
-}
-
 
 
 //-------- Mobile -------
@@ -206,6 +176,16 @@
     margin: 0;
     padding: 0;
   }
+
+  .errorMsg{
+    margin: 1em 0;
+    padding: 0.4em;
+    font-size: 13px;
+    background: #FF4446;
+    color: white;
+    border-radius: 3px;
+  }
+  
   .progressWrap{
     height: 34px;
     display: flex;
