@@ -100,7 +100,7 @@ function Test() {
     }, [])
 
 
-    console.log(moment(' Aug 24, 2020 ').format())
+    console.log(moment().subtract(1, 'days').format('ll'))
 
     return (
         <div style={{ paddingTop: "85px", paddingLeft: "30px" }}>

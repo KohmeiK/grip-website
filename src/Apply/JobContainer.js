@@ -104,7 +104,7 @@ function JobContainer(props) {
 
     setCompanyInfo(<p dangerouslySetInnerHTML={{ __html: marked(props.companyInfo) }} />)
 
-    let localDL = moment(props.dl).valueOf() // unix time in local time zone
+    let localDL = moment(props.dl).subtract(1, 'days').valueOf() // unix time in local time zone; ddl displayed to users is one day before the actual deadline
     setRemainingTime(timeUntil(localDL))
 
   }, [])

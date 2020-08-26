@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { Card, Row, Col } from 'react-bootstrap'
+import moment from 'moment'
 
 function JobCardForStudent(props) {
 
@@ -27,7 +28,7 @@ function JobCardForStudent(props) {
               <Card.Text style={{ wordWrap: "breakWord" }}>
                 {props.companyName} ({props.location}) <br />
                 Status: {status} <br />
-                Applied {props.applyDate} — Application closed {props.dl}
+                Applied {props.applyDate} — Application closed {moment(props.dl).subtract(1, 'days').format('ll')} {/* Ddl displayed to users is one day before the actual deadline */}
               </Card.Text>
             </Col>
           </Row>

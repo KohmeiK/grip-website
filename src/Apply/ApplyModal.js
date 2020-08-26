@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react"
 import { Modal, Button, Collapse, Spinner, Card } from 'react-bootstrap'
 import { Formik, Field, Form } from 'formik';
 import { v4 as uuidv4 } from 'uuid'
-
+import moment from 'moment'
 
 import FirebaseContext from '../Firebase'
 import AuthContext from '../Firebase/AuthContext'
@@ -85,7 +85,7 @@ function ApplyModal(props) {
         resumeName: resumeName,
         clName: clName,
         studentName: props.studentName,
-        applyDate: getDate(),
+        applyDate: moment(getDate()).format('ll'),
         downloaded: '',
         companyName: props.companyName,
         companyLogoURL: props.companyLogoURL
