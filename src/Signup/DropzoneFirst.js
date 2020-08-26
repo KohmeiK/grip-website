@@ -172,7 +172,14 @@ function Dropzone(props) {
           </div>
         </div>
         <div className={styles.footer}>
-          <button className={styles.mainButton}onClick={handleSubmit} disabled={props.uploading || acceptedFiles.length !== 1}>Upload Resume</button>
+          <button className={styles.mainButton}onClick={handleSubmit} disabled={props.uploading || acceptedFiles.length !== 1}>
+          {props.uploading && <Spinner
+            as="span"
+            animation="border"
+            size="sm"
+            role="status"
+            aria-hidden="true"
+          />}Upload Resume</button>
           <button onClick={()=> history.push("/readyToApply")}className={styles.subButton}> Upload later </button>
         </div>
         </>
@@ -191,7 +198,14 @@ function Dropzone(props) {
             <div className={styles.progressWrap}>
               {props.uploading && <><ProgressBar now={props.progress} /><p>{Math.round(props.progress)}%</p></>}
             </div>
-            <button className={(!props.uploading && acceptedFiles.length !== 1) ? styles.subButton : styles.mainButton} onClick={handleSubmit} disabled={props.uploading || acceptedFiles.length !== 1}>Upload Resume</button>
+            <button className={(!props.uploading && acceptedFiles.length !== 1) ? styles.subButton : styles.mainButton} onClick={handleSubmit} disabled={props.uploading || acceptedFiles.length !== 1}>
+            {props.uploading && <Spinner
+              as="span"
+              animation="border"
+              size="sm"
+              role="status"
+              aria-hidden="true"
+            />}Upload Resume</button>
             <div className={styles.orWrap}>
               <hr />
               <h6> OR </h6>
