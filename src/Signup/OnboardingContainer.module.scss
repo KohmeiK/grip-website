@@ -16,6 +16,8 @@
 }
 
 .mainBox{
+  display: flex;
+  flex-direction: column;
   background-color: $c-background;
   width: 60vw;
   min-width: 600px;

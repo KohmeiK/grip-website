@@ -1,66 +1,37 @@
 import ProgressBar from 'react-bootstrap/ProgressBar'
-import React, { useState, useContext, useReducer, useMemo } from 'react';
+import React, { useState, useContext, useReducer, useMemo, useEffect, useCallback} from 'react';
 import { Button, Spinner } from "react-bootstrap"
 
 import { Formik } from "formik";
 import * as yup from "yup"
 import { useDropzone } from 'react-dropzone'
 
+import styles from './DropzoneFirst.module.scss'
 import FirebaseContext from "../Firebase/"
-
-const baseStyle = {
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    padding: '20px',
-    borderWidth: 2,
-    borderRadius: 2,
-    borderColor: '#eeeeee',
-    borderStyle: 'dashed',
-    backgroundColor: '#fafafa',
-    color: '#bdbdbd',
-    outline: 'none',
-    transition: 'border .24s ease-in-out'
-};
-
-const activeStyle = {
-    borderColor: '#2196f3'
-};
-
-const acceptStyle = {
-    borderColor: '#00e676'
-};
-
-const rejectStyle = {
-    borderColor: '#ff1744'
-};
+import cloudIcon from '../Media/cloudIcon.svg'
+import docIcon from '../Media/iconDocDark.svg'
 
 function Dropzone(props) {
+    const onDrop = useCallback(acceptedFiles => {
+      // Do something with the files
+    }, [])
     const { acceptedFiles, getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject } = useDropzone({ accept: '.pdf' });
     const firebase = useContext(FirebaseContext)
     const setUploading = (newValue) => props.setUploading(newValue)
     const setProgress = (newValue) => props.setProgress(newValue)
     const setNewUpload = (newValue) => props.setNewUpload(newValue)
     const setSubmitted = (newValue) => props.setSubmitted(newValue)
+
+    const [styleString, setStyleString] = useState(styles.baseStyle)
     const [ignored, forceUpdate] = useReducer(x => x + 1, 0);
 
-    const style = useMemo(() => ({
-        ...baseStyle,
-        ...(isDragActive ? activeStyle : {}),
-        ...(isDragAccept ? acceptStyle : {}),
-        ...(isDragReject ? rejectStyle : {})
-    }), [
+    useEffect(() => {
+      setStyleString(`${styles.baseStyle} ${isDragActive && styles.activeStyle} ${isDragReject && styles.rejectStyle} ${isDragAccept && styles.acceptStyle}`)
+    },[
         isDragActive,
         isDragReject,
         isDragAccept
     ]);
-
-    let files = acceptedFiles.map(file => (
-        <li key={file.path}>
-            {file.path} - {file.size} bytes
-        </li>
-    ));
 
     const handleSubmit = () => {
         let smallFile = false
@@ -109,27 +80,49 @@ function Dropzone(props) {
         })
     }
 
-    if (acceptedFiles.length > 1) { // limit to one file only
-        files = <h5>Select one file only!</h5>
+    let displayName;
+    if (acceptedFiles.length == 1){
+      displayName = acceptedFiles[0].path;
     }
+    else if (acceptedFiles.length > 1) { // limit to one file only
+        displayName = "Select one file only!"
+    }else{
+      displayName = "No file selcted"
+    }
+    // console.log(files)
 
-    return ( 
-        <div>
-            <section className="container">
-                <div {...getRootProps({ style })}>
-                    <input {...getInputProps()} />
-                    <p>Drag and drop your resume here, or click to select a file</p>
-                </div>
-                <aside>
-                    <h4>File</h4>
-                    <ul>{files}</ul>
-                </aside>
-                <Button onClick={handleSubmit} disabled={props.uploading || acceptedFiles.length !== 1}>Submit</Button>
-            </section>
-            <br />
-            {props.uploading && <ProgressBar now={props.progress} />}
+    return (
+      <>
+      <div {...getRootProps()} className={styleString} >
+        <input multiple={false} {...getInputProps({multiple: false})}/>
+        <div className={styles.inputWrapper}>
+          <div className={styles.leftCol}>
+              <h5> Step 3 of 4:</h5>
+              <h3> Upload Resume</h3>
+              {
+                isDragActive ?
+                  <p>Drop the file here ...</p> :
+                  <p>Drag 'n' drop your resume here, or click anywhere to select files</p>
+              }
+          </div>
+          <div className={styles.rightCol}>
+            <img src={cloudIcon}/>
+            <hr />
+            <h6> OR </h6>
+            <button> Choose file</button>
+            <div className={styles.fileLabel}> <img src={docIcon}/> <div>{displayName} </div></div>
+            <div className={styles.progressWrap}>
+              {props.uploading && <><ProgressBar now={props.progress} /><p>{props.progress}%</p></>}
+            </div>
+          </div>
         </div>
-    );
+      </div>
+      <div className={styles.footer}>
+        <button className={styles.mainButton}onClick={handleSubmit} disabled={props.uploading || acceptedFiles.length !== 1}>Upload Resume</button>
+        <button className={styles.subButton}> Upload later </button>
+      </div>
+      </>
+    )
 }
 
 export default Dropzone

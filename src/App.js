@@ -45,7 +45,7 @@ function App(){
         <NavBar/>
         <Switch>
           <PrivateRoute path="/apply"> <ApplyContainer /> </PrivateRoute>
-          <PrivateRoute path="/firstUpload"> <FirstUpload /> </PrivateRoute>
+          <PrivateRoute path="/firstUpload"> <OnboardingContainer onStep={2}><FirstUpload /></ OnboardingContainer> </PrivateRoute>
           <PrivateRoute path="/upload"> <UploadFrom /> </PrivateRoute>
           <PrivateRoute path="/applications"> <Applications /> </PrivateRoute>
           <PrivateRoute path="/editInfo"> <EditInfo /> </PrivateRoute>

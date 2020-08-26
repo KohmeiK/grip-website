@@ -1,0 +1,169 @@
+@import '../colorCodes.scss';
+
+.inputWrapper{
+  // background-color: green;
+  width: 100%;
+  margin: auto 0;
+  display: flex;
+  text-align: center;
+  color: $c-blackBlue;
+  .leftCol{
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    h3, h5{
+      font-weight: 800;
+    }
+    p{
+      max-width: 250px;
+    }
+  }
+  .rightCol{
+    width: 55%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    >img{
+      padding-bottom: 1em;
+      width: 100px;
+    }
+    hr{
+      width: 40%;
+      border-top: 1px solid $c-blackBlue;
+      margin-bottom: -10px;
+    }
+    h6{ //OR
+      background: #eee;
+      font-weight: 800;
+      padding: 0 20px;
+    }
+    button{
+      color: white;
+      background: linear-gradient($c-pink, $c-pinkHov);
+      border: none;
+      border-radius: 5px;
+      margin: 8px;
+      padding: 2px 8px;
+      &:hover{
+        background: $c-pinkHov;
+      }
+    }
+    .fileLabel{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      img{
+        margin: 10px;
+      }
+      div{
+        text-align: left;
+        display: inline-block;
+        width: 250px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow:ellipsis
+      }
+    }
+    .progressWrap{
+      height: 24px;
+      display: flex;
+      width: 75%;
+      align-items: center;
+      :global(.progress){
+        width: 75%;
+        height: 10px;
+        background: #C4C4C4;
+        :global(.progress-bar){
+          background: #A1DEFF
+        }
+      }
+      p{
+        margin: 0 10px;
+        padding: 0;
+      }
+    }
+  }
+}
+
+.footer{
+  flex-grow: 2;
+  display: flex;
+  height: 10vh;
+  justify-content: center;
+  align-items: center;
+  .mainButton{
+    color: white;
+    background: $c-pink;
+    font-size: 1.1em;
+    // font-weight: 800;
+    border: none;
+    border-radius: 2em;
+    padding: 0.25em 1.4em;
+    margin: 0 0.2em;
+    &:disabled{
+      opacity: 0.6;
+      &:hover{
+        background: $c-pink;
+      }
+    }
+    &:hover{
+      background: $c-pinkHov;
+    }
+    &:active{
+      background: $c-darkBlue;
+    }
+
+  }
+  .subButton{
+    background: none;
+    color: $c-pink;
+    font-size: 1.1em;
+    font-weight: 300;
+    border: none;
+    padding: 0.25em 1.4em;
+    margin: 0 0.2em;
+
+    &:hover{
+      color: $c-pinkHov;
+    }
+    &:active{
+      color: $c-darkBlue;
+    }
+  }
+}
+
+.baseStyle{
+    margin: 20px;
+    margin-bottom: 0px;
+    // height: 50vh;
+    flex-grow: 8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-width: 1px;
+    border-radius: 40px;
+    border-color: #81899C;
+    border-style: dashed;
+    background-color: #eee;
+    color: #bdbdbd;
+    outline: none;
+    transition: border .24s ease-in-out;
+}
+
+.activeStyle{
+    border-color: #2196f3;
+}
+
+.rejectStyle{
+    border-color: #ff1744;
+}
+
+.acceptStyle{
+    border-olor: #00e676;
+}
+
+@media screen and (max-width: $s-desktopMin) {
+}
