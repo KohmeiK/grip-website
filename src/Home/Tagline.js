@@ -29,8 +29,8 @@ function Tagline(){
         <div className={styles.content}>
             <div className={styles.heroImage}>
                 <div className={styles.tagline}>
-                    <h1>STANFORD'S GLOBALLY FOCUSED STUDENT ENTRIPRENEURSHIP</h1>
-                    <p>Lorem ipsum dolor sit amet. cons adipiscing elit.</p>
+                    <h1>(FIX) STANFORD'S GLOBALLY FOCUSED STUDENT ENTREPRENEURSHIP CLUB</h1>
+                    <p>Applying abroad has never been easier</p>
                     <LinkContainer to="/apply">
                     <div className={styles.buttonWrap}>
                       <button className={styles.mainButton} type="button">

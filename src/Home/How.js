@@ -22,7 +22,7 @@ function How(){
           <div className={`${styles.diagonalBox} ${styles.bgTwo}`}>
             <div className={`${styles.content} ${styles.topText}`}>
               <h1>How it Works</h1>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+              <p>(FIX) Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
             </div>
           </div>
         </div>
@@ -35,7 +35,7 @@ function How(){
               <h3 className={styles.desktop}>Sign up</h3>
               <h3 className={styles.mobile}>Step 1: Sign up</h3>
               <img className={styles.mobile} src={how1m} alt="Step1"/>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</p>
+              <p>Sign up using your university (.edu) email. A verification link will be sent to your inbox.</p>
             </div>
           </div>
         </li>
@@ -47,7 +47,7 @@ function How(){
               <h3 className={styles.desktop}>Upload resume</h3>
               <h3 className={styles.mobile}>Step 2: Upload resume</h3>
               <img className={styles.mobile} src={how2m} alt="Step2"/>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</p>
+              <p>Upload your default resume for a quicker application process. You can choose to skip this step, and upload your resume later when you apply.</p>
             </div>
           </div>
         </li>
@@ -59,14 +59,14 @@ function How(){
               <h3 className={styles.desktop}>Apply</h3>
               <h3 className={styles.mobile}>Step 3: Apply</h3>
               <img className={styles.mobile} src={how3m} alt="Step3"/>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</p>
+              <p>Browse through the list. See an interesting apply? Just click Apply! Some companies may require cover letters.</p>
             </div>
           </div>
         </li>
         </div>
       </ul>
       <LinkContainer to="apply">
-        <button className={`${styles.mainButton} ${styles.desktop}`} type="button">APPLY</button>
+        <button className={`${styles.mainButton} ${styles.desktop}`} type="button">GET STARTED</button>
       </LinkContainer>
     </div>
     </div>
