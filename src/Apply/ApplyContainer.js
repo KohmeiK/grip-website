@@ -154,6 +154,7 @@ function ApplyContainer() {
             // handleClose={handleClose}
             // handleShow={handleShow}
             // show={show && (index === indexToShow) ? true : false}
+            isCompany={authContext.isCompany && !authContext.isAdmin}
             studentName={authContext.user.displayName}
             studentID={authContext.user.uid}
           />

@@ -152,7 +152,7 @@ function JobContainer(props) {
         </Collapse>
 
         <Card.Footer>
-          <Button disabled={props.applied || localApplied || !remainingTime} onClick={handleClick}> Apply! </Button>
+          <Button disabled={props.applied || localApplied || !remainingTime || props.isCompany} onClick={handleClick}> Apply! </Button>
           {(props.applied || localApplied ) && <p className="font-italic">You've applied to this job</p>}
         </Card.Footer>
       </Card>
