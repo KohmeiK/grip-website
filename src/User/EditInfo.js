@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useContext } from "react"
 import { Row, Col, Container } from 'react-bootstrap'
 import {
     Switch,
@@ -8,6 +8,8 @@ import {
 } from "react-router-dom";
 import { Nav } from 'react-bootstrap'
 
+import AuthContext from '../Firebase/AuthContext'
+
 import InfoUpdate from './InfoUpdate'
 import UploadForm from './UploadForm'
 import ChangeEmail from './ChangeEmail'
@@ -15,16 +17,18 @@ import ChangePassword from './ChangePassword'
 
 function EditInfo() {
     let match = useRouteMatch()
+    let authContext = useContext(AuthContext)
     return (
         <div style={{ background: "#e0e0e0", paddingTop: "85px" }} >
             <Container fluid style={{ paddingTop: "2em" }}>
                 <Row>
                     <Col>
                         <Nav className="flex-column">
-                            <Nav.Link as={Link} to={`${match.url}/basic`}>Edit Profile</Nav.Link>
+                            {!authContext.isCompany ? <Nav.Link as={Link} to={`${match.url}/basic`}>Edit Profile</Nav.Link>
+                            : <Nav.Link as={Link} to={`${match.url}/basic`}>View Profile</Nav.Link>}
                             <Nav.Link as={Link} to={`${match.url}/email`}>Change Email</Nav.Link>
                             <Nav.Link as={Link} to={`${match.url}/password`}>Change Password</Nav.Link>
-                            <Nav.Link as={Link} to={`${match.url}/resume`}>Update Resume</Nav.Link>
+                            {!authContext.isCompany && <Nav.Link as={Link} to={`${match.url}/resume`}>Update Resume</Nav.Link>}
                         </Nav>
                     </Col>
                     <Col sm={7}>

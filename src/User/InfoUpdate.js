@@ -79,6 +79,15 @@ function InfoUpdate() {
     setIsUpdating(false)
   }
 
+  if (authContext.isCompany) { // companies will only see their display names, not being able to change them
+    return (
+      <>
+        <h3>Display Name:</h3> 
+        {authContext.user.displayName}
+      </>
+    )
+  }
+
 
   let arr = []
   let thisYear = new Date().getFullYear()

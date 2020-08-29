@@ -234,7 +234,6 @@ function MyJobs() {
 
   return (
     <div style={{ background: "#e0e0e0", paddingTop: "85px" }}>
-      <h1>A company only page that lists out jobs and allows resume download</h1>
       <Container fluid style={{ paddingTop: "2em" }}>
         <Row>
           <Col>
