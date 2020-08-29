@@ -30,7 +30,7 @@ function InfoUpdate() {
       if (doc.exists) {
         valsBuilder.year = doc.data().classYear
       } else {
-        valsBuilder.year = "Error!"
+        valsBuilder.year = "N/A"
         console.log("No such document!");
       }
       setInitVals(valsBuilder)
@@ -79,7 +79,7 @@ function InfoUpdate() {
     setIsUpdating(false)
   }
 
-  if (authContext.isCompany) { // companies will only see their display names, not being able to change them
+  if (authContext.isCompany && !authContext.isAdmin) { // companies will only see their display names, not being able to change them
     return (
       <>
         <h3>Display Name:</h3> 

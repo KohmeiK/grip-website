@@ -24,11 +24,11 @@ function EditInfo() {
                 <Row>
                     <Col>
                         <Nav className="flex-column">
-                            {!authContext.isCompany ? <Nav.Link as={Link} to={`${match.url}/basic`}>Edit Profile</Nav.Link>
+                            {(!authContext.isCompany || authContext.isAdmin) ? <Nav.Link as={Link} to={`${match.url}/basic`}>Edit Profile</Nav.Link>
                             : <Nav.Link as={Link} to={`${match.url}/basic`}>View Profile</Nav.Link>}
                             <Nav.Link as={Link} to={`${match.url}/email`}>Change Email</Nav.Link>
                             <Nav.Link as={Link} to={`${match.url}/password`}>Change Password</Nav.Link>
-                            {!authContext.isCompany && <Nav.Link as={Link} to={`${match.url}/resume`}>Update Resume</Nav.Link>}
+                            {(!authContext.isCompany || authContext.isAdmin) && <Nav.Link as={Link} to={`${match.url}/resume`}>Update Resume</Nav.Link>}
                         </Nav>
                     </Col>
                     <Col sm={7}>
