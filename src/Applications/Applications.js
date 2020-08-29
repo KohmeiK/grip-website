@@ -27,40 +27,41 @@ function Applications() {
     useEffect(() => {
         //Only on mount
         let jobsBuilder = []
-        firebase.db.collection('applications').where("studentID", "==", authContext.user.uid).get().then(function(applications){
+        firebase.db.collection('applications').where("studentID", "==", authContext.user.uid).get().then(function (applications) {
             applications.forEach(application => {
                 jobsBuilder.push(application.data())
             })
             setJobs(jobsBuilder)
-        }).then(function(){
-            if (jobsBuilder.length === 0){
-                alert("You haven't applied to any jobs") 
-                // localDisplay = <h3>You haven't applied to any jobs!</h3>
-            } else {
-                setLoading(false)
-            }
+        }).then(function () {
+            setLoading(false)
+        }).catch(function(error){
+            alert(error)
         })
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     let localDisplay = "Loading..."
     if (!loading) {
-        localDisplay = jobs.map((job, index) => { //Convert each element to JSX
-            //convert all elements before reach render, this is only updates when show is changed
-            return (
-                <JobCardForStudent
-                    key={index}
-                    index={index}
-                    title={job.title}
-                    location={job.location}
-                    dl={job.dl}
-                    downloaded={job.downloaded}
-                    applyDate={job.applyDate}
-                    companyName={job.companyName}
-                    companyLogoURL={job.companyLogoURL}
-                />
-            );
-        })
+        if (jobs.length === 0) {
+            localDisplay = <h3>You haven't applied to any jobs!</h3>
+        } else {
+            localDisplay = jobs.map((job, index) => { //Convert each element to JSX
+                //convert all elements before reach render, this is only updates when show is changed
+                return (
+                    <JobCardForStudent
+                        key={index}
+                        index={index}
+                        title={job.title}
+                        location={job.location}
+                        dl={job.dl}
+                        downloaded={job.downloaded}
+                        applyDate={job.applyDate}
+                        companyName={job.companyName}
+                        companyLogoURL={job.companyLogoURL}
+                    />
+                );
+            })
+        }
     }
 
     return (
