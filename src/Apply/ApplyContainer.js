@@ -277,24 +277,9 @@ function ApplyContainer() {
             </div>
           </Col>
           <Col sm={7}>
-            <Form>
-              <Form.Row className="align-items-center">
-                <Col>
-                  <Form.Label htmlFor="inlineFormInputGroup" srOnly>
-                    Some Eventual Search Feature Could Go Here
-              </Form.Label>
-                  <InputGroup className="mb-2">
-                    <FormControl id="inlineFormInputGroup" placeholder="Some Eventual Search Feature Could Go Here" />
-                    <InputGroup.Append>
-                      <InputGroup.Text>Search</InputGroup.Text>
-                    </InputGroup.Append>
-                  </InputGroup>
-                </Col>
-              </Form.Row>
-            </Form>
             {localDisplay}
           </Col>
-          <Col sm={3}>More Settings</Col>
+          <Col sm={2}></Col>
         </Row>
       </Container>
     </div>

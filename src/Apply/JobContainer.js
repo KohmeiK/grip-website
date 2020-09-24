@@ -6,7 +6,24 @@ import moment from 'moment'
 
 import ApplyModal from "./ApplyModal.js"
 
+import expandArrow from "../Media/DarkDownArrow.svg"
+
 import styles from './JobContainer.module.scss';
+
+
+function Label(props){
+  const labelStyle = {
+    background: "#DEE2EA",
+    borderRadius: "5px",
+    padding: "0 10px",
+    margin: "0 5px",
+  };
+  return(
+    <div style={labelStyle}>
+      {props.children}
+    </div>
+  )
+}
 
 //Job card for Apply page
 function JobContainer(props) {
@@ -42,7 +59,7 @@ function JobContainer(props) {
     )
   }
   const handleClose = () => setModal()
-  
+
   function timeSince(date) {
 
     var days = Math.ceil((new Date() - date) / 1000 / 86400);
@@ -92,10 +109,10 @@ function JobContainer(props) {
   useEffect(() => {
     let reqSkillsBuilder, preSkillsBuilder
     reqSkillsBuilder = props.reqSkills.map(skill => {
-      return <Badge className="mr-1" variant="secondary">{skill}</Badge>
+      return <Label>{skill}</Label>
     })
     preSkillsBuilder = props.preSkills.map(skill => {
-      return <Badge className="mr-1" variant="secondary">{skill}</Badge>
+      return <Label>{skill}</Label>
     })
     setReqSkills(reqSkillsBuilder)
     setPreSkills(preSkillsBuilder)
@@ -113,50 +130,48 @@ function JobContainer(props) {
 
   return (
     <>
-      <Card>
-        <Card.Header>
-          <Row>
-            <Col sm={3}>
-              <img src={props.companyLogoURL} width="150"></img>
-            </Col>
-            <Col sm={9}>
-              <Card.Title>{props.title}</Card.Title>
-              <Card.Text style={{ wordWrap: "breakWord" }}>
-                {props.companyName} <br />
-                {props.location} <br />
-                Duration: {props.duration} <br />
-                Required Skills: <br />
-                {reqSkills} <br />
-                Preferred Skills: <br />
-                {preSkills} <br />
-                {props.reqCoverLetter &&
-                  <p className="text-danger">Requires Cover Letter <br /> </p>}
+      <div className={styles.blackLine}>
+        <div className={styles.cardBG}>
+          <div className={styles.leftCol}>
+              <img src={props.companyLogoURL}></img>
+              <p>{props.companyName} </p>
+          </div>
+
+          <div className={styles.rightCol}>
+            <div className={styles.row1}>
+                <h3>{props.title}</h3>
+                <img className={`${open && styles.flipped}`}src={expandArrow} onClick={() => setOpen(!open)} />
+            </div>
+            <div className={styles.row2}>
+                <p>{props.location}</p>
+                <p>{props.duration}</p>
+                <button className={styles.mainButton} disabled={props.applied || localApplied || !remainingTime || props.isCompany} onClick={handleClick}> Apply </button>
+                {(props.applied || localApplied ) && <p className="font-italic">You've applied to this job</p>}
+            </div>
+            <div className={`${styles.row3} ${open && styles.wrapOn}`}>
+                <p>Required:</p>
+                {reqSkills}
+            </div>
+            <div className={`${styles.row4} ${open && styles.wrapOn}`}>
+                <p>Preferred:</p>
+                {preSkills}
+
+            </div>
+
+            <div className={styles.row5}>
                 Posted: {timeSince(props.timePosted) + ' ago'} <br />
-                {remainingTime ? remainingTime : <p className="text-danger">Deadline Passed!</p>}
-              </Card.Text>
-              <Button onClick={() => setOpen(!open)}
-                aria-expanded={open}>
-                Expand
-          </Button>
-            </Col>
-          </Row>
+            </div>
+          </div>
+        </div>
 
-        </Card.Header>
-        <Collapse in={open}>
-          <Card.Body className={styles.markDown}>
-            <h6>About {props.companyName}: </h6>
-            {companyInfo} <br />
-            <h6>About the Job:</h6>
-            {info}
-          </Card.Body>
-        </Collapse>
+        <div className={`${styles.markDown} ${open ? styles.body : styles.hidden}`}>
+              <h6>About {props.companyName}: </h6>
+              {companyInfo} <br />
+              <h6>About the Job:</h6>
+              {info}
+        </div>
 
-        <Card.Footer>
-          <Button disabled={props.applied || localApplied || !remainingTime || props.isCompany} onClick={handleClick}> Apply! </Button>
-          {(props.applied || localApplied ) && <p className="font-italic">You've applied to this job</p>}
-        </Card.Footer>
-      </Card>
-
+      </div>
       {modal}
 
     </>
@@ -164,6 +179,53 @@ function JobContainer(props) {
 }
 
 export default JobContainer
+
+
+//
+// <Card>
+//   <Card.Header>
+//     <Row>
+//       <Col sm={3}>
+//         <img src={props.companyLogoURL} width="100%"></img>
+//         {props.companyName}
+//       </Col>
+//
+//       <Col sm={9}>
+//         <Card.Title>{props.title}</Card.Title>
+//         <Card.Text style={{ wordWrap: "breakWord" }}>
+//            <br />
+//           {props.location} <br />
+//           Duration: {props.duration} <br />
+//           Required Skills: <br />
+//           {reqSkills} <br />
+//           Preferred Skills: <br />
+//           {preSkills} <br />
+//           {props.reqCoverLetter &&
+//             <p className="text-danger">Requires Cover Letter <br /> </p>}
+//           Posted: {timeSince(props.timePosted) + ' ago'} <br />
+//           {remainingTime ? remainingTime : <p className="text-danger">Deadline Passed!</p>}
+//
+//           <Button disabled={props.applied || localApplied || !remainingTime || props.isCompany} onClick={handleClick}> Apply! </Button>
+//           {(props.applied || localApplied ) && <p className="font-italic">You've applied to this job</p>}
+//
+//         </Card.Text>
+//     <Button onClick={() => setOpen(!open)}
+//           aria-expanded={open}>
+//           Expand
+//     </Button>
+//       </Col>
+//     </Row>
+//   </Card.Header>
+//
+//   <Collapse in={open}>
+//     <Card.Body className={styles.markDown}>
+//       <h6>About {props.companyName}: </h6>
+//       {companyInfo} <br />
+//       <h6>About the Job:</h6>
+//       {info}
+//     </Card.Body>
+//   </Collapse>
+// </Card>
 
 //This is for Image Placeholder before loading is done
 // <img src="%PUBLIC_URL%/TempImg.png"/>

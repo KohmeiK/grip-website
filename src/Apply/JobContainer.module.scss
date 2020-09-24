@@ -1,5 +1,105 @@
 @import '../colorCodes.scss';
 
+.flipped{
+  transform: scaleY(-1);
+}
+.hidden{
+  display: none;
+}
+.body{
+  background: white;
+  padding: 1em;
+}
+
+.mainButton{
+  color: white;
+  background: $c-pink;
+  letter-spacing: 1px;
+  font-size: 1.1em;
+  font-weight: 400;
+  border: none;
+  border-radius: 2em;
+  padding: 0.25em 1em;
+
+  &:hover{
+    background: $c-pinkHov;
+  }
+  &:active{
+    background: $c-darkBlue;
+  }
+
+}
+
+
+.blackLine{
+  background-color: $c-darkBlue;
+  padding-top: 4px;
+}
+.cardBG{
+  background-color: white;
+  display: flex;
+  .leftCol{
+    width: 15%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 0.6em;
+    text-align: center;
+    img{
+      width: 80%;
+    }
+  }
+  .rightCol{
+    color: $c-darkBlue;
+    padding: 1em;
+    padding-bottom: 2px;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    & > div{
+      display: flex;
+      margin: 2px;
+    }
+    .row1,.row2{
+      justify-content: space-between;
+      align-items: center;
+      h3{
+        font-weight: 800;
+        margin: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      img{
+        height: 40%;
+      }
+      p{
+        margin: 0;
+      }
+    }
+    .row3,.row4{
+      p{
+        margin: 0;
+        margin-right: 10px;
+      }
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .wrapOn{
+      flex-wrap: wrap;
+      white-space: initial;
+      overflow: initial;
+      text-overflow: initial;
+    }
+    .row5{
+      margin: 0;
+      justify-content: flex-end;
+    }
+  }
+}
+
+
 .markDown{
   ul{
     margin: 1em 0;
