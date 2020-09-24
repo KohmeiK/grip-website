@@ -145,8 +145,11 @@ function JobContainer(props) {
             <div className={styles.row2}>
                 <p>{props.location}</p>
                 <p>{props.duration}</p>
-                <button className={styles.mainButton} disabled={props.applied || localApplied || !remainingTime || props.isCompany} onClick={handleClick}> Apply </button>
-                {(props.applied || localApplied ) && <p className="font-italic">You've applied to this job</p>}
+                <div className={styles.buttonContainer}>
+                  {remainingTime ? remainingTime : <p className="text-danger">Deadline Passed!</p>}
+                  <button className={styles.mainButton} disabled={props.applied || localApplied || !remainingTime || props.isCompany} onClick={handleClick}> Apply </button>
+                  {(props.applied || localApplied ) && <p className="font-italic">You've applied to this job</p>}
+                </div>
             </div>
             <div className={`${styles.row3} ${open && styles.wrapOn}`}>
                 <p>Required:</p>
