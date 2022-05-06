@@ -1,6 +1,4 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-# Most Recent Stable version at: https://kolledgeholdings.com.
+# Most Recent Stable version at: https://testing2-54b27.web.app.
 
 ## A lot more doccumentation available. Run: `npm run docs`
 
